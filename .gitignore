@@ -1,0 +1,95 @@
+# ==============================
+# NetBeans
+# ==============================
+
+.netbeans/
+.netbeans_automatic_build
+.netbeans_update_resources
+
+# NetBeans private project files
+**/nbproject/private/
+
+# NetBeans build and distribution folders
+**/build/
+**/dist/
+
+# NetBeans test output
+**/test/
+
+# ==============================
+# Java
+# ==============================
+
+# Compiled Java files
+*.class
+
+# Java archives
+*.jar
+*.war
+*.ear
+
+# ==============================
+# NetBeans generated files
+# ==============================
+
+**/nbbuild/
+**/nbdist/
+**/.nb-gradle/
+
+# ==============================
+# IDE files
+# ==============================
+
+.idea/
+*.iml
+.vscode/
+
+# ==============================
+# OS generated files
+# ==============================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# ==============================
+# Logs
+# ==============================
+
+*.log
+
+# ==============================
+# Temporary files
+# ==============================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ==============================
+# Generated JSP/Servlet files
+# ==============================
+
+# Compiled/generated web application files
+**/WEB-INF/classes/
+**/WEB-INF/lib/
+
+# Tomcat generated files
+**/work/
+**/temp/
+
+# ==============================
+# Database / local configuration
+# ==============================
+
+# Uncomment these if you have local database/config files
+# *.properties
+# *.xml
