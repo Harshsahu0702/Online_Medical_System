@@ -1,0 +1,69 @@
+# ==============================
+# NetBeans
+# ==============================
+
+.netbeans/
+.netbeans_automatic_build
+.netbeans_update_resources
+
+# NetBeans private project files
+/nbproject/private/
+
+# NetBeans build and distribution folders
+/build/
+/dist/
+
+# NetBeans generated files
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# ==============================
+# Java
+# ==============================
+
+*.class
+
+# ==============================
+# IDE files
+# ==============================
+
+.idea/
+*.iml
+.vscode/
+
+# ==============================
+# OS generated files
+# ==============================
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# ==============================
+# Temporary files
+# ==============================
+
+*~
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ==============================
+# Generated web application files
+# ==============================
+
+/web/WEB-INF/classes/
+/web/WEB-INF/lib/
+
+# Tomcat generated files
+/work/
+/temp/
+
+# ==============================
+# Logs
+# ==============================
+
+*.log
