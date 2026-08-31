@@ -2,11 +2,27 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>DoctorServlet</servlet-name>
-        <servlet-class>controller.DoctorServlet</servlet-class>
+        <servlet-class>controller.DoctorRegistrationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoctorRegisterServlet</servlet-name>
+        <servlet-class>controller.doctor.DoctorRegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PatientServlet</servlet-name>
+        <servlet-class>PatientServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DoctorServlet</servlet-name>
         <url-pattern>/DoctorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoctorRegisterServlet</servlet-name>
+        <url-pattern>/DoctorRegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PatientServlet</servlet-name>
+        <url-pattern>/PatientServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
