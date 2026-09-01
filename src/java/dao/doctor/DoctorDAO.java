@@ -23,12 +23,13 @@ public class DoctorDAO {
 
     private static final String USER = "avnadmin";
 
-    private static final String PASSWORD = "";
+    
 
     private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String password = System.getenv("DB_PASSWORD");
 
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, password);
     }
 
     // GET ALL SPECIALIZATIONS
