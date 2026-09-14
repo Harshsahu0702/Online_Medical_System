@@ -416,18 +416,310 @@ public class DoctorDAO {
         }
     }
 
-    // ROLLBACK
+    // DOCTOR LOGIN
+    public Doctor loginDoctor(String email, String password) {
+        String sql = "SELECT d.doctor_id, d.user_id, d.specialization_id, d.clinic_id, d.qualification, "
+                + "d.experience, d.license_number, d.consultation_fee, d.registration_authority, d.bio, "
+                + "d.consultation_type, u.name, u.email, u.phone, u.status, s.name AS specialization_name, c.clinic_name "
+                + "FROM users u "
+                + "JOIN doctors d ON u.user_id = d.user_id "
+                + "LEFT JOIN specializations s ON d.specialization_id = s.specialization_id "
+                + "LEFT JOIN clinics c ON d.clinic_id = c.clinic_id "
+                + "WHERE u.email = ? AND u.password = ? AND u.role = 'DOCTOR'";
 
-    private void rollbackConnection(Connection con) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Doctor d = new Doctor();
+                d.setDoctorId(rs.getInt("doctor_id"));
+                d.setUserId(rs.getInt("user_id"));
+                d.setSpecializationId(rs.getInt("specialization_id"));
+                
+                int clinicId = rs.getInt("clinic_id");
+                if (!rs.wasNull()) {
+                    d.setClinicId(clinicId);
+                }
+                
+                d.setQualification(rs.getString("qualification"));
+                d.setExperience(rs.getInt("experience"));
+                d.setLicenseNumber(rs.getString("license_number"));
+                d.setConsultationFee(rs.getDouble("consultation_fee"));
+                d.setRegistrationAuthority(rs.getString("registration_authority"));
+                d.setBio(rs.getString("bio"));
+                d.setConsultationType(rs.getString("consultation_type"));
+                d.setName(rs.getString("name"));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setStatus(rs.getString("status"));
+                d.setSpecializationName(rs.getString("specialization_name"));
+                d.setClinicName(rs.getString("clinic_name"));
+                return d;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(con, ps, rs);
+        }
+        return null;
+    }
+
+    // GET DOCTOR BY ID
+    public Doctor getDoctorById(int doctorId) {
+        String sql = "SELECT d.doctor_id, d.user_id, d.specialization_id, d.clinic_id, d.qualification, "
+                + "d.experience, d.license_number, d.consultation_fee, d.registration_authority, d.bio, "
+                + "d.consultation_type, u.name, u.email, u.phone, u.status, s.name AS specialization_name, c.clinic_name "
+                + "FROM doctors d "
+                + "JOIN users u ON d.user_id = u.user_id "
+                + "LEFT JOIN specializations s ON d.specialization_id = s.specialization_id "
+                + "LEFT JOIN clinics c ON d.clinic_id = c.clinic_id "
+                + "WHERE d.doctor_id = ?";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Doctor d = new Doctor();
+                d.setDoctorId(rs.getInt("doctor_id"));
+                d.setUserId(rs.getInt("user_id"));
+                d.setSpecializationId(rs.getInt("specialization_id"));
+                
+                int clinicId = rs.getInt("clinic_id");
+                if (!rs.wasNull()) {
+                    d.setClinicId(clinicId);
+                }
+                
+                d.setQualification(rs.getString("qualification"));
+                d.setExperience(rs.getInt("experience"));
+                d.setLicenseNumber(rs.getString("license_number"));
+                d.setConsultationFee(rs.getDouble("consultation_fee"));
+                d.setRegistrationAuthority(rs.getString("registration_authority"));
+                d.setBio(rs.getString("bio"));
+                d.setConsultationType(rs.getString("consultation_type"));
+                d.setName(rs.getString("name"));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setStatus(rs.getString("status"));
+                d.setSpecializationName(rs.getString("specialization_name"));
+                d.setClinicName(rs.getString("clinic_name"));
+                return d;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(con, ps, rs);
+        }
+        return null;
+    }
+
+    // UPDATE DOCTOR PROFILE
+    public boolean updateDoctorProfile(Doctor doctor) {
+        String updateDoctorSql = "UPDATE doctors SET specialization_id = ?, clinic_id = ?, qualification = ?, "
+                + "experience = ?, license_number = ?, consultation_fee = ?, registration_authority = ?, bio = ?, "
+                + "consultation_type = ? WHERE doctor_id = ?";
+
+        String updateUserSql = "UPDATE users SET name = ?, phone = ? WHERE user_id = ?";
+
+        Connection con = null;
+        PreparedStatement psDoctor = null;
+        PreparedStatement psUser = null;
+
+        try {
+            con = getConnection();
+            con.setAutoCommit(false);
+
+            // Update doctors table
+            psDoctor = con.prepareStatement(updateDoctorSql);
+            psDoctor.setInt(1, doctor.getSpecializationId());
+            if (doctor.getClinicId() == null || doctor.getClinicId() == 0) {
+                psDoctor.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                psDoctor.setInt(2, doctor.getClinicId());
+            }
+            psDoctor.setString(3, doctor.getQualification());
+            psDoctor.setInt(4, doctor.getExperience());
+            psDoctor.setString(5, doctor.getLicenseNumber());
+            psDoctor.setDouble(6, doctor.getConsultationFee());
+            psDoctor.setString(7, doctor.getRegistrationAuthority());
+            psDoctor.setString(8, doctor.getBio());
+            psDoctor.setString(9, doctor.getConsultationType());
+            psDoctor.setInt(10, doctor.getDoctorId());
+            psDoctor.executeUpdate();
+
+            // Update users table
+            psUser = con.prepareStatement(updateUserSql);
+            psUser.setString(1, doctor.getName());
+            psUser.setString(2, doctor.getPhone());
+            psUser.setInt(3, doctor.getUserId());
+            psUser.executeUpdate();
+
+            con.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackConnection(con);
+            return false;
+        } finally {
+            if (psUser != null) {
+                try { psUser.close(); } catch (SQLException ignored) {}
+            }
+            if (psDoctor != null) {
+                try { psDoctor.close(); } catch (SQLException ignored) {}
+            }
+            if (con != null) {
+                try { con.close(); } catch (SQLException ignored) {}
+            }
+        }
+    }
+
+    // GET DOCTOR DOCUMENTS
+    public List<DoctorDocument> getDoctorDocuments(int doctorId) {
+        List<DoctorDocument> list = new ArrayList<DoctorDocument>();
+        String sql = "SELECT document_id, doctor_id, document_type, file_name, file_path, verification_status, uploaded_at "
+                + "FROM doctor_documents WHERE doctor_id = ? ORDER BY document_id ASC";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DoctorDocument doc = new DoctorDocument();
+                doc.setDocumentId(rs.getInt("document_id"));
+                doc.setDoctorId(rs.getInt("doctor_id"));
+                doc.setDocumentType(rs.getString("document_type"));
+                doc.setFileName(rs.getString("file_name"));
+                doc.setFilePath(rs.getString("file_path"));
+                doc.setVerificationStatus(rs.getString("verification_status"));
+                doc.setUploadedAt(rs.getTimestamp("uploaded_at"));
+                list.add(doc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(con, ps, rs);
+        }
+        return list;
+    }
+
+    // GET DOCTOR DOCUMENT BY ID
+    public DoctorDocument getDoctorDocumentById(int documentId) {
+        String sql = "SELECT document_id, doctor_id, document_type, file_name, file_path, verification_status, uploaded_at "
+                + "FROM doctor_documents WHERE document_id = ?";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, documentId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                DoctorDocument doc = new DoctorDocument();
+                doc.setDocumentId(rs.getInt("document_id"));
+                doc.setDoctorId(rs.getInt("doctor_id"));
+                doc.setDocumentType(rs.getString("document_type"));
+                doc.setFileName(rs.getString("file_name"));
+                doc.setFilePath(rs.getString("file_path"));
+                doc.setVerificationStatus(rs.getString("verification_status"));
+                doc.setUploadedAt(rs.getTimestamp("uploaded_at"));
+                return doc;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(con, ps, rs);
+        }
+        return null;
+    }
+
+    // SAVE OR UPDATE DOCTOR DOCUMENT
+    public boolean saveOrUpdateDoctorDocument(DoctorDocument doc) {
+        String checkSql = "SELECT document_id FROM doctor_documents WHERE doctor_id = ? AND document_type = ?";
+        String updateSql = "UPDATE doctor_documents SET file_name = ?, file_path = ?, verification_status = 'PENDING', uploaded_at = CURRENT_TIMESTAMP WHERE doctor_id = ? AND document_type = ?";
+        String insertSql = "INSERT INTO doctor_documents (doctor_id, document_type, file_name, file_path, verification_status) VALUES (?, ?, ?, ?, 'PENDING')";
+
+        Connection con = null;
+        PreparedStatement psCheck = null;
+        PreparedStatement psAction = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            psCheck = con.prepareStatement(checkSql);
+            psCheck.setInt(1, doc.getDoctorId());
+            psCheck.setString(2, doc.getDocumentType());
+            rs = psCheck.executeQuery();
+
+            if (rs.next()) {
+                psAction = con.prepareStatement(updateSql);
+                psAction.setString(1, doc.getFileName());
+                psAction.setString(2, doc.getFilePath());
+                psAction.setInt(3, doc.getDoctorId());
+                psAction.setString(4, doc.getDocumentType());
+                psAction.executeUpdate();
+            } else {
+                psAction = con.prepareStatement(insertSql);
+                psAction.setInt(1, doc.getDoctorId());
+                psAction.setString(2, doc.getDocumentType());
+                psAction.setString(3, doc.getFileName());
+                psAction.setString(4, doc.getFilePath());
+                psAction.executeUpdate();
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (psAction != null) {
+                try { psAction.close(); } catch (SQLException ignored) {}
+            }
+            closeResources(con, psCheck, rs);
+        }
+    }
+
+    // HELPER TO CLOSE RESOURCES
+    private void closeResources(Connection con, PreparedStatement ps, ResultSet rs) {
+        if (rs != null) {
+            try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        if (ps != null) {
+            try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
         if (con != null) {
+            try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
 
+    // ROLLBACK
+    private void rollbackConnection(Connection con) {
+        if (con != null) {
             try {
-
                 con.rollback();
-
             } catch (SQLException e) {
-
                 e.printStackTrace();
             }
         }
