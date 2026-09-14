@@ -10,6 +10,7 @@ public class DoctorDocument {
     private String filePath;
 
     private String verificationStatus;
+    private java.sql.Timestamp uploadedAt;
 
     // CONSTRUCTOR
     public DoctorDocument() {
@@ -62,5 +63,13 @@ public class DoctorDocument {
 
     public void setVerificationStatus(String verificationStatus) {
         this.verificationStatus = verificationStatus;
+    }
+    // UPLOADED AT
+    public java.sql.Timestamp getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(java.sql.Timestamp uploadedAt) {
+        this.uploadedAt = uploadedAt;
     }
 }
