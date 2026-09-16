@@ -1,0 +1,382 @@
+/* ==========================================================================
+   MediCore Patient Module
+   Profile Styles
+   File: patient/css/profile.css
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. PROFILE HERO
+   ========================================================================== */
+
+.profile-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 24px;
+
+    margin-bottom: 24px;
+
+    background-color: var(--bg-surface);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-hero-left {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    min-width: 0;
+}
+
+
+/* ==========================================================================
+   2. PROFILE AVATAR
+   ========================================================================== */
+
+.profile-large-avatar {
+    width: 76px;
+    height: 76px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background-color: var(--primary-light);
+
+    color: var(--primary);
+
+    border: 4px solid #ffffff;
+
+    box-shadow: var(--shadow-md);
+
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.profile-identity {
+    min-width: 0;
+}
+
+.profile-identity h2 {
+    font-size: 1.4rem;
+
+    font-weight: 800;
+
+    color: var(--text-main);
+
+    line-height: 1.2;
+
+    margin-bottom: 4px;
+}
+
+.profile-identity p {
+    color: var(--text-muted);
+
+    font-size: 0.88rem;
+}
+
+
+/* ==========================================================================
+   3. PROFILE BADGES
+   ========================================================================== */
+
+.profile-badges {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 8px;
+}
+
+
+/* ==========================================================================
+   4. EMERGENCY CONTACT STATUS
+   ========================================================================== */
+
+.profile-emergency-status {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 3px;
+
+    text-align: right;
+
+    flex-shrink: 0;
+}
+
+.profile-emergency-status span {
+    font-size: 0.8rem;
+
+    color: var(--text-muted);
+}
+
+.profile-emergency-status strong {
+    font-size: 0.88rem;
+
+    font-weight: 700;
+
+    color: var(--accent-emerald);
+}
+
+
+/* ==========================================================================
+   5. PROFILE INFORMATION CARDS
+   ========================================================================== */
+
+.profile-information-card {
+    margin-bottom: 24px;
+}
+
+.profile-information-card:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================================================
+   6. PROFILE DETAILS GRID
+   ========================================================================== */
+
+.profile-details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+.profile-detail {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+}
+
+.profile-detail-label {
+    display: block;
+
+    font-size: 0.78rem;
+
+    font-weight: 600;
+
+    color: var(--text-muted);
+}
+
+.profile-detail strong {
+    color: var(--text-main);
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    line-height: 1.45;
+
+    word-break: break-word;
+}
+
+
+/* ==========================================================================
+   7. MEDICAL INFORMATION
+   ========================================================================== */
+
+.profile-medical-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+.profile-medical-item {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 16px;
+
+    background-color: var(--bg-surface-subtle);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-md);
+}
+
+.profile-medical-item p {
+    color: var(--text-body);
+
+    font-size: 0.88rem;
+
+    line-height: 1.55;
+}
+
+.profile-medical-danger {
+    color: var(--accent-rose) !important;
+
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   8. PROFILE FORM GRIDS
+   ========================================================================== */
+
+.form-grid-2 {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.form-grid-3 {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ==========================================================================
+   9. PROFILE FORM ACTIONS
+   ========================================================================== */
+
+.profile-form-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 24px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border-color);
+}
+
+
+/* ==========================================================================
+   10. PROFILE FORM STATES
+   ========================================================================== */
+
+.profile-field:disabled {
+    background-color: var(--bg-surface-subtle);
+
+    color: var(--text-body);
+
+    cursor: not-allowed;
+
+    opacity: 1;
+}
+
+.profile-field:not(:disabled) {
+    background-color: var(--bg-surface);
+}
+
+
+/* ==========================================================================
+   11. RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+
+    .profile-details-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid-3 {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .profile-hero {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .profile-emergency-status {
+        align-items: flex-start;
+
+        text-align: left;
+    }
+
+    .profile-details-grid,
+    .profile-medical-grid,
+    .form-grid-2,
+    .form-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .profile-hero {
+        padding: 18px;
+    }
+
+    .profile-hero-left {
+        align-items: flex-start;
+    }
+
+    .profile-large-avatar {
+        width: 60px;
+        height: 60px;
+
+        font-size: 1.35rem;
+    }
+
+    .profile-identity h2 {
+        font-size: 1.15rem;
+    }
+
+    .profile-form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .profile-form-actions .btn {
+        width: 100%;
+    }
+
+}

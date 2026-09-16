@@ -45,23 +45,23 @@
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-label">Today's Appointments</div>
-            <div class="stat-value"><%= (stats != null && stats.get("todayAppointments") != null) ? stats.get("todayAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("todayAppointments") != null) ? String.valueOf(stats.get("todayAppointments")) : "0" %></div>
         </div>
         <div class="stat-card warning">
             <div class="stat-label">Pending Requests</div>
-            <div class="stat-value"><%= (stats != null && stats.get("pendingAppointments") != null) ? stats.get("pendingAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("pendingAppointments") != null) ? String.valueOf(stats.get("pendingAppointments")) : "0" %></div>
         </div>
         <div class="stat-card accent">
             <div class="stat-label">Upcoming / Accepted</div>
-            <div class="stat-value"><%= (stats != null && stats.get("upcomingAppointments") != null) ? stats.get("upcomingAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("upcomingAppointments") != null) ? String.valueOf(stats.get("upcomingAppointments")) : "0" %></div>
         </div>
         <div class="stat-card">
             <div class="stat-label">Completed Consultations</div>
-            <div class="stat-value"><%= (stats != null && stats.get("completedConsultations") != null) ? stats.get("completedConsultations") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("completedConsultations") != null) ? String.valueOf(stats.get("completedConsultations")) : "0" %></div>
         </div>
         <div class="stat-card accent">
             <div class="stat-label">Total Patients</div>
-            <div class="stat-value"><%= (stats != null && stats.get("totalPatients") != null) ? stats.get("totalPatients") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("totalPatients") != null) ? String.valueOf(stats.get("totalPatients")) : "0" %></div>
         </div>
         <div class="stat-card danger">
             <div class="stat-label">Unread Notifications</div>

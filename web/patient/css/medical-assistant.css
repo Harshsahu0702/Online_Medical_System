@@ -1,0 +1,441 @@
+/* ==========================================================================
+   MediCore Patient Module
+   Medical Assistant Styles
+   File: patient/css/medical-assistant.css
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. MEDICAL ASSISTANT INTRO
+   ========================================================================== */
+
+.assistant-intro-card {
+    margin-bottom: 24px;
+
+    border: 2px solid #bae6fd;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f0f9ff 0%,
+            #ffffff 120px
+        );
+}
+
+.assistant-intro-card .card-body {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.assistant-intro-content {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    min-width: 0;
+}
+
+.assistant-intro-icon {
+    width: 56px;
+    height: 56px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: var(--radius-lg);
+
+    background-color: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.assistant-intro-content h2 {
+    color: var(--text-main);
+
+    font-size: 1.2rem;
+
+    font-weight: 800;
+
+    margin-bottom: 4px;
+}
+
+.assistant-intro-content p {
+    color: var(--text-muted);
+
+    font-size: 0.88rem;
+
+    max-width: 620px;
+}
+
+
+/* ==========================================================================
+   2. MEDICAL DISCLAIMER
+   ========================================================================== */
+
+.disclaimer-alert {
+    background-color: var(--accent-amber-bg);
+
+    border: 1px solid #fde68a;
+
+    border-radius: var(--radius-md);
+
+    padding: 14px 18px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    color: #92400e;
+
+    font-size: 0.88rem;
+
+    line-height: 1.55;
+
+    margin-bottom: 20px;
+}
+
+.disclaimer-alert .icon {
+    flex-shrink: 0;
+
+    margin-top: 1px;
+}
+
+.disclaimer-alert strong {
+    font-weight: 800;
+}
+
+.disclaimer-alert u {
+    font-weight: 800;
+}
+
+
+/* ==========================================================================
+   3. ASSISTANT CARD
+   ========================================================================== */
+
+.assistant-card {
+    border: 2px solid #bae6fd;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f0f9ff 0%,
+            #ffffff 120px
+        );
+}
+
+.assistant-card .card-title .icon {
+    color: var(--primary);
+}
+
+
+/* ==========================================================================
+   4. ASSISTANT INSTRUCTIONS
+   ========================================================================== */
+
+.assistant-instruction {
+    font-size: 0.88rem;
+
+    color: var(--text-muted);
+
+    margin-bottom: 12px;
+}
+
+
+/* ==========================================================================
+   5. SYMPTOM CHIPS
+   ========================================================================== */
+
+.symptom-tag-container {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 10px;
+
+    margin-bottom: 22px;
+}
+
+.symptom-chip {
+    padding: 8px 16px;
+
+    background-color: var(--bg-surface);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: var(--radius-pill);
+
+    font-weight: 600;
+
+    font-size: 0.85rem;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    color: var(--text-main);
+
+    transition: all var(--transition-fast);
+}
+
+.symptom-chip:hover {
+    border-color: var(--primary);
+
+    color: var(--primary);
+
+    background-color: var(--primary-light);
+}
+
+.symptom-chip.selected {
+    background-color: var(--primary);
+
+    color: #ffffff;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 2px 6px rgba(2, 132, 199, 0.2);
+}
+
+.symptom-chip:focus-visible {
+    outline: 2px solid var(--primary);
+
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   6. ASSISTANT FORM
+   ========================================================================== */
+
+.assistant-form-group {
+    margin-top: 20px;
+}
+
+.assistant-form-group + .assistant-form-group {
+    margin-top: 18px;
+}
+
+.assistant-generate-btn {
+    width: 100%;
+
+    margin-top: 20px;
+}
+
+
+/* ==========================================================================
+   7. SELECTED SYMPTOMS
+   ========================================================================== */
+
+.selected-symptoms-card {
+    margin-top: 24px;
+
+    border-left: 4px solid var(--primary);
+}
+
+.selected-symptoms-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.selected-symptom {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: var(--radius-pill);
+
+    background-color: var(--primary-light);
+
+    color: var(--primary-dark);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   8. ASSISTANT STEPS
+   ========================================================================== */
+
+.assistant-steps-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 24px;
+}
+
+.assistant-step-card {
+    padding: 24px;
+
+    text-align: center;
+}
+
+.assistant-step-number {
+    width: 38px;
+    height: 38px;
+
+    margin: 0 auto 12px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background-color: var(--primary-light);
+
+    color: var(--primary-dark);
+
+    font-size: 0.9rem;
+
+    font-weight: 800;
+}
+
+.assistant-step-card h3 {
+    color: var(--text-main);
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.assistant-step-card p {
+    color: var(--text-muted);
+
+    font-size: 0.82rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   9. EMERGENCY REMINDER
+   ========================================================================== */
+
+.assistant-emergency-card {
+    margin-top: 24px;
+
+    padding: 18px 20px;
+
+    border: 1px solid #fecaca;
+
+    border-radius: var(--radius-lg);
+
+    background-color: var(--accent-rose-bg);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.assistant-emergency-card strong {
+    display: block;
+
+    color: var(--text-main);
+
+    font-size: 0.9rem;
+
+    margin-bottom: 3px;
+}
+
+.assistant-emergency-card p {
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+}
+
+
+/* ==========================================================================
+   10. RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+
+    .assistant-steps-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .assistant-intro-card .card-body {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .assistant-intro-card .btn {
+        width: 100%;
+    }
+
+    .assistant-steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .assistant-emergency-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .assistant-emergency-card .btn {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .symptom-chip {
+        width: 100%;
+    }
+
+    .assistant-intro-content {
+        align-items: flex-start;
+    }
+
+    .assistant-intro-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+}
