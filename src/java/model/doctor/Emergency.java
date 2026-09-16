@@ -1,7 +1,9 @@
 package model.doctor;
+
+import dao.emergency.EmergencyDAO;
 public class Emergency {
     private int emergencyID;
-    private int patientID;
+    private Integer patientID;
     private String emergencyType;
     private String description;
     private String location;
@@ -20,7 +22,7 @@ public class Emergency {
         this.emergencyID = emergencyID;
     }
 
-    public void setPatientID(int patientID) {
+    public void setPatientID(Integer patientID) {
         this.patientID = patientID;
     }
 
@@ -60,7 +62,7 @@ public class Emergency {
         return emergencyID;
     }
 
-    public int getPatientID() {
+    public Integer getPatientID() {
         return patientID;
     }
 
@@ -94,5 +96,9 @@ public class Emergency {
 
     public String getResolvedAt() {
         return resolvedAt;
+    }
+    public int insert()
+    {
+        return EmergencyDAO.insertData(this);
     }
 }
