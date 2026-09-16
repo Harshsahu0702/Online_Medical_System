@@ -1,0 +1,155 @@
+/* ================================
+   Navigation Bar
+   ================================ */
+
+.navbar {
+    width: 100%;
+    height: 72px;
+
+    padding: 0 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid #e8ebf0;
+}
+
+
+/* ================================
+   Brand
+   ================================ */
+
+.navbar-brand a {
+    text-decoration: none;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #1f2937;
+}
+
+
+/* ================================
+   Navigation Menu
+   ================================ */
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+
+    gap: 32px;
+}
+
+.nav-link {
+    position: relative;
+
+    padding: 26px 0;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    color: #6b7280;
+
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #2563eb;
+}
+
+.nav-link.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 2px;
+
+    background-color: #2563eb;
+}
+
+
+/* ================================
+   Navbar Actions
+   ================================ */
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+}
+
+.logout-button {
+    padding: 9px 18px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #ffffff;
+    background-color: #2563eb;
+
+    border-radius: 6px;
+
+    transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #1d4ed8;
+}
+
+
+/* ================================
+   Responsive Navigation
+   ================================ */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 0 25px;
+    }
+
+    .navbar-menu {
+        gap: 20px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .navbar {
+        height: auto;
+        min-height: 72px;
+
+        flex-wrap: wrap;
+        gap: 15px;
+
+        padding: 15px 20px;
+    }
+
+    .navbar-menu {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 20px;
+    }
+
+    .nav-link {
+        padding: 10px 0;
+    }
+
+    .nav-link.active::after {
+        bottom: 2px;
+    }
+}
