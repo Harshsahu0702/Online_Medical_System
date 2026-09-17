@@ -155,6 +155,7 @@
                 let description = document.forms["emergency"]["description"].value.trim();
                 let location = document.forms["emergency"]["location"].value.trim(); 
                 let contact = document.forms["emergency"]["contact"].value.trim();
+                let severity = document.forms["emergency"]["severity"].value.trim();
                 if(type==null || type=="")
                 {
                     alert("please select emergency type");
@@ -163,6 +164,11 @@
                 if(description==null || description=="")
                 {
                     alert("please enter an emergency description");
+                    return false;
+                }
+                if(severity==null || severity=="")
+                {
+                    alert("please select emergency severity");
                     return false;
                 }
                 if(location==null || location=="")
@@ -192,7 +198,7 @@
                 Please provide the following information for an emergency
                 assistance to be arranged
             </p>
-            <form name="emergency" method="post" onsubmit="return validate()" action="emergency">
+            <form name="emergency" method="post" onsubmit="return validate()" action="../EmergencyServlet">
                 <div class="form-group">
                     <label for="type">Emergency Type</label>
                     <select name="type" id="type">
@@ -209,6 +215,15 @@
                     <label for="description">Emergency Description</label>
                     <textarea name="description" id="description" rows="5" 
                         placeholder="Briefly describe the emergency..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="severity">Severity</label>
+                    <select name="severity" id="severity">
+                        <option value="">Select Severity</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>

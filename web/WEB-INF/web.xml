@@ -13,6 +13,17 @@
         <servlet-class>PatientServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>emergency</servlet-name>
+        <servlet-class>controller.emergency.emergency</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Emergency</servlet-name>
+        <servlet-class>controller.emergency.Emergency</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmergencyServlet</servlet-name>
+        <servlet-class>controller.emergency.EmergencyServlet</servlet-class>
+    </servlet>
         <servlet-name>DoctorLoginServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorLoginServlet</servlet-class>
     </servlet>
@@ -74,6 +85,16 @@
         <url-pattern>/PatientServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>emergency</servlet-name>
+        <url-pattern>/emergency</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Emergency</servlet-name>
+        <url-pattern>/Emergency</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmergencyServlet</servlet-name>
+        <url-pattern>/EmergencyServlet</url-pattern>
         <servlet-name>DoctorLoginServlet</servlet-name>
         <url-pattern>/DoctorLoginServlet</url-pattern>
     </servlet-mapping>
