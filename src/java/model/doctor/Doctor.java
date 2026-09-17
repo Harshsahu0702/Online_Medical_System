@@ -23,6 +23,11 @@ public class Doctor {
     private String email;
     private String password;
     private String phone;
+    private String status;
+
+    // JOINED NAMES FOR DISPLAY
+    private String specializationName;
+    private String clinicName;
 
 
     public Doctor() {
@@ -156,5 +161,32 @@ public class Doctor {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    // STATUS
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // SPECIALIZATION NAME
+    public String getSpecializationName() {
+        return specializationName;
+    }
+
+    public void setSpecializationName(String specializationName) {
+        this.specializationName = specializationName;
+    }
+
+    // CLINIC NAME
+    public String getClinicName() {
+        return clinicName;
+    }
+
+    public void setClinicName(String clinicName) {
+        this.clinicName = clinicName;
     }
 }

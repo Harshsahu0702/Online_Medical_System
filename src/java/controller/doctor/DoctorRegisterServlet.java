@@ -383,6 +383,20 @@ public class DoctorRegisterServlet extends HttpServlet {
         part.write(
                 savedFile.getAbsolutePath()
         );
+
+        // BACKUP TO PERSISTENT STORAGE
+        try {
+            File persistentDir1 = new File("C:/Online_Medical_Uploads/doctors");
+            if (!persistentDir1.exists()) persistentDir1.mkdirs();
+            java.nio.file.Files.copy(savedFile.toPath(), new File(persistentDir1, newFileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+            String userHome = System.getProperty("user.home");
+            File persistentDir2 = new File(userHome + "/OneDrive/Desktop/Online_Medical_System/web/uploads/doctors");
+            if (persistentDir2.exists()) {
+                java.nio.file.Files.copy(savedFile.toPath(), new File(persistentDir2, newFileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (Exception ignored) {}
+
         // CREATE DOCUMENT MODEL
         DoctorDocument document =
                 new DoctorDocument();
