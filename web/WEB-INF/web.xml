@@ -5,13 +5,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
-    <!-- Existing Doctor Servlet -->
+    <!-- ==================== BASIC SERVLETS ==================== -->
+
     <servlet>
         <servlet-name>DoctorServlet</servlet-name>
         <servlet-class>controller.DoctorRegistrationServlet</servlet-class>
     </servlet>
 
-    <!-- Doctor Module Servlets -->
     <servlet>
         <servlet-name>DoctorRegisterServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorRegisterServlet</servlet-class>
@@ -21,6 +21,27 @@
         <servlet-name>PatientServlet</servlet-name>
         <servlet-class>PatientServlet</servlet-class>
     </servlet>
+
+
+    <!-- ==================== EMERGENCY SERVLETS ==================== -->
+
+    <servlet>
+        <servlet-name>emergency</servlet-name>
+        <servlet-class>controller.emergency.emergency</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Emergency</servlet-name>
+        <servlet-class>controller.emergency.Emergency</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EmergencyServlet</servlet-name>
+        <servlet-class>controller.emergency.EmergencyServlet</servlet-class>
+    </servlet>
+
+
+    <!-- ==================== DOCTOR SERVLETS ==================== -->
 
     <servlet>
         <servlet-name>DoctorLoginServlet</servlet-name>
@@ -82,7 +103,9 @@
         <servlet-class>controller.doctor.DoctorDocumentUploadServlet</servlet-class>
     </servlet>
 
-    <!-- Patient Module Servlets -->
+
+    <!-- ==================== PATIENT SERVLETS ==================== -->
+
     <servlet>
         <servlet-name>Signup</servlet-name>
         <servlet-class>controller.patient.Signup</servlet-class>
@@ -103,24 +126,8 @@
         <servlet-class>patient.controller.DashboardController</servlet-class>
     </servlet>
 
-    <!-- Emergency Module Servlets -->
-    <servlet>
-        <servlet-name>emergency</servlet-name>
-        <servlet-class>controller.emergency.emergency</servlet-class>
-    </servlet>
 
-    <servlet>
-        <servlet-name>Emergency</servlet-name>
-        <servlet-class>controller.emergency.Emergency</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>EmergencyServlet</servlet-name>
-        <servlet-class>controller.emergency.EmergencyServlet</servlet-class>
-    </servlet>
-
-
-    <!-- Servlet Mappings -->
+    <!-- ==================== BASIC SERVLET MAPPINGS ==================== -->
 
     <servlet-mapping>
         <servlet-name>DoctorServlet</servlet-name>
@@ -136,6 +143,27 @@
         <servlet-name>PatientServlet</servlet-name>
         <url-pattern>/PatientServlet</url-pattern>
     </servlet-mapping>
+
+
+    <!-- ==================== EMERGENCY MAPPINGS ==================== -->
+
+    <servlet-mapping>
+        <servlet-name>emergency</servlet-name>
+        <url-pattern>/emergency</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Emergency</servlet-name>
+        <url-pattern>/Emergency</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EmergencyServlet</servlet-name>
+        <url-pattern>/EmergencyServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ==================== DOCTOR MAPPINGS ==================== -->
 
     <servlet-mapping>
         <servlet-name>DoctorLoginServlet</servlet-name>
@@ -197,7 +225,9 @@
         <url-pattern>/DoctorDocumentUploadServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Patient Module Mappings -->
+
+    <!-- ==================== PATIENT MAPPINGS ==================== -->
+
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -218,27 +248,11 @@
         <url-pattern>/DashboardController</url-pattern>
     </servlet-mapping>
 
-    <!-- Emergency Module Mappings -->
-    <servlet-mapping>
-        <servlet-name>emergency</servlet-name>
-        <url-pattern>/emergency</url-pattern>
-    </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>Emergency</servlet-name>
-        <url-pattern>/Emergency</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>EmergencyServlet</servlet-name>
-        <url-pattern>/EmergencyServlet</url-pattern>
-    </servlet-mapping>
-
+    <!-- ==================== SESSION CONFIG ==================== -->
 
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 
 </web-app>

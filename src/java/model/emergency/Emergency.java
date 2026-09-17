@@ -1,4 +1,4 @@
-package model.doctor;
+package model.emergency;
 
 import dao.emergency.EmergencyDAO;
 public class Emergency {
