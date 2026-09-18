@@ -1,169 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app version="3.1"
-         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <!-- Existing Doctor Servlet -->
     <servlet>
         <servlet-name>DoctorServlet</servlet-name>
         <servlet-class>controller.DoctorRegistrationServlet</servlet-class>
     </servlet>
-
     <!-- Doctor Module Servlets -->
     <servlet>
         <servlet-name>DoctorRegisterServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorRegisterServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>PatientServlet</servlet-name>
         <servlet-class>PatientServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorLoginServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorLoginServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorLogoutServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorLogoutServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorDashboardServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorDashboardServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorProfileServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorProfileServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorAvailabilityServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorAvailabilityServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorAppointmentServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorAppointmentServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorPatientServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorPatientServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorConsultationServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorConsultationServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorPrescriptionServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorPrescriptionServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorNotificationServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorNotificationServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>ViewDocumentServlet</servlet-name>
         <servlet-class>controller.doctor.ViewDocumentServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>DoctorDocumentUploadServlet</servlet-name>
         <servlet-class>controller.doctor.DoctorDocumentUploadServlet</servlet-class>
     </servlet>
-
     <!-- Servlet Mappings -->
-
+    <servlet>
+        <servlet-name>Signup</servlet-name>
+        <servlet-class>controller.patient.Signup</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignupController</servlet-name>
+        <servlet-class>patient.controller.SignupController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>patient.controller.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>patient.controller.DashboardController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoctorServlet</servlet-name>
         <url-pattern>/DoctorServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorRegisterServlet</servlet-name>
         <url-pattern>/DoctorRegisterServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>PatientServlet</servlet-name>
         <url-pattern>/PatientServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorLoginServlet</servlet-name>
         <url-pattern>/DoctorLoginServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorLogoutServlet</servlet-name>
         <url-pattern>/DoctorLogoutServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorDashboardServlet</servlet-name>
         <url-pattern>/DoctorDashboardServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorProfileServlet</servlet-name>
         <url-pattern>/DoctorProfileServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorAvailabilityServlet</servlet-name>
         <url-pattern>/DoctorAvailabilityServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorAppointmentServlet</servlet-name>
         <url-pattern>/DoctorAppointmentServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorPatientServlet</servlet-name>
         <url-pattern>/DoctorPatientServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorConsultationServlet</servlet-name>
         <url-pattern>/DoctorConsultationServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorPrescriptionServlet</servlet-name>
         <url-pattern>/DoctorPrescriptionServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorNotificationServlet</servlet-name>
         <url-pattern>/DoctorNotificationServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ViewDocumentServlet</servlet-name>
         <url-pattern>/ViewDocumentServlet</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DoctorDocumentUploadServlet</servlet-name>
         <url-pattern>/DoctorDocumentUploadServlet</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>Signup</servlet-name>
+        <url-pattern>/Signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupController</servlet-name>
+        <url-pattern>/SignupController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/DashboardController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-
 </web-app>

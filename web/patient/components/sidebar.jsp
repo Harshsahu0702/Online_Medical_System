@@ -3,7 +3,7 @@
     <!-- Sidebar Header -->
     <div class="sidebar-header">
 
-        <a href="${pageContext.request.contextPath}/patient/dashboard.jsp"
+        <a href="${pageContext.request.contextPath}/patient/dashboard"
            class="sidebar-brand">
 
             <span class="sidebar-brand-icon">
@@ -29,7 +29,7 @@
 
             <p class="sidebar-section-title">Main</p>
 
-            <a href="${pageContext.request.contextPath}/patient/dashboard.jsp"
+            <a href="${pageContext.request.contextPath}/patient/dashboard"
                class="sidebar-nav-item"
                data-page="dashboard">
 
@@ -45,7 +45,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/profile/profile.jsp"
+            <a href="${pageContext.request.contextPath}/patient/profile"
                class="sidebar-nav-item"
                data-page="profile">
 
@@ -66,7 +66,7 @@
 
             <p class="sidebar-section-title">Healthcare</p>
 
-            <a href="${pageContext.request.contextPath}/patient/medical-assistant/medical-assistant.jsp"
+            <a href="${pageContext.request.contextPath}/patient/medical-assistant"
                class="sidebar-nav-item"
                data-page="medical-assistant">
 
@@ -98,7 +98,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/appointments/appointments.jsp"
+            <a href="${pageContext.request.contextPath}/patient/appointments"
                class="sidebar-nav-item"
                data-page="appointments">
 
@@ -114,7 +114,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/prescriptions/prescriptions.jsp"
+            <a href="${pageContext.request.contextPath}/patient/prescriptions"
                class="sidebar-nav-item"
                data-page="prescriptions">
 
@@ -137,7 +137,7 @@
 
             <p class="sidebar-section-title">Pharmacy</p>
 
-            <a href="${pageContext.request.contextPath}/patient/medicines/medicines.jsp"
+            <a href="${pageContext.request.contextPath}/patient/medicines"
                class="sidebar-nav-item"
                data-page="medicines">
 
@@ -175,7 +175,7 @@
 
             <p class="sidebar-section-title">Support</p>
 
-            <a href="${pageContext.request.contextPath}/patient/notifications/notifications.jsp"
+            <a href="${pageContext.request.contextPath}/patient/notifications"
                class="sidebar-nav-item"
                data-page="notifications">
 
@@ -195,7 +195,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/emergency/emergency.jsp"
+            <a href="${pageContext.request.contextPath}/patient/emergency"
                class="sidebar-nav-item sidebar-emergency-item"
                data-page="emergency">
 
