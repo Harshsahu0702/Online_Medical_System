@@ -12,11 +12,43 @@ public class Patient {
     String contact;
     String dob;
     String bloodGroup;
-    String patientId = UUID.randomUUID().toString();
+    String patientId;
+    String emergencyName;
+    String emergencyRelation;
+    String emergencyContact;
 
+    public String getEmergencyName() {
+        return emergencyName;
+    }
+
+    public void setEmergencyName(String emergencyName) {
+        this.emergencyName = emergencyName;
+    }
+
+    public String getEmergencyRelation() {
+        return emergencyRelation;
+    }
+
+    public void setEmergencyRelation(String emergencyRelation) {
+        this.emergencyRelation = emergencyRelation;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
+    
     public String getPatientId() {
         return patientId;
     }
+    
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -61,7 +93,7 @@ public class Patient {
         return contact;
     }
 
-    public void setContact(String Contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 
@@ -83,14 +115,15 @@ public class Patient {
     public String patientSignup(){
         Connection con = null;
         Statement stmt = null;
+        patientId = UUID.randomUUID().toString();
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
             stmt = con.createStatement();
             
-            String q = "INSERT INTO patients (patient_id, email, password, name, gender, address, contact, blood_group, dob) "
-                        + "VALUES ('"+patientId+"','"+email+"','"+password+"','"+name+"','"+gender+"','"+address+"','"+contact+"','"+bloodGroup+"','"+dob+"')";
-            
+            String q = "INSERT INTO patients (patient_id, email, password, name, gender, address, contact, blood_group, dob, emergency_name, emergency_relation, emergency_contact) "
+                        + "VALUES ('"+patientId+"','"+email+"','"+password+"','"+name+"','"+gender+"','"+address+"','"+contact+"','"+bloodGroup+"','"+dob+"','"+emergencyName+"','"+emergencyRelation+"','"+emergencyContact+"')";
+            System.out.println(q);
             int x = stmt.executeUpdate(q);
             if(x>0){
                 return "success";
@@ -98,10 +131,11 @@ public class Patient {
                 return "failed";
             }
         }catch(SQLIntegrityConstraintViolationException e) {
+            System.out.println("SQLIntegrityConstraintViolationException in patientSignup: " + e.getMessage());
             return "email_exists";
-        
         }catch(Exception e){
-            System.out.println(e);
+            System.out.println("Exception in patientSignup: " + e.getMessage());
+            e.printStackTrace();
             return "error";
         }finally {
             try {
@@ -160,6 +194,7 @@ public class Patient {
             }
         }
     }
+    
     public Patient getPatientById(String patientId){
         Connection con = null;
         Statement stmt = null;
@@ -205,6 +240,81 @@ public class Patient {
             } catch (Exception e) {
                 System.out.println(e);
             }
+        }
+    }
+    
+    public Patient getPatientProfileById(String patientId){
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            stmt = con.createStatement();
+            
+            String q = "select * from patients where patient_id='"+patientId+"'";
+            
+            rs = stmt.executeQuery(q);
+            if(rs.next()){
+                Patient patient = new Patient();
+
+                patient.patientId = rs.getString("patient_id");
+                patient.email = rs.getString("email");
+                patient.name = rs.getString("name");
+                patient.gender = rs.getString("gender");
+                patient.contact = rs.getString("contact");
+                patient.address = rs.getString("address");
+                patient.dob = rs.getString("dob");
+                patient.bloodGroup = rs.getString("blood_group");
+                patient.emergencyName = rs.getString("emergency_name");
+                patient.emergencyRelation = rs.getString("emergency_relation");
+                patient.emergencyContact = rs.getString("emergency_contact");
+
+                return patient;
+            }else{
+                return null;
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+    
+    public String updatePatient(String patientId){
+        Connection con = null;
+        Statement stmt = null;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            stmt = con.createStatement(); 
+            
+            String q = "update patients "
+                    + "SET name='"+name+"', dob='"+dob+"', gender='"+gender+"', contact='"+contact+"', email='"+email+"', address='"+address+"', emergency_name='"+emergencyName+"', emergency_relation='"+emergencyRelation+"', emergency_contact='"+emergencyContact+"'"
+                    + " where patient_id='"+patientId+"'";          
+                    
+            int x = stmt.executeUpdate(q);
+            if(x>0){
+                return "success";
+            }else{
+                return "failure";
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            return "error";
         }
     }
 }

@@ -126,8 +126,23 @@
         <servlet-class>patient.controller.DashboardController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>patient.controller.ProfileController</servlet-class>
+    </servlet>
 
-    <!-- ==================== BASIC SERVLET MAPPINGS ==================== -->
+    <servlet>
+        <servlet-name>EditProfileController</servlet-name>
+        <servlet-class>patient.controller.EditProfileController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>MedicalAssistantController</servlet-name>
+        <servlet-class>patient.controller.MedicalAssistantController</servlet-class>
+    </servlet>
+
+
+    <!-- ==================== BASIC MAPPINGS ==================== -->
 
     <servlet-mapping>
         <servlet-name>DoctorServlet</servlet-name>
@@ -246,6 +261,21 @@
     <servlet-mapping>
         <servlet-name>DashboardController</servlet-name>
         <url-pattern>/DashboardController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/ProfileController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditProfileController</servlet-name>
+        <url-pattern>/EditProfileController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>MedicalAssistantController</servlet-name>
+        <url-pattern>/MedicalAssistantController</url-pattern>
     </servlet-mapping>
 
 

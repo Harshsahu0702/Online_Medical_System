@@ -1,13 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@page import="patient.model.Patient" %>
 <%
     request.setAttribute("pageTitle", "Patient Profile");
-    request.setAttribute(
-        "pageDescription",
-        "Manage your personal details, emergency contacts, and medical history."
-    );
+    request.setAttribute("pageDescription","Manage your personal details, emergency contacts, and medical history.");
 %>
-
+<%
+    Patient patient = (Patient) request.getAttribute("patient");
+    String name = patient.getName();
+    String email = patient.getEmail();
+    String gender = patient.getGender();
+    String address = patient.getAddress();
+    String dob = patient.getDob();
+    String contact = patient.getContact();
+    String bloodGroup = patient.getBloodGroup();
+    String emergencyName = patient.getEmergencyName();
+    String emergencyRelation = patient.getEmergencyRelation();
+    String emergencyContact = patient.getEmergencyContact();
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,25 +77,25 @@
                     <div class="profile-identity">
 
                         <h2 id="displayProfileName">
-                            Eleanor Vance
+                            <%= name %>
                         </h2>
 
-                        <p>
+<!--                        <p>
                             Patient ID: #MED-88421
                             <span aria-hidden="true">•</span>
                             Registered Since Jan 2024
-                        </p>
+                        </p>-->
 
 
                         <div class="profile-badges">
 
                             <span class="badge badge-info">
-                                Blood Type: O+
+                                Blood Group: <%= bloodGroup %>
                             </span>
 
-                            <span class="badge badge-success">
+<!--                            <span class="badge badge-success">
                                 Account Verified
-                            </span>
+                            </span>-->
 
                         </div>
 
@@ -124,7 +133,7 @@
 
 
                     <a
-                        href="${pageContext.request.contextPath}/patient/profile/edit-profile.jsp"
+                        href="${pageContext.request.contextPath}/patient/profile/edit"
                         class="btn btn-primary btn-sm">
 
                         Edit Profile
@@ -146,7 +155,7 @@
                             </span>
 
                             <strong>
-                                Eleanor Vance
+                                <%= name %>
                             </strong>
 
                         </div>
@@ -159,7 +168,7 @@
                             </span>
 
                             <strong>
-                                June 14, 1992
+                                <%= dob %>
                             </strong>
 
                         </div>
@@ -172,7 +181,7 @@
                             </span>
 
                             <strong>
-                                Female
+                                <%= gender %>
                             </strong>
 
                         </div>
@@ -185,7 +194,7 @@
                             </span>
 
                             <strong>
-                                +1 (555) 123-4567
+                                <%= contact %>
                             </strong>
 
                         </div>
@@ -198,7 +207,7 @@
                             </span>
 
                             <strong>
-                                eleanor.vance@example.com
+                                <%= email %>
                             </strong>
 
                         </div>
@@ -211,7 +220,7 @@
                             </span>
 
                             <strong>
-                                245 Oak Avenue
+                                <%= address %>
                             </strong>
 
                         </div>
@@ -251,7 +260,7 @@
                             </span>
 
                             <strong>
-                                Michael Vance
+                                <%= emergencyName %>
                             </strong>
 
                         </div>
@@ -264,7 +273,7 @@
                             </span>
 
                             <strong>
-                                Spouse
+                                <%= emergencyRelation %>
                             </strong>
 
                         </div>
@@ -277,7 +286,7 @@
                             </span>
 
                             <strong>
-                                +1 (555) 998-1122
+                                <%= emergencyContact %>
                             </strong>
 
                         </div>

@@ -66,8 +66,21 @@
                         </select>
                     </td>
                 </tr>
+                <td><br>Add Your Emergency Contact</td>
                 <tr>
-                    <td><input type="Submit" value="Submit" ></td>
+                    <td>Name :</td>
+                    <td><input type="text" name="emergencyName"></td>
+                </tr>
+                <tr>
+                    <td>Relation :</td>
+                    <td><input type="text" name="emergencyRelation"></td>
+                </tr>
+                <tr>
+                    <td>Contact :</td>
+                    <td><input type="text" name="emergencyContact"></td>
+                </tr>
+                <tr>
+                    <td><br><input type="Submit" value="Submit" ></td>
                 </tr>
             </table>
         </form>

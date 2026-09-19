@@ -6,7 +6,7 @@
         <nav class="patient-breadcrumb"
              aria-label="Breadcrumb">
 
-            <a href="${pageContext.request.contextPath}/patient/dashboard.jsp">
+            <a href="${pageContext.request.contextPath}/patient/dashboard">
                 Home
             </a>
 
