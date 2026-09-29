@@ -141,6 +141,11 @@
         <servlet-class>patient.controller.MedicalAssistantController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>FindDoctorController</servlet-name>
+        <servlet-class>patient.controller.FindDoctorController</servlet-class>
+    </servlet>
+
 
     <!-- ==================== BASIC MAPPINGS ==================== -->
 
@@ -276,6 +281,11 @@
     <servlet-mapping>
         <servlet-name>MedicalAssistantController</servlet-name>
         <url-pattern>/MedicalAssistantController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FindDoctorController</servlet-name>
+        <url-pattern>/FindDoctorController</url-pattern>
     </servlet-mapping>
 
 

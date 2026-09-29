@@ -1,69 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
-<%
-    request.setAttribute("pageTitle", "Available Specialists");
-    request.setAttribute(
-        "pageDescription",
-        "Browse available doctors and review their consultation information."
-    );
-%>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>MediCore | Doctor List</title>
-
-    <link
-        rel="stylesheet"
-        href="${pageContext.request.contextPath}/patient/css/patient-common.css">
-
-    <link
-        rel="stylesheet"
-        href="${pageContext.request.contextPath}/patient/css/doctors.css">
-
-</head>
-
-
-<body>
-
-<div class="app-layout">
-
-    <!-- ================================================================
-         SIDEBAR
-         ================================================================ -->
-
-    <jsp:include page="../components/sidebar.jsp" />
-
-
-    <div class="app-main">
-
-        <!-- ============================================================
-             NAVBAR
-             ============================================================ -->
-
-        <jsp:include page="../components/navbar.jsp" />
-
-
-        <main class="page-container">
-
-            <!-- ========================================================
-                 PAGE HEADER
-                 ======================================================== -->
-
-            <jsp:include page="../components/patient-header.jsp" />
-
-
-            <!-- ========================================================
-                 RESULTS HEADER
-                 ======================================================== -->
 
             <section class="doctor-list-toolbar">
 
@@ -161,7 +95,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 4.9 (128)
+                                    ? 4.9 (128)
                                 </strong>
 
                             </div>
@@ -255,7 +189,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 4.8 (94)
+                                    ? 4.8 (94)
                                 </strong>
 
                             </div>
@@ -349,7 +283,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 5.0 (160)
+                                    ? 5.0 (160)
                                 </strong>
 
                             </div>
@@ -443,7 +377,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 4.7 (210)
+                                    ? 4.7 (210)
                                 </strong>
 
                             </div>
@@ -537,7 +471,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 4.9 (88)
+                                    ? 4.9 (88)
                                 </strong>
 
                             </div>
@@ -631,7 +565,7 @@
                                 </span>
 
                                 <strong class="doctor-rating">
-                                    ★ 4.8 (112)
+                                    ? 4.8 (112)
                                 </strong>
 
                             </div>
@@ -671,25 +605,5 @@
 
             </section>
 
-        </main>
 
 
-        <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
-
-    </div>
-
-</div>
-
-
-<script
-    src="${pageContext.request.contextPath}/patient/js/patient-common.js">
-</script>
-
-<script
-    src="${pageContext.request.contextPath}/patient/js/doctors.js">
-</script>
-
-</body>
-
-</html>
