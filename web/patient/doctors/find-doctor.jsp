@@ -22,7 +22,7 @@
     <title>MediCore | Find a Doctor</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/patient/css/patient-common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/patient/css/doctors.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/patient/css/doctors.css?v=3.0">
 </head>
 
 <body>
@@ -46,12 +46,13 @@
 
             <!-- DOCTOR SEARCH & FILTERS-->
 
+            <!-- DOCTOR SEARCH & FILTERS-->
+
             <section class="card doctor-filter-card">
                 <div class="card-body doctor-filter-body">
-                    <div class="doctor-filter-bar">
+                    <form action="${pageContext.request.contextPath}/patient/find-doctor" method="GET" class="doctor-filter-bar">
 
-                        <!-- Search -->
-
+                        <!-- Search Field -->
                         <div class="doctor-search-field">
                             <label class="form-label" for="docSearchTerm">
                                 Search Doctors
@@ -62,85 +63,81 @@
                                     <path d="m21 21-4.3-4.3"/>
                                 </svg>
 
-                                <input
-                                    type="search"
-                                    class="form-control doctor-search-input"
-                                    id="docSearchTerm"
-                                    placeholder="Search by doctor name, hospital, or sub-specialty..."
-                                    autocomplete="off">
+                                <input type="search" name="searchTerm" class="form-control doctor-search-input" id="docSearchTerm" placeholder="Search by doctor name or clinic..." value="${param.searchTerm}" autocomplete="off">
                             </div>
                         </div>
 
-                        <!-- Specialty -->
-
+                        <!-- Specialty Dropdown -->
                         <div class="doctor-filter-field">
-
                             <label class="form-label" for="docSpecialtyFilter">
                                 Specialty
                             </label>
                             
-                            <select class="form-control" id="docSpecialtyFilter">
-                                <option value="ALL">
-                                    All Specialties
-                                </option>
-                                <option value="Cardiology">
-                                    Cardiology
-                                </option>
-                                <option value="Dermatology">
-                                    Dermatology
-                                </option>
-                                <option value="Neurology">
-                                    Neurology
-                                </option>
-                                <option value="Pediatrics">
-                                    Pediatrics
-                                </option>
-                                <option value="General Medicine">
-                                    General Medicine
-                                </option>
-                                <option value="Orthopedics">
-                                    Orthopedics
-                                </option>
+                            <select class="form-control" name="specialty" id="docSpecialtyFilter">
+                                <option value="">All Specialties</option>
+                                <option value="General Physician" ${param.specialty == 'General Physician' ? 'selected' : ''}>General Physician</option>
+                                <option value="Cardiologist" ${param.specialty == 'Cardiologist' ? 'selected' : ''}>Cardiologist</option>
+                                <option value="Dermatologist" ${param.specialty == 'Dermatologist' ? 'selected' : ''}>Dermatologist</option>
+                                <option value="Neurologist" ${param.specialty == 'Neurologist' ? 'selected' : ''}>Neurologist</option>
+                                <option value="Orthopedic" ${param.specialty == 'Orthopedic' ? 'selected' : ''}>Orthopedic</option>
+                                <option value="Pediatrician" ${param.specialty == 'Pediatrician' ? 'selected' : ''}>Pediatrician</option>
+                                <option value="Gynecologist" ${param.specialty == 'Gynecologist' ? 'selected' : ''}>Gynecologist</option>
+                                <option value="Obstetrician" ${param.specialty == 'Obstetrician' ? 'selected' : ''}>Obstetrician</option>
+                                <option value="ENT Specialist" ${param.specialty == 'ENT Specialist' ? 'selected' : ''}>ENT Specialist</option>
+                                <option value="Ophthalmologist" ${param.specialty == 'Ophthalmologist' ? 'selected' : ''}>Ophthalmologist</option>
+                                <option value="Psychiatrist" ${param.specialty == 'Psychiatrist' ? 'selected' : ''}>Psychiatrist</option>
+                                <option value="Oncologist" ${param.specialty == 'Oncologist' ? 'selected' : ''}>Oncologist</option>
+                                <option value="Endocrinologist" ${param.specialty == 'Endocrinologist' ? 'selected' : ''}>Endocrinologist</option>
+                                <option value="Gastroenterologist" ${param.specialty == 'Gastroenterologist' ? 'selected' : ''}>Gastroenterologist</option>
+                                <option value="Pulmonologist" ${param.specialty == 'Pulmonologist' ? 'selected' : ''}>Pulmonologist</option>
+                                <option value="Nephrologist" ${param.specialty == 'Nephrologist' ? 'selected' : ''}>Nephrologist</option>
+                                <option value="Urologist" ${param.specialty == 'Urologist' ? 'selected' : ''}>Urologist</option>
+                                <option value="Dentist" ${param.specialty == 'Dentist' ? 'selected' : ''}>Dentist</option>
+                                <option value="Rheumatologist" ${param.specialty == 'Rheumatologist' ? 'selected' : ''}>Rheumatologist</option>
+                                <option value="General Surgeon" ${param.specialty == 'General Surgeon' ? 'selected' : ''}>General Surgeon</option>
                             </select>
                         </div>
 
-                        <!-- Availability -->
-
+                        <!-- Availability Dropdown -->
                         <div class="doctor-filter-field">
                             <label class="form-label" for="docAvailabilityFilter">
-                                Availability
+                                Availability Day
                             </label>
-                            <select class="form-control" id="docAvailabilityFilter">
-                                <option value="ALL">
-                                    Any Availability
-                                </option>
-                                <option value="Today">
-                                    Available Today
-                                </option>
-                                <option value="Tomorrow">
-                                    Available Tomorrow
-                                </option>
+                            <select class="form-control" name="day" id="docAvailabilityFilter">
+                                <option value="">Any Day</option>
+                                <option value="Monday" ${param.day == 'Monday' ? 'selected' : ''}>Monday</option>
+                                <option value="Tuesday" ${param.day == 'Tuesday' ? 'selected' : ''}>Tuesday</option>
+                                <option value="Wednesday" ${param.day == 'Wednesday' ? 'selected' : ''}>Wednesday</option>
+                                <option value="Thursday" ${param.day == 'Thursday' ? 'selected' : ''}>Thursday</option>
+                                <option value="Friday" ${param.day == 'Friday' ? 'selected' : ''}>Friday</option>
+                                <option value="Saturday" ${param.day == 'Saturday' ? 'selected' : ''}>Saturday</option>
+                                <option value="Sunday" ${param.day == 'Sunday' ? 'selected' : ''}>Sunday</option>
                             </select>
                         </div>
-                    </div>
+
+                        <!-- Search & Reset Actions -->
+                        <div class="doctor-filter-actions">
+                            <button type="submit" class="btn btn-primary doctor-submit-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.3-4.3"/>
+                                </svg>
+                                <span>Search</span>
+                            </button>
+                            <% if (request.getParameter("searchTerm") != null || request.getParameter("specialty") != null || request.getParameter("day") != null) { %>
+                                <a href="${pageContext.request.contextPath}/patient/find-doctor" class="btn btn-secondary doctor-reset-btn" title="Clear Filters">
+                                    Reset
+                                </a>
+                            <% } %>
+                        </div>
+                    </form>
                 </div>
             </section>
 
             <!-- DOCTOR RESULTS -->
 
             <section class="doctor-results-section" aria-label="Available doctors">
-
-                <div class="doctor-results-header">
-                    <div>
-<!--                        <h2 class="doctor-results-title">
-                            Available Specialists
-                        </h2>
-                        <p class="doctor-results-count" id="doctorResultsCount">
-                            Loading doctors...
-                        </p>-->
-                        <jsp:include page="/doctor-list.jsp" />
-                    </div>
-                </div>
+                <jsp:include page="doctor-list.jsp" />
             </section>
         </main>
 
@@ -153,8 +150,8 @@
     src="${pageContext.request.contextPath}/patient/js/patient-common.js">
 </script>
 
-<script
+<!--<script
     src="${pageContext.request.contextPath}/patient/js/doctors.js">
-</script>
+</script>-->
 </body>
 </html>

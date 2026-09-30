@@ -82,7 +82,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/doctors/find-doctor.jsp"
+            <a href="${pageContext.request.contextPath}/patient/find-doctor"
                class="sidebar-nav-item"
                data-page="doctors">
 
