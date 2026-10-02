@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="patient.model.Doctor" %>
+<%@ page import="patient.model.DoctorAvailability" %>
 
 <%
     request.setAttribute("pageTitle", "Doctor Details");
-    request.setAttribute(
-        "pageDescription",
-        "Review doctor information, consultation details, and availability."
-    );
+    request.setAttribute("pageDescription", "Review doctor information, consultation details, and availability.");
+    Doctor doctor = (Doctor) request.getAttribute("doctor");
 %>
 
 <!DOCTYPE html>
@@ -22,259 +22,240 @@
 
 <body>
 
-<div class="app-layout">
+    <div class="app-layout">
 
-    <jsp:include page="../components/sidebar.jsp" />
+        <jsp:include page="../components/sidebar.jsp" />
 
-    <div class="app-main">
+        <div class="app-main">
 
-        <jsp:include page="../components/navbar.jsp" />
+            <jsp:include page="../components/navbar.jsp" />
 
-        <main class="page-container">
+            <main class="page-container">
 
-            <jsp:include page="../components/patient-header.jsp" />
+                <jsp:include page="../components/patient-header.jsp" />
 
-            <div class="doctor-details-layout">
+                <% if (doctor == null) { %>
+                    <section class="card">
+                        <div class="card-body" style="padding: 40px; text-align: center;">
+                            <h3>Doctor Not Found</h3>
+                            <p>The requested doctor profile could not be retrieved.</p>
+                            <br>
+                            <a href="${pageContext.request.contextPath}/patient/find-doctor" class="btn btn-primary">Back to Doctors</a>
+                        </div>
+                    </section>
+                <% } else { %>
 
-                <section class="card doctor-profile-card">
+                <div class="doctor-details-layout">
 
-                    <div class="card-body">
+                    <section class="card doctor-profile-card">
 
-                        <div class="doctor-profile-header">
+                        <div class="card-body">
 
-                            <div class="doctor-profile-img">
-                                SJ
+                            <div class="doctor-profile-header">
+
+                                <div class="doctor-profile-img">
+                                    <%= doctor.getName() != null && !doctor.getName().trim().isEmpty() ? doctor.getName().trim().substring(0, 1).toUpperCase() : "D" %>
+                                </div>
+
+                                <div class="doctor-profile-info">
+
+                                    <h2>
+                                        <%= doctor.getName() %>
+                                    </h2>
+
+                                    <div class="doctor-spec">
+                                        <%= doctor.getSpecialization() %>
+                                    </div>
+
+                                    <div class="doctor-hospital">
+                                        <%= doctor.getClinicName() %>
+                                    </div>
+
+                                    <div class="doctor-rating">
+                                        ★ 4.9 (128 reviews)
+                                    </div>
+
+                                </div>
+
                             </div>
 
-                            <div class="doctor-profile-info">
+                            <div class="doctor-profile-meta">
 
-                                <h2>
-                                    Dr. Sarah Jenkins, MD
-                                </h2>
-
-                                <div class="doctor-spec">
-                                    Cardiology
+                                <div>
+                                    <span>Experience</span>
+                                    <strong><%= doctor.getExperience() %> Years</strong>
                                 </div>
 
-                                <div class="doctor-hospital">
-                                    Metro Heart Institute
+                                <div>
+                                    <span>Consultation Fee</span>
+                                    <strong>₹ <%= doctor.getConsultationFee() %></strong>
                                 </div>
 
-                                <div class="doctor-rating">
-                                    ★ 4.9 (128 reviews)
+                                <div>
+                                    <span>Consultation</span>
+                                    <strong><%= doctor.getConsultationType() %></strong>
                                 </div>
 
                             </div>
 
                         </div>
 
-                        <div class="doctor-profile-meta">
+                    </section>
 
-                            <div>
-                                <span>Experience</span>
-                                <strong>12 Years</strong>
-                            </div>
 
-                            <div>
-                                <span>Consultation Fee</span>
-                                <strong>$60</strong>
-                            </div>
+                    <section class="card">
 
-                            <div>
-                                <span>Consultation</span>
-                                <strong>In-person &amp; Video</strong>
+                        <div class="card-body">
+
+                            <h3 class="section-title">
+                                About the Doctor
+                            </h3>
+
+                            <p class="doctor-description">
+                                <%= doctor.getBio() != null && !doctor.getBio().trim().isEmpty() ? doctor.getBio() : "No bio available." %>
+                            </p>
+
+                        </div>
+
+                    </section>
+
+
+                    <section class="card">
+
+                        <div class="card-body">
+
+                            <h3 class="section-title">
+                                Qualification &amp; Specialization
+                            </h3>
+
+                            <div class="doctor-specialty-tags">
+
+                                <span class="badge">
+                                    <%= doctor.getQualification() %>
+                                </span>
+
+                                <span class="badge">
+                                    <%= doctor.getSpecialization() %>
+                                </span>
+
                             </div>
 
                         </div>
 
-                    </div>
-
-                </section>
+                    </section>
 
 
-                <section class="card">
+                    <section class="card">
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <h3 class="section-title">
-                            About the Doctor
-                        </h3>
+                            <h3 class="section-title">
+                                Availability
+                            </h3>
 
-                        <p class="doctor-description">
-                            Dr. Sarah Jenkins is a board-certified cardiologist
-                            with over 12 years of clinical experience. She
-                            specializes in preventive cardiology, hypertension,
-                            and cardiovascular health.
-                        </p>
+                            <div class="doctor-availability">
 
-                    </div>
+                                <% if (doctor.getAvailabilityList() != null && !doctor.getAvailabilityList().isEmpty()) { 
+                                    for (DoctorAvailability da : doctor.getAvailabilityList()) { %>
+                                    <div class="availability-day">
 
-                </section>
+                                        <div>
+                                            <strong><%= da.getDay() %></strong>
+                                            <span><%= da.getConsultationType() %></span>
+                                        </div>
 
+                                        <div class="availability-time">
+                                            <%= da.getStartTime() %> - <%= da.getEndTime() %>
+                                        </div>
 
-                <section class="card">
+                                    </div>
+                                <% } } else { %>
+                                    <p>No availability schedules listed.</p>
+                                <% } %>
 
-                    <div class="card-body">
-
-                        <h3 class="section-title">
-                            Areas of Expertise
-                        </h3>
-
-                        <div class="doctor-specialty-tags">
-
-                            <span class="badge">
-                                Preventive Cardiology
-                            </span>
-
-                            <span class="badge">
-                                Hypertension
-                            </span>
-
-                            <span class="badge">
-                                Heart Health
-                            </span>
-
-                            <span class="badge">
-                                Cardiovascular Disease
-                            </span>
+                            </div>
 
                         </div>
 
-                    </div>
-
-                </section>
+                    </section>
 
 
-                <section class="card">
+                    <section class="card">
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <h3 class="section-title">
-                            Availability
-                        </h3>
+                            <h3 class="section-title">
+                                Consultation Options
+                            </h3>
 
-                        <div class="doctor-availability">
+                            <div class="consultation-options">
 
-                            <div class="availability-day">
+                                <div class="consultation-option">
 
-                                <div>
-                                    <strong>Today</strong>
-                                    <span>Available</span>
+                                    <div>
+                                        <strong>In-person Visit</strong>
+                                        <span><%= doctor.getClinicName() %></span>
+                                    </div>
+
+                                    <strong>₹ <%= doctor.getConsultationFee() %></strong>
+
                                 </div>
 
-                                <div class="availability-time">
-                                    10:00 AM - 4:00 PM
-                                </div>
+                                <div class="consultation-option">
 
-                            </div>
+                                    <div>
+                                        <strong>Video Consultation</strong>
+                                        <span>Online appointment</span>
+                                    </div>
 
-                            <div class="availability-day">
+                                    <strong>₹ <%= doctor.getConsultationFee() %></strong>
 
-                                <div>
-                                    <strong>Tomorrow</strong>
-                                    <span>Available</span>
-                                </div>
-
-                                <div class="availability-time">
-                                    9:00 AM - 2:00 PM
-                                </div>
-
-                            </div>
-
-                            <div class="availability-day">
-
-                                <div>
-                                    <strong>Friday</strong>
-                                    <span>Available</span>
-                                </div>
-
-                                <div class="availability-time">
-                                    11:00 AM - 5:00 PM
                                 </div>
 
                             </div>
 
                         </div>
 
-                    </div>
-
-                </section>
+                    </section>
 
 
-                <section class="card">
+                    <section class="card doctor-booking-card">
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <h3 class="section-title">
-                            Consultation Options
-                        </h3>
+                            <h3 class="section-title">
+                                Book an Appointment
+                            </h3>
 
-                        <div class="consultation-options">
+                            <p>
+                                Choose a convenient date and consultation
+                                type to schedule your visit.
+                            </p>
 
-                            <div class="consultation-option">
-
-                                <div>
-                                    <strong>In-person Visit</strong>
-                                    <span>Metro Heart Institute</span>
-                                </div>
-
-                                <strong>$60</strong>
-
-                            </div>
-
-                            <div class="consultation-option">
-
-                                <div>
-                                    <strong>Video Consultation</strong>
-                                    <span>Online appointment</span>
-                                </div>
-
-                                <strong>$60</strong>
-
-                            </div>
+                            <a href="${pageContext.request.contextPath}/patient/find-doctor?searchTerm=<%= doctor.getName() %>&specialty=<%= doctor.getSpecialization() %>"
+                                class="btn btn-primary">
+                                Book Appointment
+                            </a>
 
                         </div>
 
-                    </div>
+                    </section>
 
-                </section>
+                </div>
 
+                <% } %>
 
-                <section class="card doctor-booking-card">
+            </main>
 
-                    <div class="card-body">
+            <jsp:include page="../components/footer.jsp" />
 
-                        <h3 class="section-title">
-                            Book an Appointment
-                        </h3>
-
-                        <p>
-                            Choose a convenient date and consultation
-                            type to schedule your visit.
-                        </p>
-
-                        <a
-                            href="${pageContext.request.contextPath}/patient/appointments/book-appointment.jsp?doctorId=1"
-                            class="btn btn-primary">
-                            Book Appointment
-                        </a>
-
-                    </div>
-
-                </section>
-
-            </div>
-
-        </main>
-
-        <jsp:include page="../components/footer.jsp" />
+        </div>
 
     </div>
 
-</div>
-
-<script src="${pageContext.request.contextPath}/patient/js/patient-common.js"></script>
-<script src="${pageContext.request.contextPath}/patient/js/doctors.js"></script>
+    <script src="${pageContext.request.contextPath}/patient/js/patient-common.js"></script>
+    <script src="${pageContext.request.contextPath}/patient/js/doctors.js"></script>
 
 </body>
+
 </html>

@@ -375,14 +375,17 @@
         grid-template-columns: 1fr 1fr;
         row-gap: 10px;
     }
+
     .slot-action {
         grid-column: 1 / -1;
     }
+
     .btn-slot-book {
         display: block;
         text-align: center;
         width: 100%;
     }
+
     .doctor-filter-bar {
         grid-template-columns: 1fr;
     }

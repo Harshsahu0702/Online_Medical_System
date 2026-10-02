@@ -46,10 +46,12 @@
     color: var(--primary-dark);
 }
 
+.appointments-list-container,
 .appointment-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin-top: 24px;
 }
 
 .appointment-card {
@@ -78,13 +80,13 @@
 }
 
 .appointment-doctor-avatar {
-    width: 56px;
-    height: 56px;
-    flex: 0 0 56px;
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 14px;
     background: var(--primary-light);
     color: var(--primary-dark);
     font-size: 17px;
@@ -100,6 +102,13 @@
     color: var(--text-main);
     font-size: 16px;
     font-weight: 700;
+}
+
+.appointment-reason {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.4;
 }
 
 .appointment-specialty {
@@ -146,10 +155,11 @@
     align-items: center;
     justify-content: center;
     width: fit-content;
-    padding: 5px 10px;
+    padding: 4px 12px;
     border-radius: var(--radius-pill);
     font-size: 12px;
     font-weight: 700;
+    text-transform: capitalize;
 }
 
 .appointment-status.confirmed {

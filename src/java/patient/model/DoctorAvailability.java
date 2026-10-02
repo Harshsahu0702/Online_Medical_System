@@ -71,6 +71,7 @@ public class DoctorAvailability {
 //    
     
     int availabilityId;
+    int doctorId;
     String day;
     String startTime;
     String endTime;
@@ -88,6 +89,14 @@ public class DoctorAvailability {
 
     public void setAvailabilityId(int availabilityId) {
         this.availabilityId = availabilityId;
+    }
+
+    public int getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
     public String getDay() {
@@ -186,6 +195,7 @@ public class DoctorAvailability {
             
             String q = "SELECT" +
                         "    da.availability_id AS availabilityId," +
+                        "    d.doctor_id AS doctorId," +
                         "    da.day_of_week AS day," +
                         "    da.start_time AS startTime," +
                         "    da.end_time AS endTime," +
@@ -232,6 +242,7 @@ public class DoctorAvailability {
 //                da.setConsultationType(rs.getString("consultation_type"));
 
                 da.setAvailabilityId(rs.getInt("availabilityId"));
+                da.setDoctorId(rs.getInt("doctorId"));
                 da.setDay(rs.getString("day"));
                 da.setStartTime(rs.getString("startTime"));
                 da.setEndTime(rs.getString("endTime"));

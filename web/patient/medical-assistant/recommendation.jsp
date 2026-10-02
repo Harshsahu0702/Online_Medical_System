@@ -199,7 +199,7 @@
 
 
                 <a
-                    href="${pageContext.request.contextPath}/patient/doctors/find-doctor.jsp"
+                    href="${pageContext.request.contextPath}/patient/find-doctor"
                     class="btn btn-primary">
 
                     Find a Specialist

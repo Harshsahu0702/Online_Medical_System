@@ -289,7 +289,7 @@ function renderRecommendation() {
         });
     }
 
-    const findDoctorUrl = contextPath + "/patient/doctors/find-doctor.jsp";
+    const findDoctorUrl = contextPath + "/patient/find-doctor";
 
     const html =
         '<div class="rec-result-container">' +

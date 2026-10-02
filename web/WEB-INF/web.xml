@@ -146,6 +146,31 @@
         <servlet-class>patient.controller.FindDoctorController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>AppointmentsController</servlet-name>
+        <servlet-class>patient.controller.AppointmentsController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BookAppointmentsController</servlet-name>
+        <servlet-class>patient.controller.BookAppointmentsController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PrecriptionController</servlet-name>
+        <servlet-class>patient.controller.PrecriptionController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AppointmentDetailController</servlet-name>
+        <servlet-class>patient.controller.AppointmentDetailController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DoctorDetailsController</servlet-name>
+        <servlet-class>patient.controller.DoctorDetailsController</servlet-class>
+    </servlet>
+
 
     <!-- ==================== BASIC MAPPINGS ==================== -->
 
@@ -286,6 +311,31 @@
     <servlet-mapping>
         <servlet-name>FindDoctorController</servlet-name>
         <url-pattern>/FindDoctorController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AppointmentsController</servlet-name>
+        <url-pattern>/AppointmentsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BookAppointmentsController</servlet-name>
+        <url-pattern>/BookAppointmentsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PrecriptionController</servlet-name>
+        <url-pattern>/PrecriptionController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AppointmentDetailController</servlet-name>
+        <url-pattern>/AppointmentDetailController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DoctorDetailsController</servlet-name>
+        <url-pattern>/DoctorDetailsController</url-pattern>
     </servlet-mapping>
 
 
