@@ -494,6 +494,11 @@
     font-weight: 700;
 }
 
+.order-status.pending {
+    background: #fef3c7;
+    color: #b45309;
+}
+
 .order-status.processing {
     background: var(--primary-light);
     color: var(--primary-dark);
