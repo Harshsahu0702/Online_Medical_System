@@ -98,7 +98,7 @@ public class Orders {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "SELECT o.order_id, o.patient_id, o.pharmacy_id, o.order_date, o.total_amount, o.order_status, o.delivery_address, p.name AS pharmacy_name, pat.name AS patient_name "
@@ -149,7 +149,7 @@ public class Orders {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "SELECT o.order_id, o.patient_id, o.pharmacy_id, o.order_date, o.total_amount, o.order_status, o.delivery_address, p.name AS pharmacy_name, pat.name AS patient_name "
@@ -192,7 +192,7 @@ public class Orders {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "UPDATE orders SET order_status = 'CANCELLED' WHERE order_id = " + orderId;

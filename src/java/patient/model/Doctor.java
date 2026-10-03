@@ -121,7 +121,7 @@ public class Doctor {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "SELECT d.doctor_id, u.name, u.email, u.phone, s.name AS specialization, c.clinic_name AS clinicName, "

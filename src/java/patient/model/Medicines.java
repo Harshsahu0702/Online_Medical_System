@@ -126,7 +126,7 @@ public class Medicines {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "select m.medicine_id, m.medicine_name, m.price, m.status, p.name"
@@ -174,7 +174,7 @@ public class Medicines {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "select p.name, m.pharmacy_id, m.medicine_name, m.generic_name, "

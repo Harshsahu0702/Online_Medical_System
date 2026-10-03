@@ -115,7 +115,7 @@ public class Emergency {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "SELECT e.emergency_id, e.patient_id, e.emergency_type, e.description, e.location, e.contact_number, e.severity, e.status, e.requested_at, e.resolved_at, p.name AS patient_name "
@@ -195,7 +195,7 @@ public class Emergency {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String q = "SELECT e.emergency_id, e.patient_id, e.emergency_type, e.description, e.location, e.contact_number, e.severity, e.status, e.requested_at, e.resolved_at, p.name AS patient_name "
@@ -258,7 +258,7 @@ public class Emergency {
         Statement stmt = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", "REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db", "avnadmin", System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
 
             String pId = em.getPatientId() != null ? em.getPatientId().trim() : "";

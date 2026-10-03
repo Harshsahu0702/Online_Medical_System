@@ -118,7 +118,7 @@ public class Patient {
         patientId = UUID.randomUUID().toString();
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin",System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "INSERT INTO patients (patient_id, email, password, name, gender, address, contact, blood_group, dob, emergency_name, emergency_relation, emergency_contact) "
@@ -156,7 +156,7 @@ public class Patient {
         ResultSet rs = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin",System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "select * from patients where email='"+email+"' and password='"+password+"'";
@@ -201,7 +201,7 @@ public class Patient {
         ResultSet rs = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin",System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "select * from patients where patient_id='"+patientId+"'";
@@ -249,7 +249,7 @@ public class Patient {
         ResultSet rs = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin",System.getenv("DB_PASSWORD"));
             stmt = con.createStatement();
             
             String q = "select * from patients where patient_id='"+patientId+"'";
@@ -299,7 +299,7 @@ public class Patient {
         Statement stmt = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin","REMOVED_DB_PASSWORD");
+            con = DriverManager.getConnection("jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db","avnadmin",System.getenv("DB_PASSWORD"));
             stmt = con.createStatement(); 
             
             String q = "update patients "
