@@ -1,8 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="patient.model.Medicines" %>
 
 <%
     request.setAttribute("pageTitle", "Medicine Details");
-    request.setAttribute("pageDescription", "View medicine information, usage details, and availability.");
+    request.setAttribute("pageDescription", "View medicine information and pharmacy availability.");
+
+    Medicines medicineDetail = (Medicines) request.getAttribute("medicineDetail");
+    if (medicineDetail == null) {
+        String idParam = request.getParameter("medicineId");
+        if (idParam != null && !idParam.trim().isEmpty()) {
+            try {
+                int medicineId = Integer.parseInt(idParam.trim());
+                Medicines mModel = new Medicines();
+                medicineDetail = mModel.getMedicineById(medicineId);
+            } catch (Exception e) {
+                // Ignore parse errors
+            }
+        }
+    }
 %>
 
 <!DOCTYPE html>
@@ -22,68 +37,106 @@
         <main class="page-container">
             <jsp:include page="../components/patient-header.jsp" />
 
-            <section class="card medicine-details-card">
-                <div class="card-body">
-                    <div class="medicine-details-layout">
-                        <div class="medicine-image">AM</div>
+            <% if (medicineDetail == null) { %>
+                <section class="card">
+                    <div class="card-body" style="padding: 40px; text-align: center;">
+                        <h3 class="section-title">Medicine Not Found</h3>
+                        <p style="color: var(--text-muted); margin: 10px 0 20px;">
+                            The requested medicine details could not be found.
+                        </p>
+                        <a href="${pageContext.request.contextPath}/patient/medicines" class="btn btn-primary">
+                            Back to Medicines
+                        </a>
+                    </div>
+                </section>
+            <% } else { 
+                String medName = medicineDetail.getMedicineName() != null ? medicineDetail.getMedicineName() : "Medicine";
+                String initials = "MED";
+                if (medName.trim().length() >= 2) {
+                    initials = medName.trim().substring(0, 2).toUpperCase();
+                }
+            %>
 
-                        <div class="medicine-details-content">
-                            <span class="badge">Cardiovascular</span>
-                            <h2 class="section-title">Amlodipine 5 mg</h2>
-                            <p class="medicine-manufacturer">MediCore Pharmaceuticals</p>
-
-                            <div class="medicine-price-section">
-                                <span class="medicine-price">$12.50</span>
-                                <span class="medicine-stock">In Stock</span>
-                            </div>
-
-                            <div class="medicine-description">
-                                <h3 class="section-title">Description</h3>
-                                <p>Amlodipine is commonly used to help manage high blood pressure and certain cardiovascular conditions.</p>
-                            </div>
-
-                            <div class="medicine-information">
-                                <div class="medicine-info-item">
-                                    <span class="info-label">Dosage Form</span>
-                                    <strong>Tablet</strong>
-                                </div>
-                                <div class="medicine-info-item">
-                                    <span class="info-label">Strength</span>
-                                    <strong>5 mg</strong>
-                                </div>
-                                <div class="medicine-info-item">
-                                    <span class="info-label">Pack Size</span>
-                                    <strong>30 Tablets</strong>
-                                </div>
-                            </div>
-
-                            <div class="medicine-purchase">
-                                <div class="form-group">
-                                    <label class="form-label" for="medicineQuantity">Quantity</label>
-                                    <input type="number" class="form-control" id="medicineQuantity" name="quantity" value="1" min="1" max="10">
-                                </div>
-                                <button type="button" class="btn btn-primary" id="addMedicineToCartBtn">Add to Cart</button>
+                <section class="card medicine-details-card">
+                    <div class="medicine-details-header">
+                        <div class="medicine-details-image" style="font-size: 28px; font-weight: 700;">
+                            <%= initials %>
+                        </div>
+                        <div style="flex: 1;">
+                            <% if (medicineDetail.getCategory() != null && !medicineDetail.getCategory().trim().isEmpty()) { %>
+                                <span class="badge" style="margin-bottom: 8px;"><%= medicineDetail.getCategory() %></span>
+                            <% } %>
+                            <h2 class="medicine-details-name"><%= medName %></h2>
+                            <% if (medicineDetail.getGenericName() != null && !medicineDetail.getGenericName().trim().isEmpty()) { %>
+                                <p class="medicine-details-generic">Generic Name: <%= medicineDetail.getGenericName() %></p>
+                            <% } %>
+                            <div style="margin-top: 8px;">
+                                <span style="font-size: 20px; font-weight: 700; color: var(--text-main);">
+                                    ₹ <%= medicineDetail.getPrice() != null ? medicineDetail.getPrice() : "0" %>
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="medicine-warning">
-                        <h3 class="section-title">Important Information</h3>
-                        <p>Use this medicine only as directed by your doctor or pharmacist. Check the prescription and product instructions before use.</p>
-                    </div>
+                    <div class="medicine-details-content">
+                        <div class="medicine-detail-section">
+                            <h3 class="medicine-detail-title">Information</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; background: var(--bg-surface-subtle); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color-subtle);">
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Medicine ID</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;">#<%= medicineDetail.getMedicineId() %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Pharmacy</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getPharmacyName() != null ? medicineDetail.getPharmacyName() : "N/A" %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Pharmacy ID</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getPharmacyId() %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Manufacturer</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getManufacturer() != null ? medicineDetail.getManufacturer() : "N/A" %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Stock Quantity</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getStock_quantity() %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Expiry Date</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getExpiryDate() != null ? medicineDetail.getExpiryDate() : "N/A" %></strong>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-light); font-size: 11px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px;">Status</span>
+                                    <strong style="color: var(--text-main); font-size: 14px;"><%= medicineDetail.getStatus() != null ? medicineDetail.getStatus() : "N/A" %></strong>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="medicine-details-actions">
-                        <a href="${pageContext.request.contextPath}/patient/medicines/medicines.jsp" class="btn btn-secondary">Back to Medicines</a>
-                        <a href="${pageContext.request.contextPath}/patient/medicines/cart.jsp" class="btn btn-primary">View Cart</a>
+                        <div class="medicine-detail-section">
+                            <h3 class="medicine-detail-title">Description</h3>
+                            <p class="medicine-detail-text">
+                                <%= (medicineDetail.getDescription() != null && !medicineDetail.getDescription().trim().isEmpty()) 
+                                    ? medicineDetail.getDescription() 
+                                    : "No description available." %>
+                            </p>
+                        </div>
+
+                        <div style="margin-top: 28px;">
+                            <a href="${pageContext.request.contextPath}/patient/medicines" class="btn btn-secondary">
+                                &larr; Back to Medicines
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+            <% } %>
+
         </main>
         <jsp:include page="../components/footer.jsp" />
     </div>
 </div>
 
 <script src="${pageContext.request.contextPath}/patient/js/patient-common.js"></script>
-<script src="${pageContext.request.contextPath}/patient/js/medicines.js"></script>
 </body>
 </html>

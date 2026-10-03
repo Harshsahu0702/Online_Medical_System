@@ -15,6 +15,35 @@
     align-items: end;
 }
 
+.medicine-filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.medicine-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 20px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.medicine-reset-btn {
+    height: 42px;
+    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
 .medicine-search-wrapper {
     position: relative;
 }
