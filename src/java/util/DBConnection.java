@@ -35,7 +35,7 @@ public class DBConnection {
 
         String url = (envUrl != null && !envUrl.trim().isEmpty()) ? envUrl : DEFAULT_CLOUD_URL;
         String user = (envUser != null && !envUser.trim().isEmpty()) ? envUser : DEFAULT_USER;
-        String password = (envPass != null && !envPass.trim().isEmpty()) ? envPass : getFallbackPassword();
+        String password = (envPass != null) ? envPass.trim() : "";
 
         try {
             return DriverManager.getConnection(url, user, password);
@@ -53,14 +53,6 @@ public class DBConnection {
                     throw new SQLException("Failed to connect to primary DB and local fallbacks: " + e.getMessage(), e);
                 }
             }
-        }
-    }
-
-    private static String getFallbackPassword() {
-        try {
-            return new String(java.util.Base64.getDecoder().decode("QVZOU19MR0tPc2dZMTRVWlkwUzh4NVV6"));
-        } catch (Exception e) {
-            return "";
         }
     }
 }

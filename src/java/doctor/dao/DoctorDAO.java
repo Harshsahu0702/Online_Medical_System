@@ -26,16 +26,9 @@ public class DoctorDAO {
     
 
     private Connection getConnection() throws SQLException, ClassNotFoundException {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String password = System.getenv("DB_PASSWORD");
-            if (password == null || password.trim().isEmpty()) {
-                try {
-                    password = new String(java.util.Base64.getDecoder().decode("QVZOU19MR0tPc2dZMTRVWlkwUzh4NVV6"));
-                } catch (Exception ignore) {
-                    password = "";
-                }
-            }
-            return DriverManager.getConnection(URL, USER, password);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String password = System.getenv("DB_PASSWORD");
+        return DriverManager.getConnection(URL, USER, password != null ? password.trim() : "");
     }
 
     // GET ALL SPECIALIZATIONS
