@@ -6,21 +6,28 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
+    <!-- ==================== WELCOME FILES ==================== -->
+    <welcome-file-list>
+        <welcome-file>MainLogin.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+
     <!-- ==================== BASIC SERVLETS ==================== -->
 
     <servlet>
-        <servlet-name>DoctorServlet</servlet-name>
-        <servlet-class>controller.DoctorRegistrationServlet</servlet-class>
+        <servlet-name>DoctorRegisterServlet</servlet-name>
+        <servlet-class>doctor.controller.DoctorRegisterServlet</servlet-class>
     </servlet>
 
     <servlet>
-        <servlet-name>DoctorRegisterServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorRegisterServlet</servlet-class>
+        <servlet-name>DoctorServlet</servlet-name>
+        <servlet-class>doctor.controller.DoctorRegisterServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>PatientServlet</servlet-name>
-        <servlet-class>PatientServlet</servlet-class>
+        <servlet-class>patient.controller.SignupController</servlet-class>
     </servlet>
 
 
@@ -28,17 +35,17 @@
 
     <servlet>
         <servlet-name>emergency</servlet-name>
-        <servlet-class>controller.emergency.emergency</servlet-class>
+        <servlet-class>emergency.controller.EmergencyServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>Emergency</servlet-name>
-        <servlet-class>controller.emergency.Emergency</servlet-class>
+        <servlet-class>emergency.controller.EmergencyServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>EmergencyServlet</servlet-name>
-        <servlet-class>controller.emergency.EmergencyServlet</servlet-class>
+        <servlet-class>emergency.controller.EmergencyServlet</servlet-class>
     </servlet>
 
 
@@ -46,63 +53,228 @@
 
     <servlet>
         <servlet-name>DoctorLoginServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorLoginServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorLoginServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorLogoutServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorLogoutServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorLogoutServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorDashboardServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorDashboardServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorDashboardServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorProfileServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorProfileServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorProfileServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorAvailabilityServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorAvailabilityServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorAvailabilityServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorAppointmentServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorAppointmentServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorAppointmentServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorPatientServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorPatientServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorPatientServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorConsultationServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorConsultationServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorConsultationServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorPrescriptionServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorPrescriptionServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorPrescriptionServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorNotificationServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorNotificationServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorNotificationServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>ViewDocumentServlet</servlet-name>
-        <servlet-class>controller.doctor.ViewDocumentServlet</servlet-class>
+        <servlet-class>doctor.controller.ViewDocumentServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>DoctorDocumentUploadServlet</servlet-name>
-        <servlet-class>controller.doctor.DoctorDocumentUploadServlet</servlet-class>
+        <servlet-class>doctor.controller.DoctorDocumentUploadServlet</servlet-class>
     </servlet>
+
+
+    <!-- ==================== PATIENT SERVLETS ==================== -->
+
+    <servlet>
+        <servlet-name>SignupController</servlet-name>
+        <servlet-class>patient.controller.SignupController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>patient.controller.LoginController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>patient.controller.DashboardController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>patient.controller.ProfileController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditProfileController</servlet-name>
+        <servlet-class>patient.controller.EditProfileController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>MedicalAssistantController</servlet-name>
+        <servlet-class>patient.controller.MedicalAssistantController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>FindDoctorController</servlet-name>
+        <servlet-class>patient.controller.FindDoctorController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AppointmentsController</servlet-name>
+        <servlet-class>patient.controller.AppointmentsController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BookSlotController</servlet-name>
+        <servlet-class>patient.controller.BookSlotController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PrecriptionController</servlet-name>
+        <servlet-class>patient.controller.PrecriptionController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AppointmentDetailController</servlet-name>
+        <servlet-class>patient.controller.AppointmentDetailController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DoctorDetailsController</servlet-name>
+        <servlet-class>patient.controller.DoctorDetailsController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PrescriptionDetailController</servlet-name>
+        <servlet-class>patient.controller.PrescriptionDetailController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PatientEmergencyController</servlet-name>
+        <servlet-class>patient.controller.EmergencyController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PatientEmergencyDetailController</servlet-name>
+        <servlet-class>patient.controller.EmergencyDetailController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PatientMedicinesController</servlet-name>
+        <servlet-class>patient.controller.MedicinesController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PatientMedicineDetailController</servlet-name>
+        <servlet-class>patient.controller.MedicineDetailController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PatientOrdersController</servlet-name>
+        <servlet-class>patient.controller.OrdersController</servlet-class>
+    </servlet>
+
+
+    <!-- ==================== PHARMACY SERVLETS (AMRIT MODULE) ==================== -->
+
+    <servlet>
+        <servlet-name>MedicineServlet</servlet-name>
+        <servlet-class>pharmacy.controller.MedicineServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>pharmacy.controller.OrderServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PharmacyServlet</servlet-name>
+        <servlet-class>pharmacy.controller.PharmacyServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PharmacyDashboardServlet</servlet-name>
+        <servlet-class>pharmacy.controller.PharmacyDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PharmacyLoginServlet</servlet-name>
+        <servlet-class>pharmacy.controller.PharmacyLoginServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PharmacyLogoutServlet</servlet-name>
+        <servlet-class>pharmacy.controller.PharmacyLogoutServlet</servlet-class>
+    </servlet>
+
+
+    <!-- ==================== ADMIN SERVLETS ==================== -->
+
+    <servlet>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <servlet-class>admin.controller.AdminLoginServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminLogoutServlet</servlet-name>
+        <servlet-class>admin.controller.AdminLogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>admin.controller.AdminDashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminDoctorManagementServlet</servlet-name>
+        <servlet-class>admin.controller.AdminDoctorManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminPatientManagementServlet</servlet-name>
+        <servlet-class>admin.controller.AdminPatientManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminPharmacyManagementServlet</servlet-name>
+        <servlet-class>admin.controller.AdminPharmacyManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminEmergencyManagementServlet</servlet-name>
+        <servlet-class>admin.controller.AdminEmergencyManagementServlet</servlet-class>
+    </servlet>
+
 
 
     <!-- ==================== BASIC SERVLET MAPPINGS ==================== -->
@@ -202,6 +374,180 @@
         <servlet-name>DoctorDocumentUploadServlet</servlet-name>
         <url-pattern>/DoctorDocumentUploadServlet</url-pattern>
     </servlet-mapping>
+
+
+    <!-- ==================== PATIENT MAPPINGS ==================== -->
+
+    <servlet-mapping>
+        <servlet-name>SignupController</servlet-name>
+        <url-pattern>/SignupController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/DashboardController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/ProfileController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditProfileController</servlet-name>
+        <url-pattern>/EditProfileController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>MedicalAssistantController</servlet-name>
+        <url-pattern>/MedicalAssistantController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FindDoctorController</servlet-name>
+        <url-pattern>/FindDoctorController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AppointmentsController</servlet-name>
+        <url-pattern>/AppointmentsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BookSlotController</servlet-name>
+        <url-pattern>/BookSlotController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PrecriptionController</servlet-name>
+        <url-pattern>/PrecriptionController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AppointmentDetailController</servlet-name>
+        <url-pattern>/AppointmentDetailController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DoctorDetailsController</servlet-name>
+        <url-pattern>/DoctorDetailsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PrescriptionDetailController</servlet-name>
+        <url-pattern>/PrescriptionDetailController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PatientEmergencyController</servlet-name>
+        <url-pattern>/PatientEmergencyController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PatientEmergencyDetailController</servlet-name>
+        <url-pattern>/PatientEmergencyDetailController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PatientMedicinesController</servlet-name>
+        <url-pattern>/PatientMedicinesController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PatientMedicineDetailController</servlet-name>
+        <url-pattern>/PatientMedicineDetailController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PatientOrdersController</servlet-name>
+        <url-pattern>/PatientOrdersController</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ==================== PHARMACY MAPPINGS ==================== -->
+
+    <servlet-mapping>
+        <servlet-name>MedicineServlet</servlet-name>
+        <url-pattern>/MedicineServlet</url-pattern>
+        <url-pattern>/pharmacy/medicines</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/OrderServlet</url-pattern>
+        <url-pattern>/pharmacy/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PharmacyServlet</servlet-name>
+        <url-pattern>/PharmacyServlet</url-pattern>
+        <url-pattern>/pharmacy/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PharmacyDashboardServlet</servlet-name>
+        <url-pattern>/PharmacyDashboardServlet</url-pattern>
+        <url-pattern>/pharmacy/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PharmacyLoginServlet</servlet-name>
+        <url-pattern>/PharmacyLoginServlet</url-pattern>
+        <url-pattern>/pharmacy/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PharmacyLogoutServlet</servlet-name>
+        <url-pattern>/PharmacyLogoutServlet</url-pattern>
+        <url-pattern>/pharmacy/logout</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ==================== ADMIN MAPPINGS ==================== -->
+
+    <servlet-mapping>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <url-pattern>/admin/login</url-pattern>
+        <url-pattern>/AdminLoginServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminLogoutServlet</servlet-name>
+        <url-pattern>/admin/logout</url-pattern>
+        <url-pattern>/AdminLogoutServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+        <url-pattern>/AdminDashboardServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminDoctorManagementServlet</servlet-name>
+        <url-pattern>/admin/doctors</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminPatientManagementServlet</servlet-name>
+        <url-pattern>/admin/patients</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminPharmacyManagementServlet</servlet-name>
+        <url-pattern>/admin/pharmacies</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminEmergencyManagementServlet</servlet-name>
+        <url-pattern>/admin/emergencies</url-pattern>
+    </servlet-mapping>
+
 
 
     <!-- ==================== SESSION CONFIG ==================== -->

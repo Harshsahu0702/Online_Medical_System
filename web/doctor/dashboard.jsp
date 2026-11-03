@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="model.doctor.Doctor" %>
-<%@ page import="model.doctor.Appointment" %>
+<%@ page import="doctor.model.Doctor" %>
+<%@ page import="doctor.model.Appointment" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +17,24 @@
 <%
     Doctor doctor = (Doctor) request.getAttribute("doctor");
     Map<String, Integer> stats = (Map<String, Integer>) request.getAttribute("stats");
+    List<Appointment> pendingAppointments = (List<Appointment>) request.getAttribute("pendingAppointments");
     List<Appointment> todayAppointments = (List<Appointment>) request.getAttribute("todayAppointments");
     Integer unreadNotifications = (Integer) request.getAttribute("unreadNotifications");
     if (unreadNotifications == null) unreadNotifications = 0;
+    String msgParam = request.getParameter("msg");
 %>
 
 <main class="app-container">
+
+    <% if ("accepted".equalsIgnoreCase(msgParam)) { %>
+        <div class="alert alert-success" style="padding: 12px 16px; margin-bottom: 20px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 8px; font-weight: 500;">
+            ✓ Appointment accepted successfully!
+        </div>
+    <% } else if ("rejected".equalsIgnoreCase(msgParam)) { %>
+        <div class="alert alert-danger" style="padding: 12px 16px; margin-bottom: 20px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 8px; font-weight: 500;">
+            ✕ Appointment request rejected.
+        </div>
+    <% } %>
 
     <!-- WELCOME BANNER -->
     <div class="card" style="background: linear-gradient(135deg, #244b6b 0%, #3498db 100%); color: white; border: none;">
@@ -45,28 +57,108 @@
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-label">Today's Appointments</div>
-            <div class="stat-value"><%= (stats != null && stats.get("todayAppointments") != null) ? stats.get("todayAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("todayAppointments") != null) ? String.valueOf(stats.get("todayAppointments")) : "0" %></div>
         </div>
         <div class="stat-card warning">
             <div class="stat-label">Pending Requests</div>
-            <div class="stat-value"><%= (stats != null && stats.get("pendingAppointments") != null) ? stats.get("pendingAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("pendingAppointments") != null) ? String.valueOf(stats.get("pendingAppointments")) : "0" %></div>
         </div>
         <div class="stat-card accent">
             <div class="stat-label">Upcoming / Accepted</div>
-            <div class="stat-value"><%= (stats != null && stats.get("upcomingAppointments") != null) ? stats.get("upcomingAppointments") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("upcomingAppointments") != null) ? String.valueOf(stats.get("upcomingAppointments")) : "0" %></div>
         </div>
         <div class="stat-card">
             <div class="stat-label">Completed Consultations</div>
-            <div class="stat-value"><%= (stats != null && stats.get("completedConsultations") != null) ? stats.get("completedConsultations") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("completedConsultations") != null) ? String.valueOf(stats.get("completedConsultations")) : "0" %></div>
         </div>
         <div class="stat-card accent">
             <div class="stat-label">Total Patients</div>
-            <div class="stat-value"><%= (stats != null && stats.get("totalPatients") != null) ? stats.get("totalPatients") : 0 %></div>
+            <div class="stat-value"><%= (stats != null && stats.get("totalPatients") != null) ? String.valueOf(stats.get("totalPatients")) : "0" %></div>
         </div>
         <div class="stat-card danger">
             <div class="stat-label">Unread Notifications</div>
             <div class="stat-value"><%= unreadNotifications %></div>
         </div>
+    </div>
+
+    <!-- PENDING APPOINTMENT REQUESTS (SENT BY PATIENTS) -->
+    <div class="card" style="border-top: 4px solid #f59e0b;">
+        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 700; color: #b45309;">🔔 Pending Appointment Requests</span>
+                <span class="badge" style="background: #fef3c7; color: #92400e; font-weight: 600;">
+                    <%= pendingAppointments != null ? pendingAppointments.size() : 0 %> New
+                </span>
+            </div>
+            <span style="font-size: 13px; font-weight: normal; color: #64748b;">
+                Requests submitted by patients awaiting your confirmation
+            </span>
+        </div>
+
+        <% if (pendingAppointments == null || pendingAppointments.isEmpty()) { %>
+            <div style="text-align: center; padding: 25px 20px; color: #94a3b8;">
+                <p style="margin: 0; font-size: 14px;">No pending appointment requests right now.</p>
+            </div>
+        <% } else { %>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Patient Name</th>
+                        <th>Phone / Email</th>
+                        <th>Type</th>
+                        <th>Reason / Symptoms</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (Appointment pAppt : pendingAppointments) { %>
+                        <tr style="background: #fffbeb;">
+                            <td>
+                                <div><strong><%= pAppt.getAppointmentDate() %></strong></div>
+                                <div style="font-size: 12px; color: #64748b;"><%= pAppt.getAppointmentTime() %></div>
+                            </td>
+                            <td>
+                                <strong style="color: #0f172a;"><%= pAppt.getPatientName() %></strong>
+                                <% if (pAppt.getPatientGender() != null && !pAppt.getPatientGender().isEmpty()) { %>
+                                    <span style="font-size: 11px; color: #64748b;">(<%= pAppt.getPatientGender() %>)</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <div><%= pAppt.getPatientPhone() != null && !pAppt.getPatientPhone().isEmpty() ? pAppt.getPatientPhone() : "N/A" %></div>
+                                <div style="font-size: 12px; color: #64748b;"><%= pAppt.getPatientEmail() != null ? pAppt.getPatientEmail() : "" %></div>
+                            </td>
+                            <td>
+                                <span class="badge" style="background:#e0f2fe; color:#0369a1;"><%= pAppt.getAppointmentType() %></span>
+                            </td>
+                            <td>
+                                <span><%= pAppt.getReason() != null && !pAppt.getReason().isEmpty() ? pAppt.getReason() : "General Consultation" %></span>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=accept&id=<%= pAppt.getAppointmentId() %>&redirect=dashboard" 
+                                       class="btn btn-success btn-sm" 
+                                       style="background: #10b981; color: white; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-weight: 600;">
+                                       ✓ Accept
+                                    </a>
+                                    <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=reject&id=<%= pAppt.getAppointmentId() %>&redirect=dashboard" 
+                                       class="btn btn-danger btn-sm" 
+                                       style="background: #ef4444; color: white; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-weight: 600;"
+                                       onclick="return confirm('Are you sure you want to reject this appointment request?');">
+                                       ✕ Reject
+                                    </a>
+                                    <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=view&id=<%= pAppt.getAppointmentId() %>" 
+                                       class="btn btn-secondary btn-sm"
+                                       style="background: #e2e8f0; color: #334155; padding: 5px 10px; border-radius: 4px; text-decoration: none;">
+                                       Details
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } %>
     </div>
 
     <!-- TODAY'S SCHEDULE -->

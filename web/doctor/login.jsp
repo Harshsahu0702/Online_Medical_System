@@ -158,8 +158,20 @@
         <button type="submit" class="btn-submit">Sign In to Dashboard</button>
     </form>
 
+    <div style="margin-top: 18px; padding: 12px; background: #f0fdf4; border: 1px dashed #86efac; border-radius: 8px; font-size: 12px;">
+        <div style="font-weight: 700; color: #166534; margin-bottom: 4px;">✨ Viva Demo Doctor Account:</div>
+        <div style="color: #334155; font-family: monospace;">Email: harshsahu10072006@gmail.com</div>
+        <div style="color: #334155; font-family: monospace;">Pass: harsh123</div>
+        <button type="button" onclick="document.getElementById('email').value='harshsahu10072006@gmail.com'; document.getElementById('password').value='harsh123';" style="margin-top: 8px; width: 100%; padding: 6px; background: white; border: 1px solid #bbf7d0; border-radius: 6px; font-weight: 700; color: #166534; cursor: pointer;">
+            ⚡ 1-Click Auto-Fill
+        </button>
+    </div>
+
     <div class="login-footer">
         Are you a new doctor? <a href="<%= request.getContextPath() %>/DoctorRegisterServlet">Register Here</a>
+        <div style="margin-top: 8px;">
+            <a href="<%= request.getContextPath() %>/MainLogin.jsp" style="color: #64748b;">&larr; Return to Healthcare Hub</a>
+        </div>
     </div>
 </div>
 

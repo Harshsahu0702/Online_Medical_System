@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.doctor.Consultation" %>
-<%@ page import="model.doctor.Patient" %>
+<%@ page import="doctor.model.Consultation" %>
+<%@ page import="doctor.model.Patient" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,7 @@
     Consultation consultation = (Consultation) request.getAttribute("consultation");
     Patient patient = (Patient) request.getAttribute("patient");
     String savedParam = request.getParameter("saved");
+    String linkUpdatedParam = request.getParameter("linkUpdated");
 %>
 
 <main class="app-container">
@@ -40,6 +41,10 @@
         <div class="alert alert-success">Consultation notes saved successfully!</div>
     <% } %>
 
+    <% if ("1".equals(linkUpdatedParam)) { %>
+        <div class="alert alert-success">Meeting link saved and updated successfully!</div>
+    <% } %>
+
     <% if (consultation != null) { %>
 
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
@@ -47,28 +52,53 @@
             <!-- LEFT PANEL: ONLINE MEETING CONTROLS -->
             <div class="card">
                 <div class="card-title">
-                    <span>Online Consultation Room #<%= consultation.getConsultationId() %></span>
+                    <span>Consultation Meeting #<%= consultation.getConsultationId() %></span>
                     <span class="badge" style="background:#e0f2fe; color:#0369a1;"><%= consultation.getAppointmentType() != null ? consultation.getAppointmentType() : "Online Video" %></span>
                 </div>
 
-                <div style="background: #1e293b; color: white; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 44px; margin-bottom: 10px;">📹</div>
-                    <h3 style="margin: 0 0 8px 0; color: white; font-size: 18px;">Live Video Telehealth Session</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 13px; color: #94a3b8;">
-                        Direct encrypted meeting room link for Doctor and Patient.
-                    </p>
-
-                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 18px; word-break: break-all;">
-                        <%= consultation.getMeetingLink() != null ? consultation.getMeetingLink() : "Link pending generation" %>
+                <!-- GOOGLE MEET MANAGEMENT -->
+                <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 14px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                            📹 Google Meet Video Consultation
+                        </span>
+                        <a href="https://meet.google.com/new" target="_blank" class="btn btn-primary btn-sm" style="background: #1a73e8; border-color: #1a73e8; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                            + Create Google Meet
+                        </a>
                     </div>
 
-                    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                        <% if (consultation.getMeetingLink() != null) { %>
-                            <a href="<%= consultation.getMeetingLink() %>" target="_blank" class="btn btn-success" style="padding: 10px 22px; font-size: 14px;">
-                                🚀 Join / Launch Video Meeting
+                    <% 
+                        String curLink = consultation.getMeetingLink();
+                        boolean hasLink = (curLink != null && !curLink.trim().isEmpty());
+                    %>
+
+                    <% if (hasLink) { %>
+                        <div style="background: #ffffff; border: 1px solid #93c5fd; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+                            <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #1e40af; margin-bottom: 4px;">Saved Meeting Link:</div>
+                            <div style="font-family: monospace; font-size: 13px; color: #1e293b; word-break: break-all; margin-bottom: 10px;">
+                                <%= curLink %>
+                            </div>
+                            <a href="<%= curLink %>" target="_blank" class="btn btn-success" style="padding: 8px 18px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                🚀 Join Meeting
                             </a>
-                        <% } %>
-                    </div>
+                        </div>
+                    <% } else { %>
+                        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px; color: #92400e;">
+                            ⚠️ No meeting link set yet. Click <strong>+ Create Google Meet</strong> above to create a meeting, then paste the link below and click <strong>Save Link</strong>.
+                        </div>
+                    <% } %>
+
+                    <form action="<%= request.getContextPath() %>/DoctorConsultationServlet" method="GET" style="margin: 0;">
+                        <input type="hidden" name="action" value="updateLink">
+                        <input type="hidden" name="id" value="<%= consultation.getConsultationId() %>">
+                        <label style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px;">
+                            <%= hasLink ? "Update / Change Meeting Link:" : "Enter Meeting Link:" %>
+                        </label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="url" name="meetingLink" class="form-control" placeholder="https://meet.google.com/xxx-yyyy-zzz" value="<%= hasLink ? curLink : "" %>" required style="font-size: 13px;">
+                            <button type="submit" class="btn btn-primary btn-sm" style="white-space: nowrap; padding: 0 16px;">Save Link</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- END CONSULTATION BUTTON -->

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.doctor.Appointment" %>
-<%@ page import="model.doctor.Patient" %>
+<%@ page import="doctor.model.Appointment" %>
+<%@ page import="doctor.model.Patient" %>
 <!DOCTYPE html>
 <html>
 <head>

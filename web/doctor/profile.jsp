@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.doctor.Doctor" %>
-<%@ page import="model.doctor.DoctorDocument" %>
-<%@ page import="model.doctor.Specialization" %>
-<%@ page import="model.doctor.Clinic" %>
+<%@ page import="doctor.model.Doctor" %>
+<%@ page import="doctor.model.DoctorDocument" %>
+<%@ page import="doctor.model.Specialization" %>
+<%@ page import="doctor.model.Clinic" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
