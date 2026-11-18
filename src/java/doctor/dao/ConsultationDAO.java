@@ -1,6 +1,7 @@
 package doctor.dao;
 
 import doctor.model.Consultation;
+import util.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

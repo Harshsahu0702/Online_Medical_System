@@ -4,9 +4,9 @@ import doctor.model.Doctor;
 import doctor.model.DoctorDocument;
 import doctor.model.Specialization;
 import doctor.model.Clinic;
+import util.DBConnection;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,20 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorDAO {
-    // DATABASE CONNECTION
-
-    private static final String URL =
-            "jdbc:mysql://mysql-e62eab-medicalsystem2026.d.aivencloud.com:26696/online_medical_db?sslMode=REQUIRED";
-
-    private static final String USER = "avnadmin";
-
-    
-
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String password = System.getenv("DB_PASSWORD");
-        return DriverManager.getConnection(URL, USER, password != null ? password.trim() : "");
-    }
 
     // GET ALL SPECIALIZATIONS
 
@@ -48,7 +34,7 @@ public class DoctorDAO {
 
         try {
 
-            con = getConnection();
+            con = DBConnection.getConnection();
 
             ps = con.prepareStatement(sql);
 
@@ -66,10 +52,6 @@ public class DoctorDAO {
 
                 list.add(s);
             }
-
-        } catch (ClassNotFoundException e) {
-
-            e.printStackTrace();
 
         } finally {
 
@@ -119,7 +101,7 @@ public class DoctorDAO {
 
         try {
 
-            con = getConnection();
+            con = DBConnection.getConnection();
 
             ps = con.prepareStatement(sql);
 
@@ -141,10 +123,6 @@ public class DoctorDAO {
 
                 list.add(c);
             }
-
-        } catch (ClassNotFoundException e) {
-
-            e.printStackTrace();
 
         } finally {
 
@@ -190,7 +168,7 @@ public class DoctorDAO {
 
         try {
 
-            con = getConnection();
+            con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
             // 1. INSERT INTO USERS
@@ -350,14 +328,6 @@ public class DoctorDAO {
 
             return true;
 
-        } catch (ClassNotFoundException e) {
-
-            e.printStackTrace();
-
-            rollbackConnection(con);
-
-            return false;
-
         } catch (SQLException e) {
 
             e.printStackTrace();
@@ -431,7 +401,7 @@ public class DoctorDAO {
         ResultSet rs = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -487,7 +457,7 @@ public class DoctorDAO {
         ResultSet rs = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, doctorId);
             rs = ps.executeQuery();
@@ -539,7 +509,7 @@ public class DoctorDAO {
         PreparedStatement psUser = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             con.setAutoCommit(false);
 
             // Update doctors table
@@ -597,7 +567,7 @@ public class DoctorDAO {
         ResultSet rs = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, doctorId);
             rs = ps.executeQuery();
@@ -631,7 +601,7 @@ public class DoctorDAO {
         ResultSet rs = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, documentId);
             rs = ps.executeQuery();
@@ -667,7 +637,7 @@ public class DoctorDAO {
         ResultSet rs = null;
 
         try {
-            con = getConnection();
+            con = DBConnection.getConnection();
             psCheck = con.prepareStatement(checkSql);
             psCheck.setInt(1, doc.getDoctorId());
             psCheck.setString(2, doc.getDocumentType());

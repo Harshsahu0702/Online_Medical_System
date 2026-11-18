@@ -2,6 +2,7 @@ package doctor.dao;
 
 import doctor.model.Prescription;
 import doctor.model.PrescriptionItem;
+import util.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
