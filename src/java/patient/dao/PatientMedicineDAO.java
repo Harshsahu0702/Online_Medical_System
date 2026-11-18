@@ -23,7 +23,7 @@ public class PatientMedicineDAO {
 
         List<Object> params = new ArrayList<>();
         if (query != null && !query.trim().isEmpty()) {
-            sql.append("AND (m.name LIKE ? OR m.generic_name LIKE ?) ");
+            sql.append("AND (m.medicine_name LIKE ? OR m.generic_name LIKE ?) ");
             String q = "%" + query.trim() + "%";
             params.add(q);
             params.add(q);
@@ -32,7 +32,7 @@ public class PatientMedicineDAO {
             sql.append("AND m.category = ? ");
             params.add(category.trim());
         }
-        sql.append("ORDER BY m.name ASC");
+        sql.append("ORDER BY m.medicine_name ASC");
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql.toString())) {
@@ -47,7 +47,7 @@ public class PatientMedicineDAO {
                     map.put("medicineId", rs.getInt("medicine_id"));
                     map.put("pharmacyId", rs.getInt("pharmacy_id"));
                     map.put("pharmacyName", rs.getString("pharmacy_name"));
-                    map.put("name", rs.getString("name"));
+                    map.put("name", rs.getString("medicine_name"));
                     map.put("genericName", rs.getString("generic_name"));
                     map.put("category", rs.getString("category"));
                     map.put("description", rs.getString("description"));
@@ -83,7 +83,7 @@ public class PatientMedicineDAO {
                     map.put("pharmacyId", rs.getInt("pharmacy_id"));
                     map.put("pharmacyName", rs.getString("pharmacy_name"));
                     map.put("pharmacyAddress", rs.getString("pharmacy_address"));
-                    map.put("name", rs.getString("name"));
+                    map.put("name", rs.getString("medicine_name"));
                     map.put("genericName", rs.getString("generic_name"));
                     map.put("category", rs.getString("category"));
                     map.put("description", rs.getString("description"));
