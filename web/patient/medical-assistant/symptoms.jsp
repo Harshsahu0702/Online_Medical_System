@@ -49,7 +49,6 @@
              NAVBAR
              ============================================================ -->
 
-        <jsp:include page="../components/navbar.jsp" />
 
 
         <main class="page-container">
@@ -410,7 +409,6 @@
 
 
         <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
 
     </div>
 

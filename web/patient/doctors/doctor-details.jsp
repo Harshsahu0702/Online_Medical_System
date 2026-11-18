@@ -28,7 +28,6 @@
 
         <div class="app-main">
 
-            <jsp:include page="../components/navbar.jsp" />
 
             <main class="page-container">
 
@@ -247,7 +246,6 @@
 
             </main>
 
-            <jsp:include page="../components/footer.jsp" />
 
         </div>
 

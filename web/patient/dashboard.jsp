@@ -107,7 +107,7 @@
                  NAVBAR COMPONENT
                  ======================================================== -->
 
-                                <jsp:include page="components/navbar.jsp" />
+                               
 
                                 <!-- ========================================================
                  DASHBOARD CONTENT
@@ -128,13 +128,6 @@
                                     <section class="dash-welcome-banner">
                                         <div class="dash-welcome-text">
                                             <h2>Welcome back, <%= name %> 👋</h2>
-                                            <p>
-                                                <% if (latestAppt != null) { %>
-                                                    You have a consultation with <strong>Dr. <%= latestAppt.getDoctorName() != null ? latestAppt.getDoctorName() : "Doctor" %></strong> (<%= latestAppt.getAppointmentDate() != null ? latestAppt.getAppointmentDate() : "Scheduled" %>). Manage your appointments, prescriptions, and pharmacy orders below.
-                                                <% } else { %>
-                                                    Manage your appointments, digital prescriptions, and pharmacy medicine deliveries from your personal health portal.
-                                                <% } %>
-                                            </p>
                                         </div>
                                         <div class="dash-welcome-actions">
                                             <a href="${pageContext.request.contextPath}/patient/appointments/book-appointments.jsp"
@@ -531,7 +524,6 @@
                  FOOTER COMPONENT
                  ======================================================== -->
 
-                                <jsp:include page="components/footer.jsp" />
 
                             </div>
 

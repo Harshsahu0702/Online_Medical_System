@@ -61,10 +61,6 @@
 
     <div class="app-main">
 
-        <!-- Navbar -->
-        <jsp:include page="../components/navbar.jsp" />
-
-
         <main class="page-container">
 
             <!-- Page Header -->
@@ -371,7 +367,6 @@
 
 
         <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
 
     </div>
 
