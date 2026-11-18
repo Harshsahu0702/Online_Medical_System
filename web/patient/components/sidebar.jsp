@@ -152,7 +152,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/medicines/orders.jsp"
+            <a href="${pageContext.request.contextPath}/patient/orders"
                class="sidebar-nav-item"
                data-page="orders">
 
@@ -175,26 +175,6 @@
 
             <p class="sidebar-section-title">Support</p>
 
-            <a href="${pageContext.request.contextPath}/patient/notifications"
-               class="sidebar-nav-item"
-               data-page="notifications">
-
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
-                    <path d="M10 21h4"/>
-                </svg>
-
-                <span>Notifications</span>
-
-                <span class="sidebar-nav-badge"
-                      id="sidebarNotificationBadge"
-                      style="display: none;">
-                    0
-                </span>
-
-            </a>
-
-
             <a href="${pageContext.request.contextPath}/patient/emergency"
                class="sidebar-nav-item sidebar-emergency-item"
                data-page="emergency">
@@ -205,7 +185,6 @@
                 </svg>
 
                 <span>Emergency</span>
-
             </a>
 
         </div>

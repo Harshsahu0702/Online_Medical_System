@@ -32,10 +32,10 @@ public class LoginController extends HttpServlet {
                 res.sendRedirect(req.getContextPath() + "/patient/dashboard");
             }else if(loginResult.equals("invalid")){
                 ses.setAttribute("loginError", "Email or password are invalid.");
-                res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+                res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             }else if(loginResult.equals("error")){
                 ses.setAttribute("loginError", "Unable to Login.");
-                res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+                res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             }
         }catch(Exception e){
             

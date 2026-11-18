@@ -27,7 +27,7 @@ public class PrecriptionController extends HttpServlet {
         }
 
         if (patientId == null || patientId.trim().isEmpty()) {
-            res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+            res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             return;
         }
 

@@ -321,7 +321,7 @@
     </form>
 
     <div class="footer-links">
-        Already registered? <a href="${pageContext.request.contextPath}/patient/Login.jsp">Sign In Here</a> &bull; 
+        Already registered? <a href="${pageContext.request.contextPath}/MainLogin.jsp?role=patient">Sign In Here</a> &bull; 
         <a href="${pageContext.request.contextPath}/MainLogin.jsp">Return to Home</a>
     </div>
 </div>
