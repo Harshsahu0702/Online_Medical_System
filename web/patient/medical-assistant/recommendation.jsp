@@ -143,7 +143,7 @@
                     class="card-body"
                     id="recommendationContent">
 
-                    <!-- Content populated by recommendation.js -->
+                    <!-- Content populated by medical-assistant.js -->
 
                     <div class="recommendation-loading">
 

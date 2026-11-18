@@ -210,12 +210,12 @@
                     </div>
 
                     <h3>
-                        Add Details
+                        Select Duration
                     </h3>
 
                     <p>
-                        Provide the approximate duration and
-                        any additional health notes.
+                        Choose how long you have been experiencing
+                        these symptoms.
                     </p>
 
                 </div>
