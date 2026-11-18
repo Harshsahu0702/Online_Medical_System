@@ -29,6 +29,8 @@ public class LoginController extends HttpServlet {
             
             if(loginResult.equals("success")){
                 ses.setAttribute("patientId", patient.getPatientId());
+                ses.setAttribute("patientName", patient.getName());
+                ses.setAttribute("patientEmail", patient.getEmail());
                 res.sendRedirect(req.getContextPath() + "/patient/dashboard");
             }else if(loginResult.equals("invalid")){
                 ses.setAttribute("loginError", "Email or password are invalid.");
