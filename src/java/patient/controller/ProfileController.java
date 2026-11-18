@@ -23,7 +23,7 @@ public class ProfileController extends HttpServlet {
         }catch(Exception e){
             System.out.println(e);
             ses.setAttribute("loginError","Error show your data. Please login again");
-            res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");  
+            res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
         }
     }
 }

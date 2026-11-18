@@ -4,7 +4,7 @@
     request.setAttribute("pageTitle", "Symptom Assessment");
     request.setAttribute(
         "pageDescription",
-        "Select your current symptoms and provide additional details for educational guidance."
+        "Select your current symptoms and duration for educational guidance."
     );
 %>
 
@@ -49,7 +49,6 @@
              NAVBAR
              ============================================================ -->
 
-        <jsp:include page="../components/navbar.jsp" />
 
 
         <main class="page-container">
@@ -294,31 +293,6 @@
 
 
                     <!-- ==================================================
-                         ADDITIONAL NOTES
-                         ================================================== -->
-
-                    <div class="form-group assistant-form-group">
-
-                        <label
-                            class="form-label"
-                            for="symptomNotes">
-
-                            Additional Health Notes (Optional)
-
-                        </label>
-
-
-                        <textarea
-                            class="form-control"
-                            id="symptomNotes"
-                            name="symptomNotes"
-                            rows="3"
-                            placeholder="e.g., Slightly worse in the morning, took paracetamol once..."></textarea>
-
-                    </div>
-
-
-                    <!-- ==================================================
                          GENERATE GUIDANCE
                          ================================================== -->
 
@@ -340,36 +314,6 @@
                         Generate Health Guidance Report
 
                     </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- ========================================================
-                 SELECTED SYMPTOMS SUMMARY
-                 ======================================================== -->
-
-            <section
-                class="card selected-symptoms-card"
-                id="selectedSymptomsCard"
-                hidden>
-
-                <div class="card-header">
-
-                    <div class="card-title">
-                        Selected Symptoms
-                    </div>
-
-                </div>
-
-
-                <div class="card-body">
-
-                    <div
-                        class="selected-symptoms-list"
-                        id="selectedSymptomsList">
-                    </div>
 
                 </div>
 
@@ -410,7 +354,6 @@
 
 
         <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
 
     </div>
 

@@ -30,7 +30,6 @@
 
                     <!-- NAVBAR-->
 
-                    <jsp:include page="../components/navbar.jsp" />
 
                     <main class="page-container">
                         <!-- PAGE HEADER-->
@@ -171,7 +170,6 @@
                     </main>
 
                     <!-- Footer -->
-                    <jsp:include page="../components/footer.jsp" />
                 </div>
             </div>
 

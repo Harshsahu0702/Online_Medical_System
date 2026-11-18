@@ -39,7 +39,7 @@ public class BookSlotController extends HttpServlet {
         String patientId = (String) session.getAttribute("patientId");
 
         if (patientId == null || patientId.trim().isEmpty()) {
-            res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+            res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             return;
         }
   

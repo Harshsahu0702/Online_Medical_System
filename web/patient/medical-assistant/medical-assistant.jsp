@@ -49,7 +49,6 @@
              NAVBAR
              ============================================================ -->
 
-        <jsp:include page="../components/navbar.jsp" />
 
 
         <main class="page-container">
@@ -211,12 +210,12 @@
                     </div>
 
                     <h3>
-                        Add Details
+                        Select Duration
                     </h3>
 
                     <p>
-                        Provide the approximate duration and
-                        any additional health notes.
+                        Choose how long you have been experiencing
+                        these symptoms.
                     </p>
 
                 </div>
@@ -276,7 +275,6 @@
 
 
         <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
 
     </div>
 

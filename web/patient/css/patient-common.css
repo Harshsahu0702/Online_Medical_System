@@ -452,6 +452,32 @@ img {
     color: var(--text-muted);
 }
 
+.sidebar-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    padding: 9px 12px;
+
+    border-radius: var(--radius-md);
+    border: 1px solid #fecaca;
+
+    background-color: var(--accent-rose-bg);
+    color: var(--accent-rose);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    transition: all var(--transition-fast);
+}
+
+.sidebar-logout-btn:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
 
 /* ==========================================================================
    7. MAIN CONTENT AREA

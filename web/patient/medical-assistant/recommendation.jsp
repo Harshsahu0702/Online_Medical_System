@@ -49,7 +49,6 @@
              NAVBAR
              ============================================================ -->
 
-        <jsp:include page="../components/navbar.jsp" />
 
 
         <main class="page-container">
@@ -144,7 +143,7 @@
                     class="card-body"
                     id="recommendationContent">
 
-                    <!-- Content populated by recommendation.js -->
+                    <!-- Content populated by medical-assistant.js -->
 
                     <div class="recommendation-loading">
 
@@ -243,7 +242,6 @@
 
 
         <!-- Footer -->
-        <jsp:include page="../components/footer.jsp" />
 
     </div>
 

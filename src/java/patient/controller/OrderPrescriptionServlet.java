@@ -31,7 +31,7 @@ public class OrderPrescriptionServlet extends HttpServlet {
             patientId = (String) session.getAttribute("patientId");
         }
         if (patientId == null || patientId.trim().isEmpty()) {
-            response.sendRedirect(request.getContextPath() + "/patient/Login.jsp");
+            response.sendRedirect(request.getContextPath() + "/MainLogin.jsp?role=patient");
             return;
         }
 

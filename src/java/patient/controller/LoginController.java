@@ -29,13 +29,15 @@ public class LoginController extends HttpServlet {
             
             if(loginResult.equals("success")){
                 ses.setAttribute("patientId", patient.getPatientId());
+                ses.setAttribute("patientName", patient.getName());
+                ses.setAttribute("patientEmail", patient.getEmail());
                 res.sendRedirect(req.getContextPath() + "/patient/dashboard");
             }else if(loginResult.equals("invalid")){
                 ses.setAttribute("loginError", "Email or password are invalid.");
-                res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+                res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             }else if(loginResult.equals("error")){
                 ses.setAttribute("loginError", "Unable to Login.");
-                res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+                res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             }
         }catch(Exception e){
             

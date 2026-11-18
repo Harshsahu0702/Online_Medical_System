@@ -58,7 +58,7 @@ public class SignupController extends HttpServlet {
             if("success".equals(signupResult)){
                 ses.setAttribute("patientId", patient.getPatientId());
                 ses.setAttribute("loginError", "Account has created. Please Login");
-                res.sendRedirect(req.getContextPath() + "/patient/Login.jsp");
+                res.sendRedirect(req.getContextPath() + "/MainLogin.jsp?role=patient");
             }else if("email_exists".equals(signupResult)){
                 ses.setAttribute("signupError", "Email already exists. Please use another email");
                 res.sendRedirect(req.getContextPath() + "/patient/Signup.jsp");

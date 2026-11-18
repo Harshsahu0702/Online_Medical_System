@@ -1,3 +1,23 @@
+<%@ page import="patient.model.Patient" %>
+<%
+    String sidebarPatientId = (String) session.getAttribute("patientId");
+    String sidebarPatientName = (String) session.getAttribute("patientName");
+
+    if ((sidebarPatientName == null || sidebarPatientName.trim().isEmpty()) && sidebarPatientId != null && !sidebarPatientId.trim().isEmpty()) {
+        Patient p = new Patient();
+        Patient loggedPatient = p.getPatientById(sidebarPatientId);
+        if (loggedPatient != null && loggedPatient.getName() != null && !loggedPatient.getName().trim().isEmpty()) {
+            sidebarPatientName = loggedPatient.getName();
+            session.setAttribute("patientName", sidebarPatientName);
+        }
+    }
+
+    if (sidebarPatientName == null || sidebarPatientName.trim().isEmpty()) {
+        sidebarPatientName = (sidebarPatientId != null && !sidebarPatientId.trim().isEmpty()) ? "Patient" : "Guest";
+    }
+
+    String sidebarInitial = sidebarPatientName.substring(0, 1).toUpperCase();
+%>
 <aside class="patient-sidebar" id="patientSidebar">
 
     <!-- Sidebar Header -->
@@ -152,7 +172,7 @@
             </a>
 
 
-            <a href="${pageContext.request.contextPath}/patient/medicines/orders.jsp"
+            <a href="${pageContext.request.contextPath}/patient/orders"
                class="sidebar-nav-item"
                data-page="orders">
 
@@ -175,26 +195,6 @@
 
             <p class="sidebar-section-title">Support</p>
 
-            <a href="${pageContext.request.contextPath}/patient/notifications"
-               class="sidebar-nav-item"
-               data-page="notifications">
-
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
-                    <path d="M10 21h4"/>
-                </svg>
-
-                <span>Notifications</span>
-
-                <span class="sidebar-nav-badge"
-                      id="sidebarNotificationBadge"
-                      style="display: none;">
-                    0
-                </span>
-
-            </a>
-
-
             <a href="${pageContext.request.contextPath}/patient/emergency"
                class="sidebar-nav-item sidebar-emergency-item"
                data-page="emergency">
@@ -205,7 +205,6 @@
                 </svg>
 
                 <span>Emergency</span>
-
             </a>
 
         </div>
@@ -219,15 +218,29 @@
         <div class="sidebar-user">
 
             <div class="sidebar-user-avatar">
-                P
+                <%= sidebarInitial %>
             </div>
 
             <div class="sidebar-user-info">
-                <span class="sidebar-user-name">Patient</span>
-                <span class="sidebar-user-role">Patient Account</span>
+                <span class="sidebar-user-name"><%= sidebarPatientName %></span>
+                <span class="sidebar-user-role"><%= (sidebarPatientId != null && !sidebarPatientId.trim().isEmpty()) ? "Patient Account" : "Not Logged In" %></span>
             </div>
 
         </div>
+
+        <a href="${pageContext.request.contextPath}/patient/logout"
+           class="sidebar-logout-btn"
+           onclick="sessionStorage.clear(); localStorage.clear();">
+
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+
+            <span>Logout</span>
+
+        </a>
 
     </div>
 

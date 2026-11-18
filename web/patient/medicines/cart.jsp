@@ -18,7 +18,6 @@
 <div class="app-layout">
     <jsp:include page="../components/sidebar.jsp" />
     <div class="app-main">
-        <jsp:include page="../components/navbar.jsp" />
         <main class="page-container">
             <jsp:include page="../components/patient-header.jsp" />
 
@@ -66,7 +65,6 @@
                 </aside>
             </section>
         </main>
-        <jsp:include page="../components/footer.jsp" />
     </div>
 </div>
 
