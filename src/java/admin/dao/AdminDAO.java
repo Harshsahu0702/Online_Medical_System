@@ -51,7 +51,7 @@ public class AdminDAO {
              Statement stmt = con.createStatement()) {
 
             // 1. Doctors
-            try (ResultSet rs = stmt.executeQuery("SELECT count(*), SUM(CASE WHEN verification_status = 'APPROVED' THEN 1 ELSE 0 END), SUM(CASE WHEN verification_status = 'PENDING' THEN 1 ELSE 0 END) FROM doctors")) {
+            try (ResultSet rs = stmt.executeQuery("SELECT count(*), SUM(CASE WHEN u.status = 'APPROVED' OR u.status = 'ACTIVE' THEN 1 ELSE 0 END), SUM(CASE WHEN u.status = 'PENDING' THEN 1 ELSE 0 END) FROM doctors d JOIN users u ON d.user_id = u.user_id")) {
                 if (rs.next()) {
                     overview.setTotalDoctors(rs.getInt(1));
                     overview.setVerifiedDoctors(rs.getInt(2));
@@ -104,12 +104,14 @@ public class AdminDAO {
 
     public List<Map<String, Object>> getAllDoctors() {
         List<Map<String, Object>> list = new ArrayList<>();
-        String sql = "SELECT d.doctor_id, d.license_number, d.verification_status, d.experience_years, d.consultation_fee, "
-                   + "u.user_id, u.name, u.email, u.phone, u.status as account_status, "
-                   + "s.name as specialization "
+        String sql = "SELECT d.doctor_id, d.license_number, d.qualification, d.experience, d.consultation_fee, "
+                   + "d.registration_authority, d.bio, d.consultation_type, "
+                   + "u.user_id, u.name, u.email, u.phone, u.status as account_status, u.status as verification_status, u.created_at, "
+                   + "s.name as specialization, c.clinic_name "
                    + "FROM doctors d "
                    + "JOIN users u ON d.user_id = u.user_id "
                    + "LEFT JOIN specializations s ON d.specialization_id = s.specialization_id "
+                   + "LEFT JOIN clinics c ON d.clinic_id = c.clinic_id "
                    + "ORDER BY d.doctor_id DESC";
 
         try (Connection con = DBConnection.getConnection();
@@ -118,7 +120,8 @@ public class AdminDAO {
 
             while (rs.next()) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("doctorId", rs.getInt("doctor_id"));
+                int docId = rs.getInt("doctor_id");
+                map.put("doctorId", docId);
                 map.put("userId", rs.getInt("user_id"));
                 map.put("name", rs.getString("name"));
                 map.put("email", rs.getString("email"));
@@ -127,8 +130,15 @@ public class AdminDAO {
                 map.put("licenseNumber", rs.getString("license_number"));
                 map.put("verificationStatus", rs.getString("verification_status"));
                 map.put("accountStatus", rs.getString("account_status"));
-                map.put("experienceYears", rs.getInt("experience_years"));
+                map.put("experienceYears", rs.getInt("experience"));
                 map.put("fee", rs.getDouble("consultation_fee"));
+                map.put("qualification", rs.getString("qualification") != null ? rs.getString("qualification") : "MBBS");
+                map.put("registrationAuthority", rs.getString("registration_authority") != null ? rs.getString("registration_authority") : "Medical Council");
+                map.put("bio", rs.getString("bio") != null ? rs.getString("bio") : "No bio provided.");
+                map.put("consultationType", rs.getString("consultation_type") != null ? rs.getString("consultation_type") : "Both");
+                map.put("clinicName", rs.getString("clinic_name") != null ? rs.getString("clinic_name") : "Independent Practice");
+                map.put("createdAt", rs.getTimestamp("created_at"));
+                map.put("documents", getDoctorDocuments(docId));
                 list.add(map);
             }
         } catch (Exception e) {
@@ -137,23 +147,53 @@ public class AdminDAO {
         return list;
     }
 
+    public List<Map<String, Object>> getDoctorDocuments(int doctorId) {
+        List<Map<String, Object>> docs = new ArrayList<>();
+        String sql = "SELECT document_id, doctor_id, document_type, file_name, file_path, verification_status, uploaded_at "
+                   + "FROM doctor_documents WHERE doctor_id = ? ORDER BY document_id ASC";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, doctorId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> d = new HashMap<>();
+                    d.put("documentId", rs.getInt("document_id"));
+                    d.put("doctorId", rs.getInt("doctor_id"));
+                    d.put("documentType", rs.getString("document_type"));
+                    d.put("fileName", rs.getString("file_name"));
+                    d.put("filePath", rs.getString("file_path"));
+                    d.put("verificationStatus", rs.getString("verification_status"));
+                    d.put("uploadedAt", rs.getTimestamp("uploaded_at"));
+                    docs.add(d);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching doctor documents: " + e.getMessage());
+        }
+        return docs;
+    }
+
     public boolean updateDoctorStatus(int doctorId, String verificationStatus, String accountStatus) {
-        String docSql = "UPDATE doctors SET verification_status = ? WHERE doctor_id = ?";
+        String docDocsSql = "UPDATE doctor_documents SET verification_status = ? WHERE doctor_id = ?";
         String userSql = "UPDATE users SET status = ? WHERE user_id = (SELECT user_id FROM doctors WHERE doctor_id = ?)";
 
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
-            try (PreparedStatement ps1 = con.prepareStatement(docSql)) {
-                ps1.setString(1, verificationStatus);
+            try (PreparedStatement ps1 = con.prepareStatement(docDocsSql)) {
+                ps1.setString(1, verificationStatus != null ? verificationStatus : "APPROVED");
                 ps1.setInt(2, doctorId);
                 ps1.executeUpdate();
             }
-            if (accountStatus != null && !accountStatus.trim().isEmpty()) {
-                try (PreparedStatement ps2 = con.prepareStatement(userSql)) {
-                    ps2.setString(1, accountStatus);
-                    ps2.setInt(2, doctorId);
-                    ps2.executeUpdate();
-                }
+            String finalStatus = "APPROVED";
+            if ("REJECTED".equalsIgnoreCase(verificationStatus) || "SUSPENDED".equalsIgnoreCase(accountStatus) || "REJECTED".equalsIgnoreCase(accountStatus)) {
+                finalStatus = "REJECTED";
+            } else if (accountStatus != null && !accountStatus.trim().isEmpty()) {
+                finalStatus = accountStatus;
+            }
+            try (PreparedStatement ps2 = con.prepareStatement(userSql)) {
+                ps2.setString(1, finalStatus);
+                ps2.setInt(2, doctorId);
+                ps2.executeUpdate();
             }
             con.commit();
             return true;

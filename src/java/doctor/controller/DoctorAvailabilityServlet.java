@@ -70,16 +70,27 @@ public class DoctorAvailabilityServlet extends HttpServlet {
 
         int doctorId = (Integer) session.getAttribute("doctorId");
 
+        String availableDate = request.getParameter("availableDate");
         String dayOfWeek = request.getParameter("dayOfWeek");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String consultationType = request.getParameter("consultationType");
         boolean isAvailable = "true".equalsIgnoreCase(request.getParameter("isAvailable")) || "1".equals(request.getParameter("isAvailable")) || request.getParameter("isAvailable") == null;
 
+        // If specific date was chosen, calculate the day of week automatically if needed
+        if (availableDate != null && !availableDate.trim().isEmpty()) {
+            try {
+                java.time.LocalDate ld = java.time.LocalDate.parse(availableDate.trim());
+                String dName = ld.getDayOfWeek().toString(); // e.g. "WEDNESDAY"
+                dayOfWeek = dName.substring(0, 1).toUpperCase() + dName.substring(1).toLowerCase();
+            } catch (Exception ignored) {}
+        }
+
         if (dayOfWeek != null && startTime != null && endTime != null) {
             DoctorAvailability da = new DoctorAvailability();
             da.setDoctorId(doctorId);
             da.setDayOfWeek(dayOfWeek);
+            da.setAvailableDate((availableDate != null && !availableDate.trim().isEmpty()) ? availableDate.trim() : null);
             da.setStartTime(startTime);
             da.setEndTime(endTime);
             da.setConsultationType(consultationType != null ? consultationType : "Online");

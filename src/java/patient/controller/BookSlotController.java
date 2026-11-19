@@ -1,6 +1,8 @@
 package patient.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +31,10 @@ public class BookSlotController extends HttpServlet {
             return;
         }
 
+        Map<String, List<String>> bookedSlots = ba.getBookedSlots(slot.getDoctorId());
+
         req.setAttribute("slot", slot);
+        req.setAttribute("bookedSlots", bookedSlots);
         req.getRequestDispatcher("/patient/appointments/book-slot.jsp").forward(req, res);
     }
 
@@ -64,6 +69,13 @@ public class BookSlotController extends HttpServlet {
         }
 
         BookAppointment ba = new BookAppointment();
+
+        // Check if slot is already booked for this doctor
+        if (ba.isSlotBooked(doctorId, appointmentDate, appointmentTime)) {
+            res.sendRedirect(req.getContextPath() + "/patient/book-slot?availabilityId=" + availabilityId + "&error=slot_already_booked");
+            return;
+        }
+
         boolean saved = ba.saveAppointment(patientId, doctorId, appointmentDate, appointmentTime, consultationType, reason);
 
         if (saved) {

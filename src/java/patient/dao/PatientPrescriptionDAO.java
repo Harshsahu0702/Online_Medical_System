@@ -16,7 +16,8 @@ public class PatientPrescriptionDAO {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT pr.prescription_id, pr.consultation_id, pr.doctor_id, "
                    + "pr.prescription_date, pr.diagnosis, pr.advice, "
-                   + "COALESCE(u.name, 'Doctor') as doctorName, COALESCE(p.name, 'Patient') as patientName "
+                   + "COALESCE(u.name, 'Doctor') as doctorName, COALESCE(p.name, 'Patient') as patientName, "
+                   + "p.address as patientAddress, p.contact as patientContact "
                    + "FROM prescriptions pr "
                    + "LEFT JOIN patients p ON pr.patient_id = p.patient_id "
                    + "LEFT JOIN doctors d ON pr.doctor_id = d.doctor_id "

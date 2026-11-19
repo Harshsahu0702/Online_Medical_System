@@ -14,7 +14,7 @@ public class DoctorAvailabilityDAO {
 
     public List<DoctorAvailability> getAvailabilityByDoctor(int doctorId) {
         List<DoctorAvailability> list = new ArrayList<DoctorAvailability>();
-        String sql = "SELECT availability_id, doctor_id, day_of_week, "
+        String sql = "SELECT availability_id, doctor_id, day_of_week, available_date, "
                 + "TIME_FORMAT(start_time, '%h:%i %p') AS formatted_start, "
                 + "TIME_FORMAT(end_time, '%h:%i %p') AS formatted_end, "
                 + "start_time, end_time, consultation_type, is_available "
@@ -37,6 +37,7 @@ public class DoctorAvailabilityDAO {
                 da.setAvailabilityId(rs.getInt("availability_id"));
                 da.setDoctorId(rs.getInt("doctor_id"));
                 da.setDayOfWeek(rs.getString("day_of_week"));
+                da.setAvailableDate(rs.getString("available_date"));
                 da.setStartTime(rs.getString("formatted_start") != null ? rs.getString("formatted_start") : rs.getString("start_time"));
                 da.setEndTime(rs.getString("formatted_end") != null ? rs.getString("formatted_end") : rs.getString("end_time"));
                 da.setConsultationType(rs.getString("consultation_type"));
@@ -52,8 +53,8 @@ public class DoctorAvailabilityDAO {
     }
 
     public boolean addAvailability(DoctorAvailability da) {
-        String sql = "INSERT INTO doctor_availability (doctor_id, day_of_week, start_time, end_time, consultation_type, is_available) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO doctor_availability (doctor_id, day_of_week, available_date, start_time, end_time, consultation_type, is_available) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -63,10 +64,15 @@ public class DoctorAvailabilityDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, da.getDoctorId());
             ps.setString(2, da.getDayOfWeek());
-            ps.setString(3, da.getStartTime());
-            ps.setString(4, da.getEndTime());
-            ps.setString(5, da.getConsultationType());
-            ps.setBoolean(6, da.isIsAvailable());
+            if (da.getAvailableDate() != null && !da.getAvailableDate().trim().isEmpty()) {
+                ps.setString(3, da.getAvailableDate().trim());
+            } else {
+                ps.setNull(3, java.sql.Types.DATE);
+            }
+            ps.setString(4, da.getStartTime());
+            ps.setString(5, da.getEndTime());
+            ps.setString(6, da.getConsultationType());
+            ps.setBoolean(7, da.isIsAvailable());
 
             int rows = ps.executeUpdate();
             return rows > 0;

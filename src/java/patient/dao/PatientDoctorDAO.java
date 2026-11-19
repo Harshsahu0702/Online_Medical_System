@@ -111,6 +111,7 @@ public class PatientDoctorDAO {
                     map.put("availabilityId", rs.getInt("availability_id"));
                     map.put("doctorId", rs.getInt("doctor_id"));
                     map.put("dayOfWeek", rs.getString("day_of_week"));
+                    map.put("availableDate", rs.getString("available_date"));
                     map.put("startTime", rs.getString("start_time"));
                     map.put("endTime", rs.getString("end_time"));
                     map.put("consultationType", rs.getString("consultation_type"));
@@ -126,7 +127,7 @@ public class PatientDoctorDAO {
 
     public Map<String, Object> getSlotDetailsByAvailabilityId(int availabilityId) {
         String sql = "SELECT da.availability_id, d.doctor_id, u.name AS doctor_name, "
-                   + "s.name AS specialization, c.clinic_name, da.day_of_week, "
+                   + "s.name AS specialization, c.clinic_name, da.day_of_week, da.available_date, "
                    + "da.start_time, da.end_time, da.consultation_type, "
                    + "d.consultation_fee, d.qualification, d.experience "
                    + "FROM doctor_availability da "
@@ -149,6 +150,7 @@ public class PatientDoctorDAO {
                     map.put("specialization", rs.getString("specialization") != null ? rs.getString("specialization") : "General Specialist");
                     map.put("clinicName", rs.getString("clinic_name") != null ? rs.getString("clinic_name") : "OmniHealth Clinic");
                     map.put("dayOfWeek", rs.getString("day_of_week"));
+                    map.put("availableDate", rs.getString("available_date"));
                     map.put("startTime", rs.getString("start_time"));
                     map.put("endTime", rs.getString("end_time"));
                     map.put("consultationType", rs.getString("consultation_type") != null ? rs.getString("consultation_type") : "Both");

@@ -216,6 +216,16 @@
                     <td>
                         <strong><%= order.getPatientName() %></strong><br>
                         <span style="font-size: 0.775rem; color: #64748b;">Patient ID #<%= order.getPatientId() %></span>
+                        <% if (order.getItems() != null && !order.getItems().isEmpty()) { %>
+                            <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 3px;">
+                                <% for (pharmacy.model.OrderItem itm : order.getItems()) { %>
+                                    <span style="font-size: 0.78rem; background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 2px 7px; border-radius: 4px; display: inline-flex; justify-content: space-between; align-items: center; max-width: 260px;">
+                                        <span><%= itm.getMedicineName() %> <strong style="color: #64748b;">×<%= itm.getQuantity() %></strong></span>
+                                        <strong style="color: #047857; margin-left: 6px;">&#8377;<%= String.format("%.2f", itm.getPrice() * itm.getQuantity()) %></strong>
+                                    </span>
+                                <% } %>
+                            </div>
+                        <% } %>
                     </td>
                     <td><strong style="color: #047857;">&#8377;<%= String.format("%.2f", order.getTotalAmount()) %></strong></td>
                     <td>

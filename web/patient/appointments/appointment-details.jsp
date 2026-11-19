@@ -152,12 +152,6 @@
                             </div>
                         </div>
                     <% } %>
-                            </div>
-                            <span class="badge" style="background: #bbf7d0; color: #14532d; font-weight: 700; padding: 6px 14px; border-radius: 20px; font-size: 12px;">
-                                Status: Accepted
-                            </span>
-                        </div>
-                    <% } %>
 
                     <div class="appointment-detail-actions" style="margin-top: 32px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                         <a href="${pageContext.request.contextPath}/patient/appointments" class="btn btn-secondary">

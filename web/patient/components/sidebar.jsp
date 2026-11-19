@@ -34,7 +34,7 @@
                 </svg>
             </span>
 
-            <span class="sidebar-brand-text">MediCore</span>
+            <span class="sidebar-brand-text">OmniHealth</span>
 
         </a>
 

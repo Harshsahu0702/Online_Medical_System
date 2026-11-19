@@ -8,6 +8,9 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${file.reference.mysql-connector-java-8.0.18.jar-1}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.mysql-connector-java-8.0.18.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
@@ -19,5 +22,10 @@
                 <root id="test.src.dir" name="Test Packages"/>
             </test-roots>
         </data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>Healthcare</word>
+            <word>NAVBAR</word>
+            <word>OmniHealth</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>

@@ -14,6 +14,15 @@ public class Order implements Serializable {
     private String address;
     private String status;
     private Date orderDate;
+    private java.util.List<OrderItem> items = new java.util.ArrayList<>();
+
+    public java.util.List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(java.util.List<OrderItem> items) {
+        this.items = items;
+    }
 
     public Order() {
     }

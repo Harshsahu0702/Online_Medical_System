@@ -55,7 +55,10 @@
 
                     <div>
                         <strong style="color: #64748b; display: block; font-size: 12px; text-transform: uppercase;">Consultation Mode</strong>
-                        <span class="badge" style="background:#e0f2fe; color:#0369a1; margin-top: 4px;"><%= appt.getAppointmentType() %></span>
+                        <% boolean isOnline = "ONLINE".equalsIgnoreCase(appt.getAppointmentType()); %>
+                        <span class="badge" style="background:<%= isOnline ? "#e0f2fe; color:#0369a1;" : "#fef3c7; color:#92400e;" %> margin-top: 4px;">
+                            <%= isOnline ? "Online Video Consultation" : "In-Person Hospital Visit" %>
+                        </span>
                     </div>
 
                     <div>
@@ -72,13 +75,20 @@
                 </div>
 
                 <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #edf2f7; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <% boolean isOnlineAppt = "ONLINE".equalsIgnoreCase(appt.getAppointmentType()); %>
                     <% if ("PENDING".equalsIgnoreCase(appt.getStatus())) { %>
                         <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=accept&id=<%= appt.getAppointmentId() %>" class="btn btn-success">Accept Appointment</a>
                         <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=reject&id=<%= appt.getAppointmentId() %>" class="btn btn-danger" onclick="return confirm('Reject this appointment?');">Reject</a>
                     <% } else if ("ACCEPTED".equalsIgnoreCase(appt.getStatus())) { %>
-                        <a href="<%= request.getContextPath() %>/DoctorConsultationServlet?action=start&appointmentId=<%= appt.getAppointmentId() %>" class="btn btn-primary">Start Online Consultation</a>
+                        <% if (isOnlineAppt) { %>
+                            <a href="<%= request.getContextPath() %>/DoctorConsultationServlet?action=start&appointmentId=<%= appt.getAppointmentId() %>" class="btn btn-primary">Start Online Consultation</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/DoctorPrescriptionServlet?action=new&patientId=<%= appt.getPatientId() %>&appointmentId=<%= appt.getAppointmentId() %>" class="btn btn-primary" style="background:#0284c7; border-color:#0284c7;">+ Add Prescription</a>
+                        <% } %>
                     <% } %>
-                    <a href="<%= request.getContextPath() %>/DoctorPrescriptionServlet?action=new&patientId=<%= appt.getPatientId() %>" class="btn btn-secondary">Write Prescription</a>
+                    <% if (!"ACCEPTED".equalsIgnoreCase(appt.getStatus()) || isOnlineAppt) { %>
+                        <a href="<%= request.getContextPath() %>/DoctorPrescriptionServlet?action=new&patientId=<%= appt.getPatientId() %>&appointmentId=<%= appt.getAppointmentId() %>" class="btn btn-secondary">Write Prescription</a>
+                    <% } %>
                 </div>
             </div>
 

@@ -13,6 +13,15 @@ public class Orders {
     double totalAmount;
     String orderStatus;
     String deliveryAddress;
+    java.util.List<java.util.Map<String, Object>> items = new java.util.ArrayList<>();
+
+    public java.util.List<java.util.Map<String, Object>> getItems() {
+        return items;
+    }
+
+    public void setItems(java.util.List<java.util.Map<String, Object>> items) {
+        this.items = items;
+    }
 
     public int getOrderId() {
         return orderId;
@@ -108,6 +117,10 @@ public class Orders {
             }
             o.setOrderStatus((String) map.get("orderStatus"));
             o.setDeliveryAddress((String) map.get("deliveryAddress"));
+            o.setPatientName((String) map.get("patientName"));
+            if (map.get("items") != null) {
+                o.setItems((java.util.List<java.util.Map<String, Object>>) map.get("items"));
+            }
             orderList.add(o);
         }
         return orderList;
@@ -128,6 +141,10 @@ public class Orders {
         }
         o.setOrderStatus((String) map.get("orderStatus"));
         o.setDeliveryAddress((String) map.get("deliveryAddress"));
+        o.setPatientName((String) map.get("patientName"));
+        if (map.get("items") != null) {
+            o.setItems((java.util.List<java.util.Map<String, Object>>) map.get("items"));
+        }
         return o;
     }
 

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniHealth • All 20 Tables A4 ER Diagram (Peter Chen Notation)</title>
+    <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+    <style>
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 4mm;
+            }
+            body {
+                background: #FFFFFF !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-container {
+                width: 100% !important;
+                height: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            svg {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+        .canvas-bg {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+        }
+        .a4-paper {
+            aspect-ratio: 1.4142 / 1;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 h-full flex flex-col font-sans antialiased overflow-hidden">
+
+    <!-- TOP TOOLBAR (NO-PRINT) -->
+    <header class="no-print bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shadow-sm z-30 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                ⚕️
+            </div>
+            <div>
+                <h1 class="text-base font-bold text-slate-900 leading-tight">OmniHealth • Complete 20-Table A4 ER Diagram</h1>
+                <p class="text-xs text-slate-500">Peter Chen Classic Notation • All 20 Database Entities • Optimized for A4 Landscape Print (297 × 210 mm)</p>
+            </div>
+        </div>
+
+        <!-- ACTIONS & ZOOM CONTROLS -->
+        <div class="flex items-center space-x-2">
+            <div class="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200 text-xs font-medium space-x-1">
+                <button onclick="zoomOut()" title="Zoom Out" class="p-1.5 hover:bg-white rounded text-slate-700 hover:shadow-xs transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                </button>
+                <span id="zoomLevel" class="px-2 font-mono text-slate-800 font-semibold">100%</span>
+                <button onclick="zoomIn()" title="Zoom In" class="p-1.5 hover:bg-white rounded text-slate-700 hover:shadow-xs transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <button onclick="resetZoom()" title="Reset Zoom" class="px-2 py-1 hover:bg-white rounded text-slate-700 transition">
+                    Fit
+                </button>
+            </div>
+
+            <!-- Print Button -->
+            <button onclick="window.print()" class="flex items-center space-x-1.5 bg-teal-600 hover:bg-teal-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition active:scale-95">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>Print / Save A4 PDF</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- WORKSPACE CANVAS -->
+    <main id="canvasContainer" class="flex-1 canvas-bg overflow-auto p-6 flex items-center justify-center relative">
+        <div id="paperWrapper" class="a4-paper print-container bg-white rounded-lg transition-transform duration-150 origin-center max-w-[1380px] w-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 1980" width="100%" height="100%" style="background-color: #FFFFFF; font-family: 'Segoe UI', Arial, Helvetica, sans-serif;">
+<defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+        <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+    <style>
+        .title { font-size: 28px; font-weight: 800; fill: #1E293B; }
+        .subtitle { font-size: 15px; fill: #64748B; }
+        .ent-text { font-size: 14.5px; font-weight: 700; fill: #0E6251; text-anchor: middle; dominant-baseline: central; }
+        .rel-text { font-size: 13px; font-weight: 700; fill: #78281F; text-anchor: middle; dominant-baseline: central; }
+        .att-text { font-size: 11.5px; font-weight: 500; fill: #2C3E50; text-anchor: middle; dominant-baseline: central; }
+        .att-pk { font-size: 11.5px; font-weight: 700; fill: #873600; text-anchor: middle; dominant-baseline: central; text-decoration: underline; }
+        .card-box { fill: #34495E; rx: 4px; ry: 4px; }
+        .card-text { font-size: 11px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; dominant-baseline: central; }
+        .line-att { stroke: #7F8C8D; stroke-width: 1.4; stroke-linecap: round; }
+        .line-rel { stroke: #475569; stroke-width: 2.0; stroke-linecap: round; }
+        .legend-box { fill: #F8FAFC; stroke: #E2E8F0; stroke-width: 1.5; rx: 8px; }
+        .legend-title { font-size: 14px; font-weight: 700; fill: #334155; }
+        .legend-text { font-size: 12.5px; fill: #475569; }
+    </style>
+</defs>
+
+<!-- HEADER BANNER -->
+<rect x="40" y="25" width="2720" height="65" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5" />
+<text x="65" y="55" class="title">OmniHealth • Online Medical System — Complete 20-Table Entity Relationship (ER) Model</text>
+<text x="65" y="75" class="subtitle">Peter Chen Classic Notation • All 20 Normalized Database Entities • Optimized for A4 Landscape Print (297mm × 210mm)</text>
+<rect x="2500" y="38" width="230" height="38" rx="6" fill="#0D9488" />
+<text x="2615" y="62" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-size="14" font-weight="700">20 Tables • A4 Standard</text>
+
+<!-- 1. LINES: ENTITY TO ATTRIBUTES -->
+<line x1="900" y1="220" x2="900" y2="130" class="line-att" />
+<line x1="900" y1="220" x2="770" y2="130" class="line-att" />
+<line x1="900" y1="220" x2="1030" y2="130" class="line-att" />
+<line x1="900" y1="220" x2="900" y2="310" class="line-att" />
+<line x1="900" y1="220" x2="770" y2="270" class="line-att" />
+<line x1="280" y1="220" x2="280" y2="130" class="line-att" />
+<line x1="280" y1="220" x2="140" y2="150" class="line-att" />
+<line x1="280" y1="220" x2="140" y2="260" class="line-att" />
+<line x1="280" y1="220" x2="280" y2="310" class="line-att" />
+<line x1="2480" y1="130" x2="2330" y2="70" class="line-att" />
+<line x1="2480" y1="130" x2="2480" y2="60" class="line-att" />
+<line x1="2480" y1="130" x2="2630" y2="70" class="line-att" />
+<line x1="2480" y1="260" x2="2380" y2="320" class="line-att" />
+<line x1="2480" y1="260" x2="2520" y2="320" class="line-att" />
+<line x1="2480" y1="260" x2="2670" y2="230" class="line-att" />
+<line x1="2480" y1="260" x2="2670" y2="290" class="line-att" />
+<line x1="1900" y1="280" x2="1790" y2="190" class="line-att" />
+<line x1="1900" y1="280" x2="1950" y2="190" class="line-att" />
+<line x1="1900" y1="280" x2="1760" y2="250" class="line-att" />
+<line x1="1900" y1="280" x2="1760" y2="330" class="line-att" />
+<line x1="2480" y1="400" x2="2350" y2="460" class="line-att" />
+<line x1="2480" y1="400" x2="2490" y2="460" class="line-att" />
+<line x1="2480" y1="400" x2="2660" y2="410" class="line-att" />
+<line x1="2480" y1="540" x2="2350" y2="610" class="line-att" />
+<line x1="2480" y1="540" x2="2490" y2="610" class="line-att" />
+<line x1="2480" y1="540" x2="2660" y2="520" class="line-att" />
+<line x1="2480" y1="540" x2="2660" y2="580" class="line-att" />
+<line x1="450" y1="660" x2="320" y2="580" class="line-att" />
+<line x1="450" y1="660" x2="450" y2="560" class="line-att" />
+<line x1="450" y1="660" x2="580" y2="580" class="line-att" />
+<line x1="450" y1="660" x2="320" y2="720" class="line-att" />
+<line x1="450" y1="660" x2="450" y2="740" class="line-att" />
+<line x1="450" y1="660" x2="580" y2="720" class="line-att" />
+<line x1="200" y1="880" x2="100" y2="810" class="line-att" />
+<line x1="200" y1="880" x2="240" y2="810" class="line-att" />
+<line x1="200" y1="880" x2="100" y2="950" class="line-att" />
+<line x1="200" y1="880" x2="240" y2="950" class="line-att" />
+<line x1="200" y1="880" x2="320" y2="890" class="line-att" />
+<line x1="1200" y1="660" x2="1100" y2="580" class="line-att" />
+<line x1="1200" y1="660" x2="1230" y2="570" class="line-att" />
+<line x1="1200" y1="660" x2="1340" y2="610" class="line-att" />
+<line x1="1200" y1="660" x2="1100" y2="740" class="line-att" />
+<line x1="1200" y1="660" x2="1240" y2="740" class="line-att" />
+<line x1="1750" y1="660" x2="1680" y2="580" class="line-att" />
+<line x1="1750" y1="660" x2="1820" y2="580" class="line-att" />
+<line x1="1750" y1="660" x2="1680" y2="740" class="line-att" />
+<line x1="1750" y1="660" x2="1820" y2="740" class="line-att" />
+<line x1="2280" y1="760" x2="2170" y2="710" class="line-att" />
+<line x1="2280" y1="760" x2="2300" y2="700" class="line-att" />
+<line x1="2280" y1="760" x2="2440" y2="740" class="line-att" />
+<line x1="2280" y1="760" x2="2440" y2="800" class="line-att" />
+<line x1="2320" y1="980" x2="2480" y2="920" class="line-att" />
+<line x1="2320" y1="980" x2="2530" y2="980" class="line-att" />
+<line x1="2320" y1="980" x2="2480" y2="1050" class="line-att" />
+<line x1="2320" y1="980" x2="2330" y2="1070" class="line-att" />
+<line x1="1100" y1="1200" x2="990" y2="1120" class="line-att" />
+<line x1="1100" y1="1200" x2="1130" y2="1120" class="line-att" />
+<line x1="1100" y1="1200" x2="990" y2="1280" class="line-att" />
+<line x1="1100" y1="1200" x2="1130" y2="1280" class="line-att" />
+<line x1="1750" y1="1200" x2="1670" y2="1120" class="line-att" />
+<line x1="1750" y1="1200" x2="1810" y2="1120" class="line-att" />
+<line x1="1750" y1="1200" x2="1670" y2="1280" class="line-att" />
+<line x1="1750" y1="1200" x2="1810" y2="1280" class="line-att" />
+<line x1="1750" y1="1200" x2="1930" y2="1200" class="line-att" />
+<line x1="450" y1="1200" x2="320" y2="1130" class="line-att" />
+<line x1="450" y1="1200" x2="450" y2="1110" class="line-att" />
+<line x1="450" y1="1200" x2="320" y2="1270" class="line-att" />
+<line x1="450" y1="1200" x2="450" y2="1290" class="line-att" />
+<line x1="1100" y1="1460" x2="980" y2="1550" class="line-att" />
+<line x1="1100" y1="1460" x2="1100" y2="1570" class="line-att" />
+<line x1="1100" y1="1460" x2="1220" y2="1550" class="line-att" />
+<line x1="1100" y1="1460" x2="1250" y2="1470" class="line-att" />
+<line x1="350" y1="1680" x2="220" y2="1620" class="line-att" />
+<line x1="350" y1="1680" x2="360" y2="1600" class="line-att" />
+<line x1="350" y1="1680" x2="220" y2="1740" class="line-att" />
+<line x1="350" y1="1680" x2="360" y2="1760" class="line-att" />
+<line x1="1550" y1="1750" x2="1440" y2="1820" class="line-att" />
+<line x1="1550" y1="1750" x2="1580" y2="1830" class="line-att" />
+<line x1="1550" y1="1750" x2="1700" y2="1750" class="line-att" />
+<line x1="950" y1="1750" x2="860" y2="1820" class="line-att" />
+<line x1="950" y1="1750" x2="1040" y2="1820" class="line-att" />
+<!-- 2. LINES: ENTITY TO RELATIONSHIPS -->
+<line x1="900" y1="220" x2="590" y2="220" class="line-rel" />
+<line x1="280" y1="220" x2="590" y2="220" class="line-rel" />
+<g transform="translate(777, 211)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(374, 211)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="900" y1="220" x2="1400" y2="250" class="line-rel" />
+<line x1="1900" y1="280" x2="1400" y2="250" class="line-rel" />
+<g transform="translate(1061, 221)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1711, 260)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<line x1="2480" y1="130" x2="2180" y2="180" class="line-rel" />
+<line x1="1900" y1="280" x2="2180" y2="180" class="line-rel" />
+<g transform="translate(2361, 138)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1984, 236)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="2480" y1="260" x2="2180" y2="270" class="line-rel" />
+<line x1="1900" y1="280" x2="2180" y2="270" class="line-rel" />
+<g transform="translate(2361, 254)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<g transform="translate(1984, 267)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1900" y1="280" x2="2180" y2="360" class="line-rel" />
+<line x1="2480" y1="400" x2="2180" y2="360" class="line-rel" />
+<g transform="translate(1984, 299)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(2361, 377)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1900" y1="280" x2="2180" y2="470" class="line-rel" />
+<line x1="2480" y1="540" x2="2180" y2="470" class="line-rel" />
+<g transform="translate(1984, 337)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(2361, 506)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="450" y1="660" x2="820" y2="660" class="line-rel" />
+<line x1="1200" y1="660" x2="820" y2="660" class="line-rel" />
+<g transform="translate(565, 651)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1053, 651)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1900" y1="280" x2="1550" y2="470" class="line-rel" />
+<line x1="1200" y1="660" x2="1550" y2="470" class="line-rel" />
+<g transform="translate(1763, 337)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1308, 584)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="450" y1="660" x2="310" y2="780" class="line-rel" />
+<line x1="200" y1="880" x2="310" y2="780" class="line-rel" />
+<g transform="translate(387, 693)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<g transform="translate(224, 836)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1200" y1="660" x2="1470" y2="660" class="line-rel" />
+<line x1="1750" y1="660" x2="1470" y2="660" class="line-rel" />
+<g transform="translate(1280, 651)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1638, 651)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<line x1="1750" y1="660" x2="2010" y2="710" class="line-rel" />
+<line x1="2280" y1="760" x2="2010" y2="710" class="line-rel" />
+<g transform="translate(1827, 668)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<g transform="translate(2171, 733)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">0..1</text>
+    </g>
+<line x1="2280" y1="760" x2="2280" y2="880" class="line-rel" />
+<line x1="2320" y1="980" x2="2280" y2="880" class="line-rel" />
+<g transform="translate(2266, 793)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(2292, 936)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1..N</text>
+    </g>
+<line x1="1750" y1="1200" x2="2040" y2="1090" class="line-rel" />
+<line x1="2320" y1="980" x2="2040" y2="1090" class="line-rel" />
+<g transform="translate(1837, 1152)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(2208, 1009)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1100" y1="1200" x2="1420" y2="1200" class="line-rel" />
+<line x1="1750" y1="1200" x2="1420" y2="1200" class="line-rel" />
+<g transform="translate(1198, 1191)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1620, 1191)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="450" y1="660" x2="450" y2="950" class="line-rel" />
+<line x1="450" y1="1200" x2="450" y2="950" class="line-rel" />
+<g transform="translate(436, 752)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(436, 1103)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="1100" y1="1200" x2="780" y2="1200" class="line-rel" />
+<line x1="450" y1="1200" x2="780" y2="1200" class="line-rel" />
+<g transform="translate(974, 1191)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(551, 1191)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="450" y1="1200" x2="760" y2="1360" class="line-rel" />
+<line x1="1100" y1="1460" x2="760" y2="1360" class="line-rel" />
+<g transform="translate(544, 1247)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(967, 1416)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1..N</text>
+    </g>
+<line x1="1750" y1="1200" x2="1440" y2="1350" class="line-rel" />
+<line x1="1100" y1="1460" x2="1440" y2="1350" class="line-rel" />
+<g transform="translate(1627, 1243)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1205, 1412)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">N</text>
+    </g>
+<line x1="350" y1="1680" x2="650" y2="1720" class="line-rel" />
+<line x1="950" y1="1750" x2="650" y2="1720" class="line-rel" />
+<g transform="translate(441, 1685)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(831, 1730)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1..N</text>
+    </g>
+<line x1="1550" y1="1750" x2="1250" y2="1750" class="line-rel" />
+<line x1="950" y1="1750" x2="1250" y2="1750" class="line-rel" />
+<g transform="translate(1431, 1741)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1</text>
+    </g>
+<g transform="translate(1041, 1741)">
+        <rect width="28" height="18" class="card-box" />
+        <text x="14" y="9" class="card-text">1..N</text>
+    </g>
+<!-- 3. ATTRIBUTE OVALS -->
+<g transform="translate(900, 130)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">user_id</text>
+        </g>
+<g transform="translate(770, 130)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">name</text>
+        </g>
+<g transform="translate(1030, 130)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">email</text>
+        </g>
+<g transform="translate(900, 310)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">role</text>
+        </g>
+<g transform="translate(770, 270)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">status</text>
+        </g>
+<g transform="translate(280, 130)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="76" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">notification_id</text>
+        </g>
+<g transform="translate(140, 150)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">title</text>
+        </g>
+<g transform="translate(140, 260)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">type</text>
+        </g>
+<g transform="translate(280, 310)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">is_read</text>
+        </g>
+<g transform="translate(2330, 70)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="85" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">specialization_id</text>
+        </g>
+<g transform="translate(2480, 60)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">name</text>
+        </g>
+<g transform="translate(2630, 70)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">description</text>
+        </g>
+<g transform="translate(2380, 320)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="50" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">clinic_id</text>
+        </g>
+<g transform="translate(2520, 320)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">clinic_name</text>
+        </g>
+<g transform="translate(2670, 230)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">city</text>
+        </g>
+<g transform="translate(2670, 290)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">phone</text>
+        </g>
+<g transform="translate(1790, 190)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="50" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">doctor_id</text>
+        </g>
+<g transform="translate(1950, 190)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="72" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">license_number</text>
+        </g>
+<g transform="translate(1760, 250)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">experience</text>
+        </g>
+<g transform="translate(1760, 330)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="80" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">consultation_fee</text>
+        </g>
+<g transform="translate(2350, 460)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">document_id</text>
+        </g>
+<g transform="translate(2490, 460)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="67" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">document_type</text>
+        </g>
+<g transform="translate(2660, 410)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="93" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">verification_status</text>
+        </g>
+<g transform="translate(2350, 610)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="76" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">availability_id</text>
+        </g>
+<g transform="translate(2490, 610)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">day_of_week</text>
+        </g>
+<g transform="translate(2660, 520)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">start_time</text>
+        </g>
+<g transform="translate(2660, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">end_time</text>
+        </g>
+<g transform="translate(320, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">patient_id</text>
+        </g>
+<g transform="translate(450, 560)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">name</text>
+        </g>
+<g transform="translate(580, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">email</text>
+        </g>
+<g transform="translate(320, 720)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">contact</text>
+        </g>
+<g transform="translate(450, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">blood_group</text>
+        </g>
+<g transform="translate(580, 720)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">gender</text>
+        </g>
+<g transform="translate(100, 810)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="63" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">emergency_id</text>
+        </g>
+<g transform="translate(240, 810)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="72" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">emergency_type</text>
+        </g>
+<g transform="translate(100, 950)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">location</text>
+        </g>
+<g transform="translate(240, 950)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">severity</text>
+        </g>
+<g transform="translate(320, 890)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">status</text>
+        </g>
+<g transform="translate(1100, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="72" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">appointment_id</text>
+        </g>
+<g transform="translate(1230, 570)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="80" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">appointment_date</text>
+        </g>
+<g transform="translate(1340, 610)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="80" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">appointment_time</text>
+        </g>
+<g transform="translate(1100, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">status</text>
+        </g>
+<g transform="translate(1240, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="80" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">appointment_type</text>
+        </g>
+<g transform="translate(1680, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="76" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">consultation_id</text>
+        </g>
+<g transform="translate(1820, 580)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="93" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">consultation_status</text>
+        </g>
+<g transform="translate(1680, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="63" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">meeting_link</text>
+        </g>
+<g transform="translate(1820, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">notes</text>
+        </g>
+<g transform="translate(2170, 710)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="76" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">prescription_id</text>
+        </g>
+<g transform="translate(2300, 700)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="85" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">prescription_date</text>
+        </g>
+<g transform="translate(2440, 740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="50" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">diagnosis</text>
+        </g>
+<g transform="translate(2440, 800)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">advice</text>
+        </g>
+<g transform="translate(2480, 920)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="98" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">prescription_item_id</text>
+        </g>
+<g transform="translate(2530, 980)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">dosage</text>
+        </g>
+<g transform="translate(2480, 1050)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="50" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">frequency</text>
+        </g>
+<g transform="translate(2330, 1070)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">duration</text>
+        </g>
+<g transform="translate(990, 1120)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">pharmacy_id</text>
+        </g>
+<g transform="translate(1130, 1120)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">name</text>
+        </g>
+<g transform="translate(990, 1280)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="72" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">license_number</text>
+        </g>
+<g transform="translate(1130, 1280)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">address</text>
+        </g>
+<g transform="translate(1670, 1120)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="59" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">medicine_id</text>
+        </g>
+<g transform="translate(1810, 1120)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="67" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">medicine_name</text>
+        </g>
+<g transform="translate(1670, 1280)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">category</text>
+        </g>
+<g transform="translate(1810, 1280)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">price</text>
+        </g>
+<g transform="translate(1930, 1200)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="72" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">stock_quantity</text>
+        </g>
+<g transform="translate(320, 1130)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">order_id</text>
+        </g>
+<g transform="translate(450, 1110)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">order_date</text>
+        </g>
+<g transform="translate(320, 1270)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="63" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">total_amount</text>
+        </g>
+<g transform="translate(450, 1290)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="63" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">order_status</text>
+        </g>
+<g transform="translate(980, 1550)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="67" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">order_item_id</text>
+        </g>
+<g transform="translate(1100, 1570)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">quantity</text>
+        </g>
+<g transform="translate(1220, 1550)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">unit_price</text>
+        </g>
+<g transform="translate(1250, 1470)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">subtotal</text>
+        </g>
+<g transform="translate(220, 1620)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">rule_id</text>
+        </g>
+<g transform="translate(360, 1600)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="89" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">possible_condition</text>
+        </g>
+<g transform="translate(220, 1740)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">specialist</text>
+        </g>
+<g transform="translate(360, 1760)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">severity</text>
+        </g>
+<g transform="translate(1440, 1820)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">symptom_id</text>
+        </g>
+<g transform="translate(1580, 1830)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="63" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">symptom_name</text>
+        </g>
+<g transform="translate(1700, 1750)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" />
+            <text x="0" y="0" class="att-text">severity</text>
+        </g>
+<g transform="translate(860, 1820)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="46" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">rule_id</text>
+        </g>
+<g transform="translate(1040, 1820)" filter="url(#shadow)">
+            <ellipse cx="0" cy="0" rx="55" ry="16" fill="#FEF3C7" stroke="#D97706" stroke-width="2.2" />
+            <text x="0" y="0" class="att-pk">symptom_id</text>
+        </g>
+<!-- 4. RELATIONSHIP DIAMONDS -->
+<g filter="url(#shadow)">
+        <polygon points="590,195 650,220 590,245 530,220" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="590" y="220" class="rel-text">Receives</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1400,225 1465,250 1400,275 1335,250" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1400" y="250" class="rel-text">Authenticates</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2180,155 2240,180 2180,205 2120,180" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2180" y="180" class="rel-text">Categorizes</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2180,245 2235,270 2180,295 2125,270" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2180" y="270" class="rel-text">Hosts</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2180,335 2235,360 2180,385 2125,360" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2180" y="360" class="rel-text">Submits</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2180,445 2235,470 2180,495 2125,470" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2180" y="470" class="rel-text">Defines</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="820,635 875,660 820,685 765,660" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="820" y="660" class="rel-text">Books</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1550,445 1605,470 1550,495 1495,470" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1550" y="470" class="rel-text">Attends</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="310,755 365,780 310,805 255,780" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="310" y="780" class="rel-text">Triggers</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1470,635 1535,660 1470,685 1405,660" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1470" y="660" class="rel-text">Transitions To</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2010,685 2065,710 2010,735 1955,710" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2010" y="710" class="rel-text">Issues</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2280,855 2335,880 2280,905 2225,880" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2280" y="880" class="rel-text">Contains</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="2040,1065 2105,1090 2040,1115 1975,1090" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="2040" y="1090" class="rel-text">Prescribed In</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1420,1175 1475,1200 1420,1225 1365,1200" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1420" y="1200" class="rel-text">Stocks</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="450,925 505,950 450,975 395,950" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="450" y="950" class="rel-text">Places</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="780,1175 835,1200 780,1225 725,1200" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="780" y="1200" class="rel-text">Fulfills</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="760,1335 815,1360 760,1385 705,1360" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="760" y="1360" class="rel-text">Contains</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1440,1325 1500,1350 1440,1375 1380,1350" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1440" y="1350" class="rel-text">Ordered In</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="650,1695 710,1720 650,1745 590,1720" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="650" y="1720" class="rel-text">Evaluates</text>
+    </g>
+<g filter="url(#shadow)">
+        <polygon points="1250,1725 1305,1750 1250,1775 1195,1750" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2.0" />
+        <text x="1250" y="1750" class="rel-text">Maps</text>
+    </g>
+<!-- 5. ENTITY RECTANGLES -->
+<g filter="url(#shadow)">
+        <rect x="825" y="197" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="900" y="220" class="ent-text">USERS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="200" y="197" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="280" y="220" class="ent-text">NOTIFICATIONS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2395" y="107" width="170" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2480" y="130" class="ent-text">SPECIALIZATIONS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2405" y="237" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2480" y="260" class="ent-text">CLINICS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1825" y="257" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1900" y="280" class="ent-text">DOCTORS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2400" y="377" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2480" y="400" class="ent-text">DOCTOR_DOCS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2400" y="517" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2480" y="540" class="ent-text">DOCTOR_AVAIL</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="375" y="637" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="450" y="660" class="ent-text">PATIENTS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="115" y="857" width="170" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="200" y="880" class="ent-text">EMERGENCY_REQS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1120" y="637" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1200" y="660" class="ent-text">APPOINTMENTS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1670" y="637" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1750" y="660" class="ent-text">CONSULTATIONS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2200" y="737" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2280" y="760" class="ent-text">PRESCRIPTIONS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="2225" y="957" width="190" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="2320" y="980" class="ent-text">PRESCRIPTION_ITEMS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1025" y="1177" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1100" y="1200" class="ent-text">PHARMACIES</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1675" y="1177" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1750" y="1200" class="ent-text">MEDICINES</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="375" y="1177" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="450" y="1200" class="ent-text">ORDERS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1025" y="1437" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1100" y="1460" class="ent-text">ORDER_ITEMS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="265" y="1657" width="170" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="350" y="1680" class="ent-text">ASSISTANT_RULES</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="1475" y="1727" width="150" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="1550" y="1750" class="ent-text">SYMPTOMS</text>
+    </g>
+<g filter="url(#shadow)">
+        <rect x="870" y="1727" width="160" height="46" rx="6" ry="6" fill="#E8F8F5" stroke="#16A085" stroke-width="2.2" />
+        <text x="950" y="1750" class="ent-text">RULE_SYMPTOMS</text>
+    </g>
+
+<!-- 6. CHEN NOTATION LEGEND -->
+<g transform="translate(60, 1880)">
+    <rect width="2680" height="70" class="legend-box" />
+    <text x="25" y="28" class="legend-title">Peter Chen Classic ER Notation Legend (All 20 Normalized Tables Represented):</text>
+    
+    <rect x="25" y="38" width="50" height="22" rx="3" fill="#E8F8F5" stroke="#16A085" stroke-width="1.5" />
+    <text x="85" y="52" class="legend-text"><strong>Entity Set</strong> (Table: Rectangle)</text>
+    
+    <polygon points="460,38 475,49 460,60 445,49" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.5" />
+    <text x="490" y="52" class="legend-text"><strong>Relationship</strong> (Association: Diamond)</text>
+    
+    <ellipse cx="880" cy="49" rx="25" ry="11" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.2" />
+    <text x="915" y="52" class="legend-text"><strong>Attribute</strong> (Column: Oval)</text>
+    
+    <ellipse cx="1250" cy="49" rx="25" ry="11" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" />
+    <text x="1250" y="52" font-size="10" font-weight="700" fill="#873600" text-anchor="middle" dominant-baseline="central" text-decoration="underline">PK</text>
+    <text x="1285" y="52" class="legend-text"><strong>Primary Key</strong> (Underlined Oval)</text>
+    
+    <rect x="1680" y="40" width="22" height="18" rx="3" fill="#34495E" />
+    <text x="1691" y="50" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">N</text>
+    <text x="1715" y="52" class="legend-text"><strong>Cardinality</strong> (1:1, 1:N, M:N)</text>
+    
+    <text x="2100" y="52" class="legend-text" font-weight="bold" fill="#0E6251">✓ Total 20/20 Tables Active in online_medical_db</text>
+</g>
+</svg>
+        </div>
+    </main>
+
+    <!-- FOOTER / STATS BAR -->
+    <footer class="no-print bg-white border-t border-slate-200 px-6 py-2 flex items-center justify-between text-xs text-slate-500 shrink-0">
+        <div class="flex items-center space-x-6">
+            <span><strong>Notation:</strong> Peter Chen (Rectangles, Diamonds, Ovals)</span>
+            <span class="text-teal-700 font-bold">✓ Total 20/20 Tables Active</span>
+            <span><strong>Attributes:</strong> 82 Ovals (PKs Underlined)</span>
+            <span><strong>Print Target:</strong> A4 Landscape (1-Page Full Fit)</span>
+        </div>
+        <div class="text-slate-400">OmniHealth Production Database: online_medical_db</div>
+    </footer>
+
+    <script>
+        let scale = 1.0;
+        const paper = document.getElementById('paperWrapper');
+        const zoomLabel = document.getElementById('zoomLevel');
+
+        function updateTransform() {
+            paper.style.transform = `scale(${scale})`;
+            zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+        }
+
+        function zoomIn() {
+            if (scale < 2.5) {
+                scale += 0.15;
+                updateTransform();
+            }
+        }
+
+        function zoomOut() {
+            if (scale > 0.4) {
+                scale -= 0.15;
+                updateTransform();
+            }
+        }
+
+        function resetZoom() {
+            scale = 1.0;
+            updateTransform();
+        }
+    </script>
+</body>
+</html>

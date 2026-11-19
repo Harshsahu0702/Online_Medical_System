@@ -40,12 +40,14 @@ public class DoctorDashboardServlet extends HttpServlet {
             Map<String, Integer> stats = appointmentDAO.getDoctorDashboardStats(doctorId);
             List<Appointment> pendingAppointments = appointmentDAO.getPendingAppointments(doctorId);
             List<Appointment> todayAppointments = appointmentDAO.getTodayAppointments(doctorId);
+            List<Appointment> doctorQueue = appointmentDAO.getDoctorQueue(doctorId);
             int unreadNotifications = notificationDAO.getUnreadCount(userId);
 
             request.setAttribute("doctor", doctor);
             request.setAttribute("stats", stats);
             request.setAttribute("pendingAppointments", pendingAppointments);
             request.setAttribute("todayAppointments", todayAppointments);
+            request.setAttribute("doctorQueue", doctorQueue);
             request.setAttribute("unreadNotifications", unreadNotifications);
 
             request.getRequestDispatcher("/doctor/dashboard.jsp").forward(request, response);

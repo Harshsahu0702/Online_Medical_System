@@ -26,6 +26,8 @@
         <div class="alert alert-success">Appointment accepted successfully!</div>
     <% } else if ("rejected".equalsIgnoreCase(msgParam)) { %>
         <div class="alert alert-danger">Appointment marked as rejected.</div>
+    <% } else if ("completed".equalsIgnoreCase(msgParam)) { %>
+        <div class="alert alert-success">Appointment marked as completed successfully!</div>
     <% } %>
 
     <div class="card">
@@ -73,7 +75,10 @@
                                 <div style="font-size: 12px; color: #64748b;"><%= a.getPatientEmail() != null ? a.getPatientEmail() : "" %></div>
                             </td>
                             <td>
-                                <span class="badge" style="background:#e0f2fe; color:#0369a1;"><%= a.getAppointmentType() %></span>
+                                <% boolean isOnlineAppt = "ONLINE".equalsIgnoreCase(a.getAppointmentType()); %>
+                                <span class="badge" style="background:<%= isOnlineAppt ? "#e0f2fe; color:#0369a1;" : "#fef3c7; color:#92400e;" %>">
+                                    <%= isOnlineAppt ? "Online Video" : "In-Person Visit" %>
+                                </span>
                             </td>
                             <td><%= a.getReason() != null ? a.getReason() : "General Consultation" %></td>
                             <td>
@@ -91,11 +96,16 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <% boolean isOnline = "ONLINE".equalsIgnoreCase(a.getAppointmentType()); %>
                                     <% if ("PENDING".equalsIgnoreCase(a.getStatus())) { %>
                                         <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=accept&id=<%= a.getAppointmentId() %>" class="btn btn-success btn-sm">Accept</a>
                                         <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=reject&id=<%= a.getAppointmentId() %>" class="btn btn-danger btn-sm" onclick="return confirm('Reject this appointment request?');">Reject</a>
                                     <% } else if ("ACCEPTED".equalsIgnoreCase(a.getStatus())) { %>
-                                        <a href="<%= request.getContextPath() %>/DoctorConsultationServlet?action=start&appointmentId=<%= a.getAppointmentId() %>" class="btn btn-primary btn-sm">Start Consultation</a>
+                                        <% if (isOnline) { %>
+                                            <a href="<%= request.getContextPath() %>/DoctorConsultationServlet?action=start&appointmentId=<%= a.getAppointmentId() %>" class="btn btn-primary btn-sm">Start Consultation</a>
+                                        <% } else { %>
+                                            <a href="<%= request.getContextPath() %>/DoctorPrescriptionServlet?action=new&patientId=<%= a.getPatientId() %>&appointmentId=<%= a.getAppointmentId() %>" class="btn btn-primary btn-sm" style="background:#0284c7; border-color:#0284c7;">+ Add Prescription</a>
+                                        <% } %>
                                     <% } %>
                                     <a href="<%= request.getContextPath() %>/DoctorAppointmentServlet?action=view&id=<%= a.getAppointmentId() %>" class="btn btn-secondary btn-sm">Details</a>
                                 </div>

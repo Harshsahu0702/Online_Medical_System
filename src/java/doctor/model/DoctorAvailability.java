@@ -5,12 +5,21 @@ public class DoctorAvailability {
     private int availabilityId;
     private int doctorId;
     private String dayOfWeek;
+    private String availableDate;
     private String startTime;
     private String endTime;
     private String consultationType; // Online, Offline, Both
     private boolean isAvailable;
 
     public DoctorAvailability() {
+    }
+
+    public String getAvailableDate() {
+        return availableDate;
+    }
+
+    public void setAvailableDate(String availableDate) {
+        this.availableDate = availableDate;
     }
 
     public int getAvailabilityId() {

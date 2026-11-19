@@ -98,7 +98,7 @@
                                     </div>
 
                                     <div class="order-body">
-                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 14px;">
                                             <div>
                                                 <span style="font-size: 11px; text-transform: uppercase; color: var(--text-light); font-weight: 600; display: block; margin-bottom: 2px;">Pharmacy</span>
                                                 <strong style="color: var(--text-main); font-size: 13px;">
@@ -114,10 +114,60 @@
                                             </div>
                                             <div>
                                                 <span style="font-size: 11px; text-transform: uppercase; color: var(--text-light); font-weight: 600; display: block; margin-bottom: 2px;">Patient Name</span>
-                                                <span style="color: var(--text-body); font-size: 13px; font-weight: 500;">
-                                                    <%= ord.getPatientName() != null ? ord.getPatientName() : "-" %>
+                                                <span style="color: var(--text-body); font-size: 13px; font-weight: 600;">
+                                                    <%= (ord.getPatientName() != null && !ord.getPatientName().trim().isEmpty()) ? ord.getPatientName() : "Patient" %>
                                                 </span>
                                             </div>
+                                        </div>
+
+                                        <!-- Prescribed Medicines & Price Breakdown -->
+                                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px;">
+                                            <div style="padding: 10px 14px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="font-size: 15px;">💊</span>
+                                                    <span style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.03em;">Ordered Medicines</span>
+                                                </div>
+                                                <span style="font-size: 12px; color: #64748b; font-weight: 600;">
+                                                    <%= (ord.getItems() != null) ? ord.getItems().size() : 0 %> Item(s)
+                                                </span>
+                                            </div>
+
+                                            <% if (ord.getItems() != null && !ord.getItems().isEmpty()) { %>
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                                    <thead>
+                                                        <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 11px; text-transform: uppercase;">
+                                                            <th style="padding: 8px 14px; text-align: left; font-weight: 600;">Medicine Name</th>
+                                                            <th style="padding: 8px 14px; text-align: center; font-weight: 600;">Qty</th>
+                                                            <th style="padding: 8px 14px; text-align: right; font-weight: 600;">Unit Price</th>
+                                                            <th style="padding: 8px 14px; text-align: right; font-weight: 600;">Subtotal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for (java.util.Map<String, Object> item : ord.getItems()) { %>
+                                                            <tr style="border-bottom: 1px solid #f1f5f9; background: white;">
+                                                                <td style="padding: 9px 14px; color: #0f172a; font-weight: 600;">
+                                                                    <%= item.get("medicineName") %>
+                                                                </td>
+                                                                <td style="padding: 9px 14px; text-align: center;">
+                                                                    <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">
+                                                                        <%= item.get("quantity") %>
+                                                                    </span>
+                                                                </td>
+                                                                <td style="padding: 9px 14px; text-align: right; color: #64748b;">
+                                                                    ₹ <%= String.format("%.2f", (Double) item.get("unitPrice")) %>
+                                                                </td>
+                                                                <td style="padding: 9px 14px; text-align: right; color: #047857; font-weight: 700;">
+                                                                    ₹ <%= String.format("%.2f", (Double) item.get("subtotal")) %>
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            <% } else { %>
+                                                <div style="padding: 12px 14px; color: #94a3b8; font-size: 12px; font-style: italic;">
+                                                    Individual medicine item details not found for this order.
+                                                </div>
+                                            <% } %>
                                         </div>
                                     </div>
 

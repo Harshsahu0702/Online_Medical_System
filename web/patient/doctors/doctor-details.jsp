@@ -159,7 +159,24 @@
                                     <div class="availability-day">
 
                                         <div>
+                                            <%
+                                                String daDateStr = "";
+                                                if (da.getAvailableDate() != null && !da.getAvailableDate().trim().isEmpty()) {
+                                                    daDateStr = da.getAvailableDate();
+                                                } else if (da.getDay() != null) {
+                                                    try {
+                                                        java.time.LocalDate cDate = java.time.LocalDate.now();
+                                                        while (!cDate.getDayOfWeek().toString().equalsIgnoreCase(da.getDay())) {
+                                                            cDate = cDate.plusDays(1);
+                                                        }
+                                                        daDateStr = cDate.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"));
+                                                    } catch (Exception ignored) {}
+                                                }
+                                            %>
                                             <strong><%= da.getDay() %></strong>
+                                            <% if (!daDateStr.isEmpty()) { %>
+                                                <span style="color: #0284c7; font-weight: 600; font-size: 12px; margin-left: 4px;">(📅 <%= daDateStr %>)</span>
+                                            <% } %>
                                             <span><%= da.getConsultationType() %></span>
                                         </div>
 

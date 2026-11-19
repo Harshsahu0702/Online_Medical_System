@@ -24,7 +24,9 @@ public class OrderDAO {
             ps.setInt(1, pharmacyId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    orders.add(mapOrder(rs, con));
+                    Order ord = mapOrder(rs, con);
+                    ord.setItems(getOrderItems(ord.getOrderId()));
+                    orders.add(ord);
                 }
             }
         } catch (Exception e) {

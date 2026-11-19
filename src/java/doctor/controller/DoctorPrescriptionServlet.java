@@ -1,5 +1,6 @@
 package doctor.controller;
 
+import doctor.dao.AppointmentDAO;
 import doctor.dao.MedicineDAO;
 import doctor.dao.PatientDAO;
 import doctor.dao.PrescriptionDAO;
@@ -39,6 +40,7 @@ public class DoctorPrescriptionServlet extends HttpServlet {
         if ("new".equalsIgnoreCase(action)) {
             String patientIdStr = request.getParameter("patientId");
             String consultationIdStr = request.getParameter("consultationId");
+            String appointmentIdStr = request.getParameter("appointmentId");
 
             List<Medicine> medicines = medicineDAO.getActiveMedicines();
             request.setAttribute("medicines", medicines);
@@ -50,6 +52,10 @@ public class DoctorPrescriptionServlet extends HttpServlet {
 
             if (consultationIdStr != null && !consultationIdStr.isEmpty()) {
                 request.setAttribute("consultationId", consultationIdStr);
+            }
+
+            if (appointmentIdStr != null && !appointmentIdStr.isEmpty()) {
+                request.setAttribute("appointmentId", appointmentIdStr);
             }
 
             // Also load list of all patients for dropdown if patient is not preselected
@@ -90,6 +96,7 @@ public class DoctorPrescriptionServlet extends HttpServlet {
 
         try {
             String consultationIdStr = request.getParameter("consultationId");
+            String appointmentIdStr = request.getParameter("appointmentId");
             String patientIdStr = request.getParameter("patientId");
             String prescriptionDate = request.getParameter("prescriptionDate");
             String diagnosis = request.getParameter("diagnosis");
@@ -135,6 +142,15 @@ public class DoctorPrescriptionServlet extends HttpServlet {
             boolean success = prescriptionDAO.createPrescriptionWithItems(prescription, items);
 
             if (success) {
+                if (appointmentIdStr != null && !appointmentIdStr.trim().isEmpty()) {
+                    try {
+                        int appointmentId = Integer.parseInt(appointmentIdStr.trim());
+                        AppointmentDAO appointmentDAO = new AppointmentDAO();
+                        appointmentDAO.updateAppointmentStatus(appointmentId, doctorId, "COMPLETED");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 response.sendRedirect(request.getContextPath() + "/DoctorPrescriptionServlet?success=1");
             } else {
                 response.sendRedirect(request.getContextPath() + "/DoctorPrescriptionServlet?error=1");

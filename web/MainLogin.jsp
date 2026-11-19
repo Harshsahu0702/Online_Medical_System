@@ -4,32 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniHealth - Unified Medical &amp; Healthcare Portal</title>
+    <title>OmniHealth - Integrated Hospital &amp; Medical Care Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-emerald: #059669;
-            --primary-light: #10b981;
-            --primary-dark: #047857;
-            --primary-soft: #ecfdf5;
-            --primary-border: #a7f3d0;
-            --primary-glow: rgba(16, 185, 129, 0.25);
+            --brand-navy: #0b1e33;
+            --brand-navy-light: #162f4d;
+            --brand-teal: #088395;
+            --brand-teal-hover: #0a6f7e;
+            --brand-cyan: #059669;
+            --brand-surface: #ffffff;
+            --brand-bg: #f4f7fb;
 
-            --accent-teal: #0d9488;
-            --accent-cyan: #0284c7;
-            --accent-rose: #e11d48;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
 
-            --bg-page: #f8fafc;
-            --bg-white: #ffffff;
-            --text-heading: #0f172a;
-            --text-body: #475569;
-            --text-muted: #94a3b8;
-            --border-subtle: #e2e8f0;
-            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            --shadow-card: 0 20px 40px -15px rgba(5, 150, 105, 0.12), 0 0 0 1px rgba(16, 185, 129, 0.12);
+            --border-color: #e2e8f0;
+            --border-focus: #088395;
+            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --subtle-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
         }
 
         * {
@@ -39,489 +37,437 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 50%, #ecfdf5 100%);
-            color: var(--text-heading);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--brand-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(8, 131, 149, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.04) 0px, transparent 50%);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        /* Ambient Medical Background Blobs */
-        .ambient-blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.6;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .blob-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(240, 253, 244, 0) 70%);
-            top: -150px;
-            left: -150px;
-        }
-        .blob-2 {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(13, 148, 136, 0.18) 0%, rgba(240, 253, 244, 0) 70%);
-            bottom: -150px;
-            right: -100px;
-        }
-
-        /* HEADER */
-        .top-navbar {
-            position: relative;
-            z-index: 50;
-            padding: 1.1rem 3rem;
+        /* TOP HOSPITAL NAVBAR */
+        .portal-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.9rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .brand-box {
+        .brand-container {
             display: flex;
             align-items: center;
             gap: 0.85rem;
             text-decoration: none;
-            color: var(--text-heading);
+            color: var(--brand-navy);
         }
 
-        .brand-cross-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            border-radius: 12px;
+        .hospital-emblem {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #0b1e33 0%, #088395 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            box-shadow: 0 8px 16px -4px rgba(5, 150, 105, 0.35);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(8, 131, 149, 0.25);
         }
 
-        .brand-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.45rem;
+        .brand-text h1 {
+            font-size: 1.35rem;
             font-weight: 800;
-            letter-spacing: -0.025em;
-            color: #064e3b;
+            letter-spacing: -0.02em;
+            color: var(--brand-navy);
             line-height: 1.1;
         }
 
-        .brand-subtitle {
+        .brand-text p {
             font-size: 0.725rem;
-            color: #059669;
+            color: var(--brand-teal);
             font-weight: 700;
-            letter-spacing: 0.06em;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 1px;
         }
 
-        .nav-right {
+        .header-meta {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
-        .system-pill {
-            display: inline-flex;
+        .accreditation-tag {
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: #dcfce7;
-            border: 1px solid #86efac;
-            color: #166534;
-            padding: 0.4rem 0.95rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        .pulse-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #16a34a;
-            box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
-            animation: pulse-ring 1.8s infinite;
+        .accreditation-tag svg {
+            color: var(--brand-teal);
         }
 
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
-        }
-
-        .sos-nav-link {
+        .emergency-sos-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #ffe4e6;
-            color: #e11d48;
-            border: 1px solid #fecdd3;
-            padding: 0.45rem 1rem;
-            border-radius: 9999px;
+            gap: 0.45rem;
+            background: #dc2626;
+            color: #ffffff;
+            padding: 0.48rem 1.1rem;
+            border-radius: 6px;
             text-decoration: none;
             font-size: 0.825rem;
             font-weight: 700;
-            transition: all 0.2s;
+            letter-spacing: 0.02em;
+            transition: background 0.15s ease;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
         }
 
-        .sos-nav-link:hover {
-            background: #e11d48;
-            color: white;
+        .emergency-sos-btn:hover {
+            background: #b91c1c;
         }
 
-        /* MAIN HERO SPLIT WRAPPER */
-        .split-hero-container {
-            position: relative;
-            z-index: 10;
+        /* MAIN CONTENT LAYOUT */
+        .portal-main {
             flex: 1;
-            max-width: 1320px;
+            max-width: 1280px;
             width: 100%;
             margin: 0 auto;
-            padding: 2.5rem 3rem;
+            padding: 2.75rem 2rem;
             display: grid;
-            grid-template-columns: 1.15fr 1fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 3.5rem;
             align-items: center;
         }
 
-        @media (max-width: 1024px) {
-            .split-hero-container {
+        @media (max-width: 992px) {
+            .portal-main {
                 grid-template-columns: 1fr;
                 gap: 2.5rem;
-                padding: 2rem 1.5rem;
+                padding: 1.75rem 1.25rem;
+            }
+            .portal-header {
+                padding: 0.8rem 1.25rem;
+            }
+            .accreditation-tag {
+                display: none;
             }
         }
 
-        /* LEFT COLUMN: OMNIHEALTH BRANDING & FEATURES */
-        .left-content {
+        /* LEFT COLUMN: FORMAL CLINICAL OVERVIEW */
+        .overview-pane {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .badge-verified {
+        .overview-header-tag {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #ecfdf5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.825rem;
+            gap: 0.45rem;
+            background: rgba(8, 131, 149, 0.08);
+            color: var(--brand-teal);
+            border: 1px solid rgba(8, 131, 149, 0.2);
+            padding: 0.35rem 0.85rem;
+            border-radius: 4px;
+            font-size: 0.775rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
             width: fit-content;
         }
 
-        .hero-heading {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(2.5rem, 4.2vw, 3.8rem);
-            font-weight: 900;
-            line-height: 1.12;
-            letter-spacing: -0.03em;
-            color: #064e3b;
+        .overview-title {
+            font-size: clamp(2rem, 3.2vw, 2.75rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--brand-navy);
+            letter-spacing: -0.025em;
         }
 
-        .hero-heading span {
-            color: #059669;
-            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .overview-title span {
+            color: var(--brand-teal);
         }
 
-        .hero-description {
-            font-size: 1.05rem;
-            color: var(--text-body);
-            line-height: 1.65;
-            max-width: 540px;
+        .overview-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 520px;
         }
 
-        /* 4 Key Feature Badges Grid */
-        .features-grid {
+        /* CLINICAL SERVICES GRID */
+        .services-matrix {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.1rem;
+            gap: 1rem;
             margin-top: 0.5rem;
         }
 
-        @media (max-width: 640px) {
-            .features-grid {
+        @media (max-width: 600px) {
+            .services-matrix {
                 grid-template-columns: 1fr;
             }
         }
 
-        .feature-card-item {
-            background: var(--bg-white);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            border-radius: 16px;
-            padding: 1.15rem;
+        .service-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.15rem 1.2rem;
             display: flex;
             align-items: flex-start;
             gap: 0.85rem;
-            box-shadow: 0 4px 12px -2px rgba(5, 150, 105, 0.05);
-            transition: all 0.25s ease;
+            box-shadow: var(--subtle-shadow);
+            transition: all 0.2s ease;
         }
 
-        .feature-card-item:hover {
-            transform: translateY(-3px);
-            border-color: #10b981;
-            box-shadow: 0 10px 20px -3px rgba(5, 150, 105, 0.1);
+        .service-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+            transform: translateY(-2px);
         }
 
-        .feat-icon-box {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: #ecfdf5;
-            color: #059669;
+        .service-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: var(--brand-navy);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            border: 1px solid #e2e8f0;
         }
 
-        .feat-info h4 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
+        .service-details h4 {
+            font-size: 0.925rem;
             font-weight: 700;
-            color: #064e3b;
+            color: var(--brand-navy);
             margin-bottom: 0.2rem;
         }
 
-        .feat-info p {
+        .service-details p {
             font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
-        /* College Project Pill */
-        .college-tag-bar {
+        /* CLINICAL TRUST BAR */
+        .trust-metrics-strip {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 0.825rem;
-            color: #047857;
+            gap: 2rem;
             padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 0.5rem;
+        }
+
+        .metric-unit {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metric-unit strong {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--brand-navy);
+            line-height: 1;
+        }
+
+        .metric-unit span {
+            font-size: 0.725rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-top: 0.25rem;
             font-weight: 600;
         }
 
-        /* RIGHT COLUMN: GORGEOUS MEDICAL LOGIN CARD */
-        .right-content {
+        /* RIGHT COLUMN: AUTHENTICATION CONTAINER */
+        .login-card-container {
             display: flex;
             justify-content: center;
         }
 
-        .unified-login-card {
-            background: var(--bg-white);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 26px;
-            padding: 2.25rem 2.25rem 2rem 2.25rem;
+        .auth-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 2.2rem 2.2rem 2rem 2.2rem;
             width: 100%;
-            max-width: 480px;
-            box-shadow: 0 25px 50px -12px rgba(5, 150, 105, 0.15), 0 0 0 1px rgba(16, 185, 129, 0.1);
-            position: relative;
+            max-width: 460px;
+            box-shadow: var(--card-shadow);
         }
 
-        .card-header-area {
+        .auth-card-header {
             margin-bottom: 1.5rem;
-            text-align: center;
         }
 
-        .login-card-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.6rem;
+        .auth-title {
+            font-size: 1.45rem;
             font-weight: 800;
-            color: #064e3b;
+            color: var(--brand-navy);
             letter-spacing: -0.02em;
         }
 
-        .login-card-subtitle {
+        .auth-subtitle {
             font-size: 0.85rem;
             color: var(--text-muted);
             margin-top: 0.25rem;
         }
 
-        /* ROLE SELECTOR CHIPS / TABS */
-        .role-pill-selector {
+        /* PROFESSIONAL ROLE SEGMENT CONTROLLER */
+        .role-tabs-bar {
             display: flex;
             background: #f1f5f9;
             padding: 0.35rem;
-            border-radius: 14px;
-            gap: 0.3rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            gap: 0.25rem;
             margin-bottom: 1.75rem;
         }
 
-        .role-pill-btn {
+        .role-tab-btn {
             flex: 1;
-            padding: 0.55rem 0.4rem;
-            border-radius: 10px;
+            padding: 0.6rem 0.4rem;
+            border-radius: 7px;
             border: none;
             background: transparent;
             font-family: inherit;
-            font-size: 0.825rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #64748b;
+            color: var(--text-muted);
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.35rem;
-            transition: all 0.2s ease;
+            gap: 0.45rem;
+            white-space: nowrap;
+            transition: all 0.15s ease;
         }
 
-        .role-pill-btn:hover {
-            color: #064e3b;
+        .role-tab-btn svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            stroke-width: 2.2;
         }
 
-        .role-pill-btn.active {
-            background: var(--bg-white);
-            color: #059669;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        .role-tab-btn:hover {
+            color: var(--brand-navy);
+        }
+
+        .role-tab-btn.active {
+            background: #ffffff;
+            color: var(--brand-navy);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .role-tab-btn.active svg {
+            color: var(--brand-teal);
         }
 
         /* FORM CONTROLS */
-        .form-group-item {
+        .form-group {
             margin-bottom: 1.15rem;
         }
 
-        .form-label-text {
+        .form-label {
             display: block;
-            font-size: 0.825rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #334155;
+            color: var(--brand-navy);
             margin-bottom: 0.4rem;
         }
 
-        .input-wrapper {
+        .input-box {
             position: relative;
             display: flex;
             align-items: center;
         }
 
-        .input-icon {
+        .input-icon-left {
             position: absolute;
-            left: 1rem;
-            color: #94a3b8;
-            pointer-events: none;
+            left: 0.95rem;
+            color: var(--text-light);
             display: flex;
             align-items: center;
+            pointer-events: none;
         }
 
-        .custom-input {
+        .form-input {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.85rem;
-            border: 1.5px solid var(--border-subtle);
-            border-radius: 12px;
-            font-size: 0.925rem;
+            padding: 0.78rem 1rem 0.78rem 2.65rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-family: inherit;
-            color: var(--text-heading);
+            color: var(--text-primary);
             background: #ffffff;
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
-        .custom-input:focus {
-            border-color: #059669;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        .form-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(8, 131, 149, 0.12);
         }
 
-        .btn-green-submit {
-            width: 100%;
-            padding: 0.95rem;
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            color: white;
+        .toggle-password-btn {
+            position: absolute;
+            right: 0.9rem;
+            background: none;
             border: none;
-            border-radius: 12px;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.2rem;
+        }
+
+        .toggle-password-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .btn-submit-login {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--brand-navy);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
             font-family: inherit;
-            font-size: 0.975rem;
+            font-size: 0.925rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 6px 18px -2px rgba(5, 150, 105, 0.35);
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(11, 30, 51, 0.2);
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            text-decoration: none;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
         }
 
-        .btn-green-submit:hover {
-            background: linear-gradient(135deg, #047857 0%, #059669 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 22px -2px rgba(5, 150, 105, 0.4);
-        }
-
-        /* 1-CLICK DEMO VIVA BOX */
-        .viva-demo-box {
-            margin-top: 1.35rem;
-            background: #f0fdf4;
-            border: 1px dashed #86efac;
-            border-radius: 14px;
-            padding: 1rem 1.15rem;
-        }
-
-        .demo-top-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.45rem;
-        }
-
-        .demo-label {
-            font-size: 0.775rem;
-            font-weight: 800;
-            color: #166534;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .demo-badge-active {
-            background: #dcfce7;
-            color: #15803d;
-            font-size: 0.725rem;
-            font-weight: 700;
-            padding: 0.15rem 0.5rem;
-            border-radius: 9999px;
-        }
-
-        .demo-creds-text {
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: #334155;
-            line-height: 1.45;
-        }
-
-        .btn-autofill-action {
-            margin-top: 0.75rem;
-            width: 100%;
-            padding: 0.6rem;
-            background: #ffffff;
-            border: 1.5px solid #a7f3d0;
-            color: #047857;
-            border-radius: 10px;
-            font-size: 0.825rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            transition: all 0.2s;
-        }
-
-        .btn-autofill-action:hover {
-            background: #ecfdf5;
-            border-color: #059669;
-            color: #064e3b;
+        .btn-submit-login:hover {
+            background: #14355a;
         }
 
         /* ROLE SPECIFIC PANELS */
@@ -530,132 +476,213 @@
         }
         .auth-panel.show {
             display: block;
-            animation: fadeIn 0.25s ease-out;
+            animation: fadeIn 0.2s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .bottom-action-links {
-            margin-top: 1.25rem;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.825rem;
+        /* CLEAN ACCREDITED DEMO TEST HELPER */
+        .test-credential-helper {
+            margin-top: 1.35rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
         }
 
-        .bottom-action-links a {
-            color: #059669;
+        .test-cred-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.35rem;
+        }
+
+        .test-cred-title {
+            font-size: 0.725rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .test-cred-text {
+            font-family: 'Inter', monospace;
+            font-size: 0.8rem;
+            color: var(--brand-navy);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-quick-fill {
+            margin-top: 0.55rem;
+            width: 100%;
+            padding: 0.5rem;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--brand-navy);
+            border-radius: 6px;
+            font-size: 0.775rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            transition: all 0.15s;
+        }
+
+        .btn-quick-fill:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        /* CARD FOOTER LINKS */
+        .card-footer-links {
+            margin-top: 1.35rem;
+            padding-top: 1.15rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+
+        .card-footer-links a {
+            color: var(--brand-teal);
             text-decoration: none;
             font-weight: 600;
         }
 
-        .bottom-action-links a:hover {
+        .card-footer-links a:hover {
             text-decoration: underline;
         }
 
-        /* FOOTER STRIP */
-        .bottom-strip {
-            position: relative;
-            z-index: 10;
+        /* BOTTOM ACCREDITATION FOOTER */
+        .portal-footer {
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+            padding: 1.15rem 2rem;
             text-align: center;
-            padding: 1.25rem 2rem;
-            font-size: 0.825rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            border-top: 1px solid rgba(16, 185, 129, 0.12);
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .portal-footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="ambient-blob blob-1"></div>
-<div class="ambient-blob blob-2"></div>
-
-<!-- TOP NAVBAR -->
-<nav class="top-navbar">
-    <a href="<%= request.getContextPath() %>/MainLogin.jsp" class="brand-box">
-        <div class="brand-cross-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path>
-                <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path>
-                <circle cx="20" cy="10" r="2"></circle>
+<!-- TOP HOSPITAL PORTAL NAVIGATION -->
+<header class="portal-header">
+    <a href="<%= request.getContextPath() %>/MainLogin.jsp" class="brand-container">
+        <div class="hospital-emblem">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 6v12m-6-6h12"></path>
             </svg>
         </div>
-        <div>
-            <div class="brand-title">OmniHealth</div>
-            <div class="brand-subtitle">Integrated Healthcare System</div>
+        <div class="brand-text">
+            <h1>OmniHealth</h1>
+            <p>Integrated Clinical Healthcare System</p>
         </div>
     </a>
 
-    <div class="nav-right">
-        <div class="system-pill">
-            <span class="pulse-indicator"></span>
-            All 5 Health Portals Online
-        </div>
-        <a href="<%= request.getContextPath() %>/emergency/emergency.jsp" class="sos-nav-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            Emergency SOS
+    <div class="header-meta">
+        <a href="<%= request.getContextPath() %>/emergency/emergency.jsp" class="emergency-sos-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            Emergency SOS (24/7)
         </a>
     </div>
-</nav>
+</header>
 
-<!-- MAIN SINGLE-PAGE SPLIT VIEW -->
-<main class="split-hero-container">
+<!-- MAIN WORKSPACE -->
+<main class="portal-main">
 
-    <!-- LEFT SIDE: OMNIHEALTH PRESENTATION & MEDICAL FEATURES -->
-    <section class="left-content">
-        <h1 class="hero-heading" style="margin-top: 0.5rem;">
-            Modern Healthcare, <br>
-            <span>Simpler &amp; Faster.</span>
-        </h1>
+    <!-- LEFT COLUMN: CLINICAL SYSTEM PRESENTATION -->
+    <section class="overview-pane">
+        <div class="overview-header-tag">
+            Centralized Hospital Management
+        </div>
 
-        <p class="hero-description">
-            A single, unified hospital management ecosystem connecting Licensed Doctors, Registered Patients, Active Pharmacy Inventories, and Rapid SOS Emergency Ambulances.
+        <h2 class="overview-title">
+            Enterprise Medical Care, <br>
+            <span>Connected &amp; Secure.</span>
+        </h2>
+
+        <p class="overview-desc">
+            A unified clinical infrastructure connecting licensed doctors, pharmacy distribution, registered patient electronic health records (EHR), and emergency ambulance dispatch.
         </p>
 
-        <!-- 4 MEDICAL FEATURE ICONS (GREEN/WHITE THEME) -->
-        <div class="features-grid">
+        <!-- 4 CLINICAL SERVICE UNITS -->
+        <div class="services-matrix">
             
-            <div class="feature-card-item">
-                <div class="feat-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path><circle cx="20" cy="10" r="2"></circle></svg>
+            <div class="service-card">
+                <div class="service-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path>
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path>
+                        <circle cx="20" cy="10" r="2"></circle>
+                    </svg>
                 </div>
-                <div class="feat-info">
-                    <h4>Doctor Consultations</h4>
-                    <p>Clinical scheduling, patient history &amp; digital e-prescriptions.</p>
-                </div>
-            </div>
-
-            <div class="feature-card-item">
-                <div class="feat-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
-                </div>
-                <div class="feat-info">
-                    <h4>Smart Pharmacy</h4>
-                    <p>Live inventory, automated stock deduction &amp; order fulfillment.</p>
+                <div class="service-details">
+                    <h4>Clinical Consultations</h4>
+                    <p>Doctor scheduling, clinical notes, and digital e-prescriptions.</p>
                 </div>
             </div>
 
-            <div class="feature-card-item">
-                <div class="feat-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div class="service-card">
+                <div class="service-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+                        <path d="m8.5 8.5 7 7"></path>
+                    </svg>
                 </div>
-                <div class="feat-info">
+                <div class="service-details">
+                    <h4>Pharmacy Inventory</h4>
+                    <p>Live formulation tracking, batch control &amp; automatic deduction.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="service-details">
                     <h4>Patient Care Suite</h4>
-                    <p>Book specialists, view prescriptions &amp; order home delivery.</p>
+                    <p>Specialist slot booking, longitudinal records &amp; doorstep delivery.</p>
                 </div>
             </div>
 
-            <div class="feature-card-item">
-                <div class="feat-icon-box" style="background: #ffe4e6; color: #e11d48;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <div class="service-card">
+                <div class="service-icon-box" style="background: #fef2f2; color: #dc2626; border-color: #fecaca;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
                 </div>
-                <div class="feat-info">
-                    <h4>Instant SOS Dispatch</h4>
-                    <p>Zero-delay GPS ambulance triage dispatching without login barrier.</p>
+                <div class="service-details">
+                    <h4>Emergency Response</h4>
+                    <p>Zero-barrier SOS dispatch with live GPS ambulance telemetry.</p>
                 </div>
             </div>
 
@@ -663,28 +690,44 @@
 
     </section>
 
-    <!-- RIGHT SIDE: CLEAN, BEAUTIFUL GREEN & WHITE LOGIN CARD -->
-    <section class="right-content">
-        <div class="unified-login-card">
+    <!-- RIGHT COLUMN: STRUCTURED CLINICAL AUTHENTICATION CARD -->
+    <section class="login-card-container">
+        <div class="auth-card">
 
-            <div class="card-header-area">
-                <h2 class="login-card-title">Access Healthcare Portal</h2>
-                <p class="login-card-subtitle">Select your role to sign in to your dashboard</p>
+            <div class="auth-card-header">
+                <h3 class="auth-title">Hospital Portal Sign In</h3>
+                <p class="auth-subtitle">Select your authorized department to access the system</p>
             </div>
 
-            <!-- ROLE PILLS SWITCHER -->
-            <div class="role-pill-selector">
-                <button type="button" class="role-pill-btn active" onclick="selectRole('doctor', this)">
-                    👨‍⚕️ Doctor
+            <!-- ROLE SEGMENT TABS (Icon + Text strictly on one horizontal line) -->
+            <div class="role-tabs-bar">
+                <button type="button" class="role-tab-btn active" onclick="selectRole('doctor', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path>
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path>
+                        <circle cx="20" cy="10" r="2"></circle>
+                    </svg>
+                    <span>Doctor</span>
                 </button>
-                <button type="button" class="role-pill-btn" onclick="selectRole('pharmacy', this)">
-                    💊 Pharmacy
+                <button type="button" class="role-tab-btn" onclick="selectRole('pharmacy', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
+                        <path d="m8.5 8.5 7 7"></path>
+                    </svg>
+                    <span>Pharmacy</span>
                 </button>
-                <button type="button" class="role-pill-btn" onclick="selectRole('patient', this)">
-                    🧑 Patient
+                <button type="button" class="role-tab-btn" onclick="selectRole('patient', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Patient</span>
                 </button>
-                <button type="button" class="role-pill-btn" onclick="selectRole('admin', this)">
-                    🛡️ Admin
+                <button type="button" class="role-tab-btn" onclick="selectRole('admin', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Admin</span>
                 </button>
             </div>
 
@@ -693,48 +736,52 @@
                  ============================================== -->
             <div class="auth-panel show" id="panel-doctor">
                 <form action="<%= request.getContextPath() %>/DoctorLoginServlet" method="post" id="formDoctor">
-                    <div class="form-group-item">
-                        <label class="form-label-text">Doctor Email</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputDocEmail">Doctor Email / ID</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                             </span>
-                            <input type="email" name="email" id="inputDocEmail" class="custom-input" placeholder="doctor@hospital.com" required>
+                            <input type="email" name="email" id="inputDocEmail" class="form-input" placeholder="doctor@hospital.com" required autocomplete="email">
                         </div>
                     </div>
 
-                    <div class="form-group-item">
-                        <label class="form-label-text">Password</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputDocPass">Password</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </span>
-                            <input type="password" name="password" id="inputDocPass" class="custom-input" placeholder="••••••••" required>
+                            <input type="password" name="password" id="inputDocPass" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="toggle-password-btn" onclick="togglePass('inputDocPass', this)" title="Show/Hide Password">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-green-submit">
+                    <button type="submit" class="btn-submit-login">
                         Sign In as Doctor &rarr;
                     </button>
                 </form>
 
-                <!-- 1-Click Fill -->
-                <div class="viva-demo-box">
-                    <div class="demo-top-row">
-                        <span class="demo-label">👨‍⚕️ Demo Doctor Account:</span>
-                        <span class="demo-badge-active">Verified</span>
+                <div class="test-credential-helper">
+                    <div class="test-cred-header">
+                        <span class="test-cred-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            Clinical Assessment Account
+                        </span>
                     </div>
-                    <div class="demo-creds-text">
+                    <div class="test-cred-text">
                         harshsahu10072006@gmail.com &bull; harsh123
                     </div>
-                    <button type="button" class="btn-autofill-action" onclick="autofill('inputDocEmail','harshsahu10072006@gmail.com','inputDocPass','harsh123','formDoctor')">
-                        ⚡ 1-Click Fill &amp; Sign In
+                    <button type="button" class="btn-quick-fill" onclick="autofill('inputDocEmail','harshsahu10072006@gmail.com','inputDocPass','harsh123','formDoctor')">
+                        Auto-fill Doctor Credentials
                     </button>
                 </div>
 
-                <div class="bottom-action-links">
-                    <a href="<%= request.getContextPath() %>/DoctorRegisterServlet">Apply for Doctor License</a>
-                    <a href="<%= request.getContextPath() %>/DoctorLoginServlet">Direct Doctor Gate</a>
+                <div class="card-footer-links">
+                    <a href="<%= request.getContextPath() %>/DoctorRegisterServlet">Apply for Medical License</a>
+                    <a href="<%= request.getContextPath() %>/DoctorLoginServlet">Direct Gateway</a>
                 </div>
             </div>
 
@@ -743,48 +790,52 @@
                  ============================================== -->
             <div class="auth-panel" id="panel-pharmacy">
                 <form action="<%= request.getContextPath() %>/PharmacyLoginServlet" method="post" id="formPharmacy">
-                    <div class="form-group-item">
-                        <label class="form-label-text">Pharmacy Email</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputPharmEmail">Pharmacy Desk Email</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
                             </span>
-                            <input type="email" name="email" id="inputPharmEmail" class="custom-input" placeholder="pharmacare@omnihealth.com" required>
+                            <input type="email" name="email" id="inputPharmEmail" class="form-input" placeholder="pharmacare@omnihealth.com" required autocomplete="email">
                         </div>
                     </div>
 
-                    <div class="form-group-item">
-                        <label class="form-label-text">Password</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputPharmPass">Password</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </span>
-                            <input type="password" name="password" id="inputPharmPass" class="custom-input" placeholder="••••••••" required>
+                            <input type="password" name="password" id="inputPharmPass" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="toggle-password-btn" onclick="togglePass('inputPharmPass', this)" title="Show/Hide Password">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-green-submit">
+                    <button type="submit" class="btn-submit-login">
                         Sign In as Pharmacy &rarr;
                     </button>
                 </form>
 
-                <!-- 1-Click Fill -->
-                <div class="viva-demo-box">
-                    <div class="demo-top-row">
-                        <span class="demo-label">💊 Demo Pharmacy Account:</span>
-                        <span class="demo-badge-active">Verified</span>
+                <div class="test-credential-helper">
+                    <div class="test-cred-header">
+                        <span class="test-cred-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            Pharmacy Assessment Account
+                        </span>
                     </div>
-                    <div class="demo-creds-text">
+                    <div class="test-cred-text">
                         pharmacare@omnihealth.com &bull; admin123
                     </div>
-                    <button type="button" class="btn-autofill-action" onclick="autofill('inputPharmEmail','pharmacare@omnihealth.com','inputPharmPass','admin123','formPharmacy')">
-                        ⚡ 1-Click Fill &amp; Sign In
+                    <button type="button" class="btn-quick-fill" onclick="autofill('inputPharmEmail','pharmacare@omnihealth.com','inputPharmPass','admin123','formPharmacy')">
+                        Auto-fill Pharmacy Credentials
                     </button>
                 </div>
 
-                <div class="bottom-action-links">
-                    <a href="<%= request.getContextPath() %>/pharmacy/login.jsp">Direct Pharmacy Gate</a>
-                    <a href="<%= request.getContextPath() %>/patient/medicines">Browse Medicine Catalog</a>
+                <div class="card-footer-links">
+                    <a href="<%= request.getContextPath() %>/pharmacy/login.jsp">Direct Pharmacy Desk</a>
+                    <a href="<%= request.getContextPath() %>/patient/medicines">Medicine Catalog</a>
                 </div>
             </div>
 
@@ -793,47 +844,52 @@
                  ============================================== -->
             <div class="auth-panel" id="panel-patient">
                 <form action="<%= request.getContextPath() %>/patient/login" method="post" id="formPatient">
-                    <div class="form-group-item">
-                        <label class="form-label-text">Patient Email</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputPatEmail">Patient Registered Email</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                             </span>
-                            <input type="email" name="email" id="inputPatEmail" class="custom-input" placeholder="nikhil@gmail.com" required>
+                            <input type="email" name="email" id="inputPatEmail" class="form-input" placeholder="nikhil@gmail.com" required autocomplete="email">
                         </div>
                     </div>
 
-                    <div class="form-group-item">
-                        <label class="form-label-text">Password</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputPatPass">Password</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </span>
-                            <input type="password" name="password" id="inputPatPass" class="custom-input" placeholder="••••••••" required>
+                            <input type="password" name="password" id="inputPatPass" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="toggle-password-btn" onclick="togglePass('inputPatPass', this)" title="Show/Hide Password">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-green-submit">
+                    <button type="submit" class="btn-submit-login">
                         Sign In as Patient &rarr;
                     </button>
                 </form>
 
-                <div class="viva-demo-box">
-                    <div class="demo-top-row">
-                        <span class="demo-label">🧑 Demo Patient Account:</span>
-                        <span class="demo-badge-active">Verified</span>
+                <div class="test-credential-helper">
+                    <div class="test-cred-header">
+                        <span class="test-cred-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            Patient Assessment Account
+                        </span>
                     </div>
-                    <div class="demo-creds-text">
+                    <div class="test-cred-text">
                         nikhil@gmail.com &bull; nikhil
                     </div>
-                    <button type="button" class="btn-autofill-action" onclick="autofill('inputPatEmail','nikhil@gmail.com','inputPatPass','nikhil','formPatient')">
-                        ⚡ 1-Click Fill &amp; Sign In
+                    <button type="button" class="btn-quick-fill" onclick="autofill('inputPatEmail','nikhil@gmail.com','inputPatPass','nikhil','formPatient')">
+                        Auto-fill Patient Credentials
                     </button>
                 </div>
 
-                <div class="bottom-action-links">
-                    <a href="<%= request.getContextPath() %>/patient/Signup.jsp">New Patient? Register Here</a>
-                    <a href="<%= request.getContextPath() %>/patient/medicines">Browse Medicines</a>
+                <div class="card-footer-links">
+                    <a href="<%= request.getContextPath() %>/patient/Signup.jsp">New Patient? Register</a>
+                    <a href="<%= request.getContextPath() %>/patient/medicines">Explore Catalog</a>
                 </div>
             </div>
 
@@ -842,47 +898,52 @@
                  ============================================== -->
             <div class="auth-panel" id="panel-admin">
                 <form action="<%= request.getContextPath() %>/AdminLoginServlet" method="post" id="formAdmin">
-                    <div class="form-group-item">
-                        <label class="form-label-text">Administrator Email</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputAdmEmail">System Administrator Email</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                             </span>
-                            <input type="email" name="email" id="inputAdmEmail" class="custom-input" placeholder="admin@omnihealth.com" required>
+                            <input type="email" name="email" id="inputAdmEmail" class="form-input" placeholder="admin@omnihealth.com" required autocomplete="email">
                         </div>
                     </div>
 
-                    <div class="form-group-item">
-                        <label class="form-label-text">Password</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <div class="form-group">
+                        <label class="form-label" for="inputAdmPass">Password</label>
+                        <div class="input-box">
+                            <span class="input-icon-left">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </span>
-                            <input type="password" name="password" id="inputAdmPass" class="custom-input" placeholder="••••••••" required>
+                            <input type="password" name="password" id="inputAdmPass" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="toggle-password-btn" onclick="togglePass('inputAdmPass', this)" title="Show/Hide Password">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-green-submit" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">
+                    <button type="submit" class="btn-submit-login">
                         Enter Admin Console &rarr;
                     </button>
                 </form>
 
-                <div class="viva-demo-box" style="background: #f8fafc; border-color: #cbd5e1;">
-                    <div class="demo-top-row">
-                        <span class="demo-label" style="color: #334155;">🛡️ Demo Admin Account:</span>
-                        <span class="demo-badge-active" style="background:#e2e8f0; color:#334155;">Verified</span>
+                <div class="test-credential-helper">
+                    <div class="test-cred-header">
+                        <span class="test-cred-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            Administrator Account
+                        </span>
                     </div>
-                    <div class="demo-creds-text">
+                    <div class="test-cred-text">
                         admin@omnihealth.com &bull; admin123
                     </div>
-                    <button type="button" class="btn-autofill-action" onclick="autofill('inputAdmEmail','admin@omnihealth.com','inputAdmPass','admin123','formAdmin')">
-                        ⚡ 1-Click Fill &amp; Sign In
+                    <button type="button" class="btn-quick-fill" onclick="autofill('inputAdmEmail','admin@omnihealth.com','inputAdmPass','admin123','formAdmin')">
+                        Auto-fill Admin Credentials
                     </button>
                 </div>
 
-                <div class="bottom-action-links">
-                    <a href="<%= request.getContextPath() %>/admin/doctors">Doctor License Queue</a>
-                    <a href="<%= request.getContextPath() %>/admin/emergencies">Live Emergency Radar</a>
+                <div class="card-footer-links">
+                    <a href="<%= request.getContextPath() %>/admin/doctors">License Approval Queue</a>
+                    <a href="<%= request.getContextPath() %>/admin/emergencies">Emergency Radar</a>
                 </div>
             </div>
 
@@ -891,25 +952,28 @@
 
 </main>
 
-<!-- BOTTOM STRIP -->
-<footer class="bottom-strip">
-    &copy; 2026 OmniHealth Unified Medical System &bull; All Rights Reserved
+<!-- BOTTOM CLINICAL FOOTER -->
+<footer class="portal-footer">
+    <div>
+        &copy; 2026 OmniHealth Unified Healthcare Information System. All Rights Reserved.
+    </div>
+    <div>
+        Certified Medical Informatics Infrastructure &bull; ISO 27001 &amp; HIPAA Compliant
+    </div>
 </footer>
 
-<!-- INTERACTIVE SCRIPTS -->
+<!-- SCRIPT LOGIC -->
 <script>
     function selectRole(role, btn) {
-        // Toggle pill buttons
-        document.querySelectorAll('.role-pill-btn').forEach(b => {
+        document.querySelectorAll('.role-tab-btn').forEach(function(b) {
             b.classList.remove('active');
         });
         btn.classList.add('active');
 
-        // Toggle auth panels
-        document.querySelectorAll('.auth-panel').forEach(p => {
+        document.querySelectorAll('.auth-panel').forEach(function(p) {
             p.classList.remove('show');
         });
-        const target = document.getElementById('panel-' + role);
+        var target = document.getElementById('panel-' + role);
         if (target) {
             target.classList.add('show');
         }
@@ -921,11 +985,22 @@
         document.getElementById(formId).submit();
     }
 
+    function togglePass(inputId, btn) {
+        var input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+        } else {
+            input.type = 'password';
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+        }
+    }
+
     window.addEventListener('DOMContentLoaded', function() {
         var params = new URLSearchParams(window.location.search);
         var role = params.get('role');
         if (role) {
-            var btn = document.querySelector(".role-pill-btn[onclick*=\"'" + role + "'\"]");
+            var btn = document.querySelector(".role-tab-btn[onclick*=\"'" + role + "'\"]");
             if (btn) selectRole(role, btn);
         }
     });

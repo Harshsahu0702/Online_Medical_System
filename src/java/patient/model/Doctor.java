@@ -142,6 +142,7 @@ public class Doctor {
             da.setAvailabilityId((Integer) a.get("availabilityId"));
             da.setDoctorId(doctorId);
             da.setDay((String) a.get("dayOfWeek"));
+            da.setAvailableDate((String) a.get("availableDate"));
             da.setStartTime((String) a.get("startTime"));
             da.setEndTime((String) a.get("endTime"));
             da.setConsultationType((String) a.get("consultationType"));

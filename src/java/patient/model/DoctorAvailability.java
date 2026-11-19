@@ -73,6 +73,7 @@ public class DoctorAvailability {
     int availabilityId;
     int doctorId;
     String day;
+    String availableDate;
     String startTime;
     String endTime;
     String consultationType;
@@ -83,6 +84,14 @@ public class DoctorAvailability {
     int doctorExperience;
     float consultationFee;
     
+    public String getAvailableDate() {
+        return availableDate;
+    }
+
+    public void setAvailableDate(String availableDate) {
+        this.availableDate = availableDate;
+    }
+
     public int getAvailabilityId() {
         return availabilityId;
     }
@@ -200,6 +209,7 @@ public class DoctorAvailability {
                         "    da.start_time AS startTime," +
                         "    da.end_time AS endTime," +
                         "    da.consultation_type AS consultationType," +
+                        "    da.available_date AS availableDate," +
                         "    u.name AS doctorName," +
                         "    c.clinic_name AS clinicName," +
                         "    s.name AS specialization," +
@@ -253,6 +263,7 @@ public class DoctorAvailability {
                 da.setDoctorExperience(rs.getInt("doctorExperience"));
                 da.setConsultationFee(rs.getFloat("consultationFee"));
                 da.setConsultationType(rs.getString("consultationType"));
+                da.setAvailableDate(rs.getString("availableDate"));
                 
                 availableDoctors.add(da);
             }

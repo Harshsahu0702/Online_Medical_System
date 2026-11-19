@@ -18,6 +18,7 @@
     List<Patient> allPatients = (List<Patient>) request.getAttribute("allPatients");
     Patient selectedPatient = (Patient) request.getAttribute("patient");
     String consultationId = (String) request.getAttribute("consultationId");
+    String appointmentId = (String) request.getAttribute("appointmentId");
 
     String errorParam = request.getParameter("error");
 %>
@@ -43,6 +44,14 @@
         <form action="<%= request.getContextPath() %>/DoctorPrescriptionServlet" method="POST" id="prescriptionForm">
             
             <input type="hidden" name="consultationId" value="<%= consultationId != null ? consultationId : "0" %>">
+            <input type="hidden" name="appointmentId" value="<%= appointmentId != null ? appointmentId : "0" %>">
+
+            <% if (appointmentId != null && !appointmentId.trim().isEmpty() && !"0".equals(appointmentId)) { %>
+                <div style="background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                    <span>🏥</span>
+                    <span>Prescribing for In-Person Appointment #<strong><%= appointmentId %></strong>. Saving will mark this appointment as Completed.</span>
+                </div>
+            <% } %>
 
             <!-- PATIENT & DATE -->
             <div class="form-row">

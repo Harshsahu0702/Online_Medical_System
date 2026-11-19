@@ -300,7 +300,7 @@
                             <span class="status-pill <%= vStat.toLowerCase() %>"><%= vStat %></span>
                         </td>
                         <td>
-                            <a href="<%= request.getContextPath() %>/admin/doctors" class="btn-action-sm btn-view">Review</a>
+                            <a href="<%= request.getContextPath() %>/admin/doctors?reviewDocId=<%= doc.get("doctorId") %>" class="btn-action-sm btn-view">Review &amp; Verify</a>
                         </td>
                     </tr>
                     <% } %>

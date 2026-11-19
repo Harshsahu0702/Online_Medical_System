@@ -16,9 +16,12 @@ public class PatientOrderDAO {
     public List<Map<String, Object>> getOrdersByPatientId(String patientId, String statusFilter) {
         List<Map<String, Object>> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder(
-            "SELECT o.*, p.* "
+            "SELECT o.order_id, o.patient_id, o.pharmacy_id, o.order_date, o.total_amount, o.order_status, o.delivery_address, "
+          + "COALESCE(p.name, 'Local Pharmacy') as pharmacy_name, "
+          + "COALESCE(pat.name, 'Patient') as patient_name "
           + "FROM orders o "
           + "LEFT JOIN pharmacies p ON o.pharmacy_id = p.pharmacy_id "
+          + "LEFT JOIN patients pat ON o.patient_id = pat.patient_id "
           + "WHERE o.patient_id = ? "
         );
 
@@ -38,21 +41,46 @@ public class PatientOrderDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    int orderId = rs.getInt("order_id");
                     Map<String, Object> map = new HashMap<>();
-                    map.put("orderId", rs.getInt("order_id"));
+                    map.put("orderId", orderId);
                     map.put("patientId", rs.getString("patient_id"));
+                    map.put("patientName", rs.getString("patient_name"));
                     map.put("pharmacyId", rs.getInt("pharmacy_id"));
-
-                    String pName = null;
-                    try { pName = rs.getString("pharmacy_name"); } catch (Exception ignore) {}
-                    if (pName == null || pName.trim().isEmpty()) {
-                        try { pName = rs.getString("name"); } catch (Exception ignore) {}
-                    }
-                    map.put("pharmacyName", pName != null ? pName : "Local Pharmacy");
+                    map.put("pharmacyName", rs.getString("pharmacy_name"));
                     map.put("orderDate", rs.getTimestamp("order_date"));
                     map.put("totalAmount", rs.getDouble("total_amount"));
                     map.put("orderStatus", rs.getString("order_status"));
                     map.put("deliveryAddress", rs.getString("delivery_address"));
+
+                    // Fetch medicines list & prices for this order
+                    List<Map<String, Object>> items = new ArrayList<>();
+                    String itemsSql = "SELECT oi.*, m.medicine_name "
+                                    + "FROM order_items oi "
+                                    + "LEFT JOIN medicines m ON oi.medicine_id = m.medicine_id "
+                                    + "WHERE oi.order_id = ?";
+                    try (PreparedStatement psItems = con.prepareStatement(itemsSql)) {
+                        psItems.setInt(1, orderId);
+                        try (ResultSet rsItems = psItems.executeQuery()) {
+                            while (rsItems.next()) {
+                                Map<String, Object> item = new HashMap<>();
+                                item.put("orderItemId", rsItems.getInt("order_item_id"));
+                                item.put("medicineId", rsItems.getInt("medicine_id"));
+                                String medName = rsItems.getString("medicine_name");
+                                if (medName == null || medName.trim().isEmpty()) {
+                                    medName = "Medicine #" + rsItems.getInt("medicine_id");
+                                }
+                                item.put("medicineName", medName);
+                                item.put("quantity", rsItems.getInt("quantity"));
+                                item.put("unitPrice", rsItems.getDouble("unit_price"));
+                                item.put("subtotal", rsItems.getDouble("subtotal"));
+                                items.add(item);
+                            }
+                        }
+                    } catch (Exception itemErr) {
+                        System.err.println("Error fetching items for order #" + orderId + ": " + itemErr.getMessage());
+                    }
+                    map.put("items", items);
                     list.add(map);
                 }
             }
@@ -64,9 +92,12 @@ public class PatientOrderDAO {
     }
 
     public Map<String, Object> getOrderDetails(int orderId) {
-        String orderSql = "SELECT o.*, p.* "
+        String orderSql = "SELECT o.order_id, o.patient_id, o.pharmacy_id, o.order_date, o.total_amount, o.order_status, o.delivery_address, "
+                        + "COALESCE(p.name, 'Local Pharmacy') as pharmacy_name, p.address as pharmacy_address, "
+                        + "COALESCE(pat.name, 'Patient') as patient_name "
                         + "FROM orders o "
                         + "LEFT JOIN pharmacies p ON o.pharmacy_id = p.pharmacy_id "
+                        + "LEFT JOIN patients pat ON o.patient_id = pat.patient_id "
                         + "WHERE o.order_id = ?";
 
         String itemsSql = "SELECT oi.*, m.medicine_name "
@@ -83,15 +114,10 @@ public class PatientOrderDAO {
                     Map<String, Object> map = new HashMap<>();
                     map.put("orderId", rs.getInt("order_id"));
                     map.put("patientId", rs.getString("patient_id"));
+                    map.put("patientName", rs.getString("patient_name"));
                     map.put("pharmacyId", rs.getInt("pharmacy_id"));
-
-                    String pName = null;
-                    try { pName = rs.getString("pharmacy_name"); } catch (Exception ignore) {}
-                    if (pName == null || pName.trim().isEmpty()) {
-                        try { pName = rs.getString("name"); } catch (Exception ignore) {}
-                    }
-                    map.put("pharmacyName", pName != null ? pName : "Local Pharmacy");
-                    map.put("pharmacyAddress", rs.getString("address"));
+                    map.put("pharmacyName", rs.getString("pharmacy_name"));
+                    map.put("pharmacyAddress", rs.getString("pharmacy_address"));
                     map.put("orderDate", rs.getTimestamp("order_date"));
                     map.put("totalAmount", rs.getDouble("total_amount"));
                     map.put("orderStatus", rs.getString("order_status"));

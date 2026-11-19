@@ -249,6 +249,59 @@ public class AppointmentDAO {
         return list;
     }
 
+    public List<Appointment> getDoctorQueue(int doctorId) {
+        List<Appointment> list = new ArrayList<Appointment>();
+        String sql = "SELECT a.appointment_id, a.patient_id, a.doctor_id, a.appointment_date, "
+                + "TIME_FORMAT(a.appointment_time, '%h:%i %p') AS formatted_time, a.appointment_time, "
+                + "a.appointment_type, a.status, a.reason, a.created_at, "
+                + "COALESCE(p.name, 'Patient') AS patient_name, "
+                + "COALESCE(p.contact, '') AS patient_phone, "
+                + "COALESCE(p.email, '') AS patient_email, "
+                + "COALESCE(p.gender, '') AS patient_gender, "
+                + "COALESCE(p.blood_group, '') AS patient_blood_group "
+                + "FROM appointments a "
+                + "LEFT JOIN patients p ON a.patient_id = p.patient_id "
+                + "WHERE a.doctor_id = ? "
+                + "  AND a.status IN ('ACCEPTED', 'PENDING') "
+                + "  AND a.appointment_date >= CURDATE() "
+                + "ORDER BY a.appointment_date ASC, a.appointment_time ASC";
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Appointment a = new Appointment();
+                a.setAppointmentId(rs.getInt("appointment_id"));
+                a.setPatientId(rs.getString("patient_id"));
+                a.setDoctorId(rs.getInt("doctor_id"));
+                a.setAppointmentDate(rs.getString("appointment_date"));
+                a.setAppointmentTime(rs.getString("formatted_time") != null ? rs.getString("formatted_time") : rs.getString("appointment_time"));
+                a.setAppointmentType(rs.getString("appointment_type"));
+                a.setStatus(rs.getString("status"));
+                a.setReason(rs.getString("reason"));
+                a.setCreatedAt(rs.getString("created_at"));
+                a.setPatientName(rs.getString("patient_name"));
+                a.setPatientPhone(rs.getString("patient_phone"));
+                a.setPatientEmail(rs.getString("patient_email"));
+                a.setPatientGender(rs.getString("patient_gender"));
+                a.setPatientBloodGroup(rs.getString("patient_blood_group"));
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close(con, ps, rs);
+        }
+        return list;
+    }
+
     public Map<String, Integer> getDoctorDashboardStats(int doctorId) {
         Map<String, Integer> stats = new HashMap<String, Integer>();
         stats.put("todayAppointments", 0);

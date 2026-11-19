@@ -2,20 +2,36 @@
 <%@ page import="patient.model.BookAppointment" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     BookAppointment slot = (BookAppointment) request.getAttribute("slot");
     if (slot == null) {
         response.sendRedirect(request.getContextPath() + "/patient/find-doctor");
         return;
     }
+    Map<String, List<String>> bookedSlots = (Map<String, List<String>>) request.getAttribute("bookedSlots");
+    String errorParam = request.getParameter("error");
+
     request.setAttribute("pageTitle", "Book Slot with " + slot.getDoctorName());
     request.setAttribute("pageDescription", "Choose an appointment date, time, and confirm your booking.");
 
     // Simple date calculation: start from today and step forward day-by-day until matching the doctor's day
     String slotDay = (slot.getDayOfWeek() != null) ? slot.getDayOfWeek().trim() : "Monday";
     LocalDate appointmentDate = LocalDate.now();
-    while (!appointmentDate.getDayOfWeek().toString().equalsIgnoreCase(slotDay)) {
-        appointmentDate = appointmentDate.plusDays(1);
+    if (slot.getAvailableDate() != null && !slot.getAvailableDate().trim().isEmpty()) {
+        try {
+            appointmentDate = LocalDate.parse(slot.getAvailableDate().trim());
+        } catch (Exception ignored) {
+            while (!appointmentDate.getDayOfWeek().toString().equalsIgnoreCase(slotDay)) {
+                appointmentDate = appointmentDate.plusDays(1);
+            }
+        }
+    } else {
+        while (!appointmentDate.getDayOfWeek().toString().equalsIgnoreCase(slotDay)) {
+            appointmentDate = appointmentDate.plusDays(1);
+        }
     }
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMM yyyy");
 
@@ -27,6 +43,28 @@
     String[] endParts = slot.getEndTime().split(":");
     int endHour = Integer.parseInt(endParts[0].trim());
     int endMin = Integer.parseInt(endParts[1].trim());
+    if (endHour < startHour && endHour <= 12) {
+        endHour += 12; // Convert 12-hr PM format (e.g. 05:00) to 24-hr (17:00)
+    }
+
+    // Build master slot list
+    List<String[]> allMasterSlots = new ArrayList<String[]>();
+    int currH = startHour;
+    int currM = startMin;
+    while (currH < endHour || (currH == endHour && currM <= endMin)) {
+        String hourStr = (currH < 10) ? ("0" + currH) : ("" + currH);
+        String minStr = (currM < 10) ? ("0" + currM) : ("" + currM);
+        String val = hourStr + ":" + minStr + ":00";
+        String ampm = (currH >= 12) ? "PM" : "AM";
+        int displayH = (currH > 12) ? (currH - 12) : ((currH == 0) ? 12 : currH);
+        String label = displayH + ":" + minStr + " " + ampm;
+        allMasterSlots.add(new String[]{val, label});
+        currM += 30;
+        if (currM >= 60) {
+            currH++;
+            currM = 0;
+        }
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -223,6 +261,24 @@
                 <!-- 3. The Main Booking Form -->
                 <section class="card appointment-booking-card">
                     <div class="card-body">
+
+                        <% if ("slot_already_booked".equalsIgnoreCase(errorParam)) { %>
+                            <div style="background: #fef2f2; border: 1.5px solid #f87171; color: #991b1b; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; font-weight: 500; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 20px;">⚠️</span>
+                                <div>
+                                    <strong>Slot Unavailable:</strong> The selected appointment slot is already booked for this doctor. Please choose an available time slot below.
+                                </div>
+                            </div>
+                        <% } else if ("save_failed".equalsIgnoreCase(errorParam)) { %>
+                            <div style="background: #fef2f2; border: 1.5px solid #f87171; color: #991b1b; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; font-weight: 500;">
+                                Unable to complete booking. Please try again.
+                            </div>
+                        <% } %>
+
+                        <div id="noSlotsAlert" style="display: none; background: #fffbeb; border: 1.5px solid #f59e0b; color: #b45309; padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; font-size: 14px;">
+                            ⚠️ All appointment slots for this selected date are already booked. Please choose another upcoming date.
+                        </div>
+
                         <form id="slotBookingForm" class="appointment-form" action="${pageContext.request.contextPath}/patient/book-slot" method="post">
                             <input type="hidden" name="availabilityId" value="<%= slot.getAvailabilityId() %>">
                             <input type="hidden" name="doctorId" value="<%= slot.getDoctorId() %>">
@@ -237,7 +293,7 @@
                                         <label class="form-label" for="appointmentDate">
                                             Appointment Date <span style="font-weight: normal; color: #64748b; font-size: 13px;">(Upcoming <%= slot.getDayOfWeek() %>s)</span>
                                         </label>
-                                        <select class="form-control" id="appointmentDate" name="appointmentDate" required>
+                                        <select class="form-control" id="appointmentDate" name="appointmentDate" required onchange="updateAvailableTimeSlots()">
                                             <%
                                                 LocalDate currDate = appointmentDate;
                                                 for (int i = 0; i < 6; i++) {
@@ -253,36 +309,13 @@
                                         </select>
                                     </div>
 
-                                    <!-- Time Dropdown (Simple loop: Step by 30 mins) -->
+                                    <!-- Time Dropdown (Dynamically populated with available, non-booked slots) -->
                                     <div class="form-group">
                                         <label class="form-label" for="appointmentTime">
-                                            Appointment Time <span style="font-weight: normal; color: #64748b; font-size: 13px;">(Every 30 mins)</span>
+                                            Appointment Time <span style="font-weight: normal; color: #64748b; font-size: 13px;">(Available Slots Only)</span>
                                         </label>
                                         <select class="form-control" id="appointmentTime" name="appointmentTime" required>
-                                            <%
-                                                int h = startHour;
-                                                int m = startMin;
-                                                while (h < endHour || (h == endHour && m <= endMin)) {
-                                                    // Value for database (e.g. 09:00:00, 09:30:00)
-                                                    String hourStr = (h < 10) ? ("0" + h) : ("" + h);
-                                                    String minStr = (m < 10) ? ("0" + m) : ("" + m);
-                                                    String val = hourStr + ":" + minStr + ":00";
-
-                                                    // Label for display (e.g. 9:00 AM, 11:30 AM)
-                                                    String ampm = (h >= 12) ? "PM" : "AM";
-                                                    int displayH = (h > 12) ? (h - 12) : ((h == 0) ? 12 : h);
-                                                    String label = displayH + ":" + minStr + " " + ampm;
-                                            %>
-                                                <option value="<%= val %>"><%= label %></option>
-                                            <%
-                                                    // Step by 30 minutes
-                                                    m += 30;
-                                                    if (m >= 60) {
-                                                        h++;
-                                                        m = 0;
-                                                    }
-                                                }
-                                            %>
+                                            <!-- Populated dynamically by updateAvailableTimeSlots() -->
                                         </select>
                                     </div>
                                 </div>
@@ -333,6 +366,81 @@
         </main>
     </div>
 </div>
+
+<script>
+    var allMasterSlots = [
+        <% for (int i = 0; i < allMasterSlots.size(); i++) {
+            String[] s = allMasterSlots.get(i);
+            out.print("{ val: '" + s[0] + "', label: '" + s[1] + "' }" + (i < allMasterSlots.size() - 1 ? "," : ""));
+        } %>
+    ];
+
+    var bookedSlotsMap = {
+        <% if (bookedSlots != null) {
+            boolean firstD = true;
+            for (Map.Entry<String, List<String>> entry : bookedSlots.entrySet()) {
+                if (!firstD) out.print(",");
+                firstD = false;
+                out.print("'" + entry.getKey() + "':[");
+                boolean firstT = true;
+                for (String t : entry.getValue()) {
+                    if (!firstT) out.print(",");
+                    firstT = false;
+                    out.print("'" + t + "'");
+                }
+                out.print("]");
+            }
+        } %>
+    };
+
+    function updateAvailableTimeSlots() {
+        var dateSelect = document.getElementById("appointmentDate");
+        var timeSelect = document.getElementById("appointmentTime");
+        var btnConfirm = document.getElementById("btnConfirmBooking");
+        var noSlotsMsg = document.getElementById("noSlotsAlert");
+        if (!dateSelect || !timeSelect) return;
+
+        var selectedDate = dateSelect.value;
+        var bookedList = bookedSlotsMap[selectedDate] || [];
+
+        // Clear current options
+        timeSelect.innerHTML = "";
+
+        var availableCount = 0;
+        for (var i = 0; i < allMasterSlots.length; i++) {
+            var slot = allMasterSlots[i];
+            // If booked, do NOT add to select (hidden completely)
+            if (bookedList.indexOf(slot.val) === -1) {
+                var opt = document.createElement("option");
+                opt.value = slot.val;
+                opt.textContent = slot.label;
+                timeSelect.appendChild(opt);
+                availableCount++;
+            }
+        }
+
+        if (availableCount === 0) {
+            var emptyOpt = document.createElement("option");
+            emptyOpt.value = "";
+            emptyOpt.textContent = "No available slots on this date";
+            emptyOpt.disabled = true;
+            emptyOpt.selected = true;
+            timeSelect.appendChild(emptyOpt);
+            if (btnConfirm) btnConfirm.disabled = true;
+            if (noSlotsMsg) noSlotsMsg.style.display = "block";
+        } else {
+            if (btnConfirm) btnConfirm.disabled = false;
+            if (noSlotsMsg) noSlotsMsg.style.display = "none";
+        }
+    }
+
+    // Run on initial load
+    if (document.readyState === 'loading') {
+        document.addEventListener("DOMContentLoaded", updateAvailableTimeSlots);
+    } else {
+        updateAvailableTimeSlots();
+    }
+</script>
 
 <script src="${pageContext.request.contextPath}/patient/js/patient-common.js"></script>
 </body>

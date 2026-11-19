@@ -15,9 +15,18 @@ public class BookAppointment {
     private String startTime;
     private String endTime;
     private String consultationType;
+    private String availableDate;
     private float consultationFee;
     private String qualification;
     private int experience;
+
+    public String getAvailableDate() {
+        return availableDate;
+    }
+
+    public void setAvailableDate(String availableDate) {
+        this.availableDate = availableDate;
+    }
 
     // Getters and Setters
     public int getAvailabilityId() {
@@ -136,6 +145,9 @@ public class BookAppointment {
                 ba.setSpecialization((String) map.get("specialization"));
                 ba.setClinicName((String) map.get("clinicName"));
                 ba.setDayOfWeek((String) map.get("dayOfWeek"));
+                if (map.get("availableDate") != null) {
+                    ba.setAvailableDate((String) map.get("availableDate"));
+                }
                 ba.setStartTime((String) map.get("startTime"));
                 ba.setEndTime((String) map.get("endTime"));
                 ba.setConsultationType((String) map.get("consultationType"));
@@ -157,5 +169,13 @@ public class BookAppointment {
     // Saves appointment into appointments table
     public boolean saveAppointment(String patientId, int doctorId, String appointmentDate, String appointmentTime, String appointmentType, String reason) {
         return appointmentDAO.bookAppointment(patientId, doctorId, appointmentDate, appointmentTime, appointmentType, reason);
+    }
+
+    public java.util.Map<String, java.util.List<String>> getBookedSlots(int doctorId) {
+        return appointmentDAO.getBookedSlotsByDoctor(doctorId);
+    }
+
+    public boolean isSlotBooked(int doctorId, String appointmentDate, String appointmentTime) {
+        return appointmentDAO.isSlotBooked(doctorId, appointmentDate, appointmentTime);
     }
 }

@@ -132,4 +132,55 @@ public class PatientAppointmentDAO {
             return false;
         }
     }
+
+    public Map<String, List<String>> getBookedSlotsByDoctor(int doctorId) {
+        Map<String, List<String>> map = new HashMap<String, List<String>>();
+        String sql = "SELECT appointment_date, TIME_FORMAT(appointment_time, '%H:%i:%s') AS appt_time "
+                   + "FROM appointments "
+                   + "WHERE doctor_id = ? "
+                   + "  AND status NOT IN ('CANCELLED', 'REJECTED') "
+                   + "  AND appointment_date >= CURDATE()";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, doctorId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String d = rs.getString("appointment_date");
+                    String t = rs.getString("appt_time");
+                    if (d != null && t != null) {
+                        if (!map.containsKey(d)) {
+                            map.put(d, new ArrayList<String>());
+                        }
+                        map.get(d).add(t);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error in PatientAppointmentDAO.getBookedSlotsByDoctor: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public boolean isSlotBooked(int doctorId, String appointmentDate, String appointmentTime) {
+        String sql = "SELECT COUNT(*) FROM appointments "
+                   + "WHERE doctor_id = ? "
+                   + "  AND appointment_date = ? "
+                   + "  AND appointment_time = ? "
+                   + "  AND status NOT IN ('CANCELLED', 'REJECTED')";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, doctorId);
+            ps.setString(2, appointmentDate);
+            ps.setString(3, appointmentTime);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error in PatientAppointmentDAO.isSlotBooked: " + e.getMessage());
+        }
+        return false;
+    }
 }

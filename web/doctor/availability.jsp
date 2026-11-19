@@ -33,8 +33,14 @@
 
             <form action="<%= request.getContextPath() %>/DoctorAvailabilityServlet" method="POST">
                 <div class="form-group">
+                    <label class="form-label">Specific Date (Optional)</label>
+                    <input type="date" name="availableDate" id="availableDateInput" class="form-control" onchange="autoSelectDay(this.value)" min="<%= java.time.LocalDate.now().toString() %>">
+                    <small style="color: #64748b; font-size: 11px;">Pick a specific date to auto-set the day, or leave blank for recurring day.</small>
+                </div>
+
+                <div class="form-group">
                     <label class="form-label">Day of the Week</label>
-                    <select name="dayOfWeek" class="form-control" required>
+                    <select name="dayOfWeek" id="dayOfWeekSelect" class="form-control" required>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
@@ -94,7 +100,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Day</th>
+                            <th>Date & Day</th>
                             <th>Time Window</th>
                             <th>Mode</th>
                             <th>Status</th>
@@ -104,7 +110,15 @@
                     <tbody>
                         <% for (DoctorAvailability slot : availabilities) { %>
                             <tr>
-                                <td><strong><%= slot.getDayOfWeek() %></strong></td>
+                                <td>
+                                    <% if (slot.getAvailableDate() != null && !slot.getAvailableDate().trim().isEmpty()) { %>
+                                        <div style="font-size: 13px; font-weight: 700; color: #0284c7;">📅 <%= slot.getAvailableDate() %></div>
+                                        <div style="font-size: 12px; color: #64748b;"><strong><%= slot.getDayOfWeek() %></strong></div>
+                                    <% } else { %>
+                                        <div><strong><%= slot.getDayOfWeek() %></strong></div>
+                                        <div style="font-size: 11px; color: #94a3b8;">(Recurring weekly)</div>
+                                    <% } %>
+                                </td>
                                 <td><%= slot.getStartTime() %> - <%= slot.getEndTime() %></td>
                                 <td>
                                     <span class="badge" style="background:#f1f5f9; color:#334155;"><%= slot.getConsultationType() %></span>
@@ -136,6 +150,19 @@
     </div>
 
 </main>
+
+<script>
+    function autoSelectDay(dateStr) {
+        if (!dateStr) return;
+        var d = new Date(dateStr + "T00:00:00");
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayName = days[d.getDay()];
+        var daySelect = document.getElementById("dayOfWeekSelect");
+        if (daySelect && dayName) {
+            daySelect.value = dayName;
+        }
+    }
+</script>
 
 </body>
 </html>

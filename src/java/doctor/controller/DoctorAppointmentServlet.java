@@ -51,6 +51,13 @@ public class DoctorAppointmentServlet extends HttpServlet {
             } catch (NumberFormatException ignored) {}
             response.sendRedirect(targetRedirect + "?msg=rejected");
             return;
+        } else if ("complete".equalsIgnoreCase(action) && idStr != null) {
+            try {
+                int appointmentId = Integer.parseInt(idStr);
+                appointmentDAO.updateAppointmentStatus(appointmentId, doctorId, "COMPLETED");
+            } catch (NumberFormatException ignored) {}
+            response.sendRedirect(targetRedirect + "?msg=completed");
+            return;
         } else if ("view".equalsIgnoreCase(action) && idStr != null) {
             try {
                 int appointmentId = Integer.parseInt(idStr);

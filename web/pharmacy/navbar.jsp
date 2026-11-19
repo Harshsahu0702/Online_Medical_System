@@ -143,9 +143,9 @@
 
 <nav class="pharm-navbar">
     <a href="<%= request.getContextPath() %>/PharmacyDashboardServlet" class="pharm-brand">
-        <div class="pharm-logo-icon">Rx</div>
+        <div class="pharm-logo-icon">Oh</div>
         <div>
-            <div>PharmaCare Pro</div>
+            <div>OmniHealth</div>
             <div style="font-size: 0.725rem; font-weight: 500; color: var(--pharm-muted);">Pharmacy Management Suite</div>
         </div>
     </a>

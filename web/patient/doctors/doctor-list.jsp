@@ -148,7 +148,26 @@
                                                                             typeClass="type-online" ; } else if
                                                                             (type.equalsIgnoreCase("offline") ||
                                                                             type.equalsIgnoreCase("in-person")) {
-                                                                            typeClass="type-offline" ; } %>
+                                                                            typeClass="type-offline" ; }
+                                                                            
+                                                                            String slotDateDisplay = "";
+                                                                            if (slot.getAvailableDate() != null && !slot.getAvailableDate().trim().isEmpty()) {
+                                                                                try {
+                                                                                    java.time.LocalDate sDate = java.time.LocalDate.parse(slot.getAvailableDate().trim());
+                                                                                    slotDateDisplay = sDate.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"));
+                                                                                } catch (Exception e) {
+                                                                                    slotDateDisplay = slot.getAvailableDate();
+                                                                                }
+                                                                            } else {
+                                                                                try {
+                                                                                    java.time.LocalDate calcDate = java.time.LocalDate.now();
+                                                                                    while (!calcDate.getDayOfWeek().toString().equalsIgnoreCase(day)) {
+                                                                                        calcDate = calcDate.plusDays(1);
+                                                                                    }
+                                                                                    slotDateDisplay = calcDate.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"));
+                                                                                } catch (Exception ignored) {}
+                                                                            }
+                                                                            %>
                                                                             <div class="doc-slot-row">
                                                                                 <!-- Column 1: Day -->
                                                                                 <div class="slot-col slot-day">
@@ -170,6 +189,11 @@
                                                                                     <strong>
                                                                                         <%= day %>
                                                                                     </strong>
+                                                                                    <% if (!slotDateDisplay.isEmpty()) { %>
+                                                                                        <span style="font-size: 11px; color: #0284c7; font-weight: 600; display: block; margin-top: 2px;">
+                                                                                            📅 <%= slotDateDisplay %>
+                                                                                        </span>
+                                                                                    <% } %>
                                                                                 </div>
 
                                                                                 <!-- Column 2: Timings -->
@@ -202,7 +226,7 @@
                                                                                 <div class="slot-col slot-action">
                                                                                     <a href="${pageContext.request.contextPath}/patient/book-slot?availabilityId=<%= slot.getAvailabilityId() %>"
                                                                                         class="btn-slot-book">
-                                                                                        Book <%= day %> &rarr;
+                                                                                        Book <%= !slotDateDisplay.isEmpty() ? slotDateDisplay : day %> &rarr;
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
